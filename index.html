@@ -10,22 +10,39 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪙%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700;900&family=Gowun+Batang:wght@400;700&family=Song+Myung&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { theme: { extend: { fontFamily: {
-  serif: ['"Playfair Display"', '"Noto Serif KR"', 'serif'],
-  mono: ['"Space Mono"', 'monospace'],
+  display: ['"Cinzel Decorative"', '"Song Myung"', 'serif'], // 화려한 큰 제목: 영문 Cinzel Decorative + 한글 송명
+  serif: ['"Cinzel"', '"Song Myung"', 'serif'],      // 작은 제목: 영문 Cinzel + 한글 송명
+  text: ['"Gowun Batang"', 'serif'],                 // 본문: 한글·영문 고운바탕
+  mono: ['"Cinzel"', '"Gowun Batang"', 'serif'],     // 작은 라벨
   sans: ['Pretendard', 'sans-serif'] } } } }
 </script>
 <style>
-  body { background:#F8F8F6; color:#1A1A1A; }
+  body { background:radial-gradient(1100px 520px at 50% -8%,#FBF8F1,transparent),#F3EFE8; color:#2B2622; }
+  .reveal { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity:1; transform:none; }
+  .hero-glow { position:relative; isolation:isolate; }
+  .hero-glow::before { content:''; position:absolute; inset:-50px -12%; z-index:-1; background:radial-gradient(closest-side,rgba(184,140,60,.17),transparent); animation:drift 16s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform:translate(4%,6%) scale(1.1); } }
   .decor-line { position:relative; }
-  .decor-line::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:40px; height:1px; background:#D1D5DB; }
-  .metal-btn.active { border-color:#000; color:#000; background:#EFEFEC; }
+  .decor-line::after { content:''; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); width:132px; height:16px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='16' viewBox='0 0 132 16'%3E%3Cpath d='M0 8H54M78 8H132' stroke='%23B8914A' stroke-width='1'/%3E%3Cpath d='M66 1.5 72.5 8 66 14.5 59.5 8z' fill='none' stroke='%23B8914A' stroke-width='1.2'/%3E%3Ccircle cx='66' cy='8' r='1.8' fill='%23B8914A'/%3E%3Ccircle cx='48' cy='8' r='1.2' fill='%23B8914A'/%3E%3Ccircle cx='84' cy='8' r='1.2' fill='%23B8914A'/%3E%3C/svg%3E") center/contain no-repeat; }
+  /* 화려한 제목: 금빛 그라데이션 (밝은 종이 배경용 / 어두운 배경용). 송명은 굵기가 없어 faux-bold 방지 */
+  .title-gold, .title-gold-light { font-weight:700; font-synthesis:none; letter-spacing:.06em; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:#7a5a22; }
+  .title-gold { background-image:linear-gradient(175deg,#5a3d12 0%,#a67c2e 48%,#6e4b17 100%); }
+  .title-gold-light { background-image:linear-gradient(175deg,#fbefc8 0%,#d4ad57 52%,#f6e3a8 100%); }
+  .opt-btn.active { border-color:#000; color:#000; background:#EFEFEC; }
   :focus-visible { outline:2px solid #1A1A1A; outline-offset:3px; }
   #gateway :focus-visible { outline-color:#fff; }
+  .acc summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 0; }
+  .acc summary::-webkit-details-marker { display:none; }
+  .acc summary::after { content:'+'; font-family:Pretendard,sans-serif; font-size:20px; color:#8a6a2f; line-height:1; }
+  .acc[open] summary::after { content:'\2212'; }
+  .inv { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding-bottom:10px; }
+  .inv > button { flex:0 0 42%; max-width:180px; scroll-snap-align:start; }
   @media (prefers-reduced-motion: reduce) { *, ::before, ::after { transition:none !important; animation:none !important; } }
 </style>
 </head>
@@ -35,15 +52,15 @@ tailwind.config = { theme: { extend: { fontFamily: {
 <div id="gateway" class="fixed inset-0 z-50 bg-[#0A0A0A] text-white flex items-center justify-center p-6 transition-opacity duration-500">
   <div class="w-full max-w-md border border-white/20 bg-white/[0.03] p-12 space-y-12 text-center">
     <div class="space-y-4">
-      <span class="font-mono text-[10px] text-neutral-400 tracking-[0.4em] uppercase">Confidential Archive</span>
-      <h1 class="text-4xl font-serif tracking-widest text-neutral-100">기록실 입장</h1>
-      <p class="font-serif text-sm text-neutral-500 italic">Enter your signature to unlock the records.</p>
+      <span class="font-mono text-xs text-stone-400 tracking-[0.4em] uppercase">Confidential Archive</span>
+      <h1 class="text-4xl font-display title-gold-light">기록실 입장</h1>
+      <p class="font-text text-sm text-stone-400">Enter your signature to unlock the records.</p>
     </div>
     <input type="text" id="username" placeholder="서명을 남겨주세요" maxlength="10" aria-label="서명"
-      class="w-2/3 bg-transparent border-b border-neutral-600 focus:border-white outline-none py-2 text-center text-lg font-serif text-white transition-colors placeholder-neutral-600" />
+      class="w-2/3 bg-transparent border-b border-stone-600 focus:border-white outline-none py-2 text-center text-lg font-text text-white transition-colors placeholder-stone-600" />
     <div class="space-y-4 pt-4 font-mono text-xs">
       <button type="button" id="btn-bgm-on" class="w-full py-4 border border-white text-white hover:bg-white hover:text-black transition-colors tracking-[0.2em] uppercase">[ Enter with Audio ]</button>
-      <button type="button" id="btn-bgm-off" class="w-full py-2 text-neutral-400 hover:text-white transition-colors tracking-widest uppercase">Silent Entry</button>
+      <button type="button" id="btn-bgm-off" class="w-full py-2 text-stone-400 hover:text-white transition-colors tracking-widest uppercase">Silent Entry</button>
     </div>
   </div>
 </div>
@@ -52,22 +69,22 @@ tailwind.config = { theme: { extend: { fontFamily: {
 
 <!-- 2. 메인 -->
 <div id="main-view" class="opacity-0 translate-y-4 transition-all duration-700 ease-out flex flex-col min-h-screen">
-  <nav class="w-full px-8 py-5 flex justify-between items-center border-b border-neutral-200 sticky top-0 bg-[#F8F8F6]/90 backdrop-blur-md z-30">
-    <div class="font-serif text-xl tracking-widest text-neutral-900 uppercase">Project<span class="font-light italic text-neutral-400"> Archive</span></div>
-    <div class="flex items-center gap-6">
+  <nav class="w-full px-4 md:px-8 py-3 md:py-5 flex justify-between items-center border-b border-stone-200 sticky top-0 bg-[#F3EFE8]/90 backdrop-blur-md z-30">
+    <div class="font-display text-lg md:text-xl tracking-widest text-stone-900 font-bold" style="font-synthesis:none">Project<span class="text-amber-800"> Archive</span></div>
+    <div class="flex items-center gap-3 md:gap-6">
       <div class="flex items-center gap-2 font-mono text-xs">
-        <div class="w-1.5 h-1.5 bg-neutral-800 rounded-full animate-pulse"></div>
-        <span id="nav-user-label" class="text-neutral-500 tracking-wider">GUEST</span>
+        <div class="w-1.5 h-1.5 bg-amber-700 rounded-full animate-pulse"></div>
+        <span id="nav-user-label" class="text-stone-500 tracking-wider">GUEST</span>
       </div>
-      <button type="button" id="bgm-toggle-btn" class="font-mono text-[10px] text-neutral-500 hover:text-black transition-colors uppercase tracking-widest border border-neutral-300 px-3 py-1 hover:border-black">Audio Off</button>
+      <button type="button" id="bgm-toggle-btn" class="font-mono text-xs text-stone-500 hover:text-black transition-colors uppercase tracking-widest border border-stone-300 px-3 py-2 hover:border-black">Audio Off</button>
     </div>
   </nav>
 
-  <main class="flex-grow max-w-5xl mx-auto px-6 py-24 w-full space-y-32">
-    <section class="text-center max-w-3xl mx-auto space-y-8">
-      <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase block">Chapter I</span>
-      <h2 class="text-5xl font-serif text-neutral-900 decor-line pb-4">작품 A의 세계</h2>
-      <p class="font-serif text-neutral-600 text-lg leading-[2.2] pt-8">
+  <main class="flex-grow max-w-5xl mx-auto px-5 md:px-6 py-16 md:py-24 w-full space-y-24 md:space-y-32">
+    <section class="text-center max-w-3xl mx-auto space-y-8 reveal hero-glow">
+      <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase block">Chapter I</span>
+      <h2 class="text-4xl md:text-5xl font-display title-gold decor-line pb-6">작품 A의 세계</h2>
+      <p class="font-text text-stone-600 text-base md:text-lg leading-[2.1] pt-8">
         이곳은 작품 A의 세계관이 펼쳐지는 중심부입니다.<br>
         아직 밝혀지지 않은 수많은 역사와 기록의 파편들이 이 공간에 잠들어 있습니다.<br>
         각기 다른 목적을 지닌 인물들이 거대한 흐름 속에서 자신들만의 궤적을 그리며 움직입니다.<br>
@@ -76,85 +93,122 @@ tailwind.config = { theme: { extend: { fontFamily: {
       </p>
     </section>
 
-    <section class="space-y-12">
+    <section class="space-y-12 reveal">
       <div class="text-center space-y-2">
-        <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase">Chapter II</span>
-        <h3 class="font-serif text-3xl text-neutral-900">등장인물 기록</h3>
+        <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Chapter II</span>
+        <h3 class="font-display title-gold text-3xl">등장인물 기록</h3>
       </div>
       <!-- 카드는 아래 characters 데이터에서 자동 생성됩니다 -->
-      <div id="character-grid" class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8"></div>
+      <div id="character-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto"></div>
     </section>
 
-    <section class="border-t border-neutral-300 pt-24">
+    <section class="border-t border-stone-300 pt-16 md:pt-24 reveal">
       <div class="text-center space-y-2 mb-16">
-        <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase">Chapter III</span>
-        <h3 class="font-serif text-3xl text-neutral-900">기념주화 제작소</h3>
-        <p class="font-mono text-xs text-neutral-500 mt-2 tracking-wide">* 입력한 이름과 사진은 내 기기에서만 처리됩니다.</p>
+        <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Chapter III</span>
+        <h3 class="font-display title-gold text-3xl">기념주화 제작소</h3>
+        <p class="font-mono text-xs text-stone-500 mt-2 tracking-wide">* 입력한 이름과 사진은 내 기기에서만 처리됩니다.</p>
       </div>
-      <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center bg-white p-10 border border-neutral-200 shadow-sm">
+      <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-white p-6 md:p-10 border border-stone-200 shadow-sm">
         <div class="flex justify-center md:w-1/2">
-          <div class="p-4 border border-neutral-100 rounded-full shadow-[0_0_40px_rgba(0,0,0,0.05)] bg-[#121212]">
-            <canvas id="coin-canvas" width="900" height="900" aria-label="기념주화 미리보기" class="w-full max-w-[280px] aspect-square rounded-full"></canvas>
+          <div class="p-4 rounded-3xl bg-[#1C1915] shadow-[0_12px_40px_rgba(40,30,10,0.2)]">
+            <canvas id="coin-canvas" width="900" height="900" aria-label="기념주화 미리보기" class="w-full max-w-[280px] aspect-square"></canvas>
           </div>
         </div>
         <div class="space-y-8 md:w-1/2 w-full font-mono">
           <div class="space-y-3">
-            <span class="text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Metal</span>
-            <div class="flex gap-3" id="metal-group">
-              <button type="button" data-metal="bronze" class="metal-btn flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Bronze</button>
-              <button type="button" data-metal="gold" class="metal-btn flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Gold</button>
-              <button type="button" data-metal="iron" class="metal-btn flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Pewter / Iron</button>
+            <span class="text-xs text-stone-500 uppercase tracking-[0.2em]">Shape</span>
+            <div class="flex gap-3" id="shape-group">
+              <button type="button" data-shape="sun" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Sunburst</button>
+              <button type="button" data-shape="flower" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Flower</button>
+              <button type="button" data-shape="round" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Round</button>
             </div>
           </div>
           <div class="space-y-3">
-            <label for="coin-name-input" class="text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Engraving Name</label>
-            <input type="text" id="coin-name-input" placeholder="이름을 입력하세요" maxlength="10" class="w-full px-0 py-2 border-b border-neutral-300 bg-transparent outline-none focus:border-black transition-colors font-serif text-lg" />
+            <span class="text-xs text-stone-500 uppercase tracking-[0.2em]">Metal</span>
+            <div class="flex gap-3" id="metal-group">
+              <button type="button" data-metal="bronze" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Bronze</button>
+              <button type="button" data-metal="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Gold</button>
+              <button type="button" data-metal="iron" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Pewter</button>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <label for="coin-name-input" class="text-xs text-stone-500 uppercase tracking-[0.2em]">Engraving Name</label>
+            <input type="text" id="coin-name-input" placeholder="이름을 입력하세요" maxlength="10" class="w-full px-0 py-2 border-b border-stone-300 bg-transparent outline-none focus:border-black transition-colors font-text text-lg" />
           </div>
           <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden" />
           <div class="flex gap-3 pt-4">
-            <button type="button" id="btn-upload" class="w-1/3 py-3 border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white transition-colors text-[10px] tracking-widest uppercase">Upload</button>
-            <button type="button" id="btn-download" class="w-2/3 py-3 bg-neutral-900 text-white hover:bg-neutral-800 transition-colors text-[10px] tracking-widest uppercase shadow-md">Mint &amp; Download</button>
+            <button type="button" id="btn-upload" class="w-1/3 py-3 border border-stone-900 text-stone-900 hover:bg-stone-900 hover:text-white transition-colors text-xs tracking-widest uppercase">Upload</button>
+            <button type="button" id="btn-download" class="w-2/3 py-3 bg-stone-900 text-white hover:bg-stone-800 transition-colors text-xs tracking-widest uppercase shadow-md">Mint &amp; Download</button>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-neutral-200 py-10 mt-auto text-center font-mono text-[10px] text-neutral-500 tracking-widest uppercase">
+  <footer class="border-t border-stone-200 pt-10 pb-24 mt-auto text-center font-mono text-xs text-stone-500 tracking-widest uppercase">
     © ROUINK PROJECT HUB. ALL RIGHTS RESERVED.
   </footer>
 </div>
 
-<!-- 3. 캐릭터 팝업 -->
-<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 bg-[#F8F8F6]/95 backdrop-blur-md hidden items-center justify-center p-6 transition-opacity opacity-0">
-  <div id="modal-panel" class="bg-white w-full max-w-4xl border border-neutral-200 shadow-2xl scale-95 transition-transform duration-500 max-h-[90vh] flex flex-col relative">
-    <button type="button" id="modal-close" aria-label="닫기" class="absolute top-6 right-6 text-neutral-500 hover:text-black font-light text-3xl z-10">✕</button>
-    <div class="overflow-y-auto flex-grow flex flex-col md:flex-row">
-      <div class="w-full md:w-5/12 bg-neutral-100 relative min-h-[300px] md:min-h-full">
+<div id="ticker" class="hidden fixed bottom-0 inset-x-0 z-40 border-t border-stone-300/70 bg-[#F3EFE8]/90 backdrop-blur-md" style="padding-bottom:env(safe-area-inset-bottom)">
+  <p id="ticker-text" class="py-3 px-4 text-center font-mono text-xs tracking-widest text-stone-600 transition-opacity duration-500"></p>
+</div>
+
+<!-- 3. 캐릭터 상세 팝업 -->
+<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 bg-[#F3EFE8]/95 backdrop-blur-md hidden items-center justify-center p-3 md:p-6 transition-opacity opacity-0">
+  <div id="modal-panel" class="bg-[#FBF8F1] w-full max-w-4xl border border-stone-200 shadow-2xl scale-95 transition-transform duration-500 max-h-[92vh] flex flex-col relative">
+    <button type="button" id="modal-close" aria-label="닫기" class="absolute top-3 right-3 md:top-5 md:right-5 w-10 h-10 flex items-center justify-center bg-[#FBF8F1]/90 text-stone-600 hover:text-black font-light text-2xl z-20">✕</button>
+    <div id="modal-scroll" class="overflow-y-auto flex-grow flex flex-col md:flex-row">
+      <div class="w-full md:w-5/12 bg-stone-100 relative min-h-[240px] md:min-h-0 md:sticky md:top-0 md:self-start md:h-[92vh] shrink-0">
         <video id="modal-video" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
-        <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-[10px] text-neutral-500 tracking-[0.3em] uppercase">Video coming soon</div>
+        <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Video coming soon</div>
       </div>
-      <div class="w-full md:w-7/12 p-10 md:p-14 space-y-10 flex flex-col justify-center">
-        <div class="space-y-4">
-          <span id="modal-subtitle" class="font-mono text-[10px] text-neutral-500 tracking-[0.3em] uppercase"></span>
-          <h4 id="modal-name" class="text-4xl md:text-5xl font-serif text-neutral-900"></h4>
-          <div class="w-12 h-[1px] bg-neutral-300 mt-6"></div>
+      <div class="w-full md:w-7/12 p-6 md:p-10 space-y-8">
+        <div class="space-y-3">
+          <span id="modal-subtitle" class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase"></span>
+          <h4 id="modal-name" class="text-4xl md:text-5xl font-display title-gold leading-tight"></h4>
+          <p id="modal-name-en" class="font-mono text-xs text-stone-500 tracking-[0.35em] uppercase"></p>
+          <div id="modal-tags" class="flex flex-wrap gap-2 pt-2"></div>
         </div>
-        <p id="modal-desc" class="font-serif text-neutral-600 text-sm md:text-base leading-[2]"></p>
-        <ul class="space-y-4 font-mono text-xs text-neutral-500">
-          <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Birth</span><span id="modal-birth" class="text-neutral-900 font-sans"></span></li>
-          <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Spec</span><span id="modal-height" class="text-neutral-900 font-sans"></span></li>
-          <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Hobby</span><span id="modal-hobby" class="text-neutral-900 font-sans"></span></li>
-        </ul>
-        <div class="bg-neutral-50 p-6 border border-neutral-100 flex gap-5 items-center">
-          <div class="text-3xl" id="modal-fav-icon"></div>
+        <p id="modal-desc" class="font-text text-stone-700 text-base leading-[2]"></p>
+        <ul id="modal-specs" class="space-y-3 font-mono text-xs text-stone-500"></ul>
+        <div id="modal-extra"></div>
+        <div>
+          <h5 class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase mb-1">TMI</h5>
+          <div id="modal-tmi" class="border-t border-stone-200"></div>
+        </div>
+        <div>
+          <h5 class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase mb-1">Past Story</h5>
+          <details class="acc border-y border-stone-200">
+            <summary class="font-text text-stone-800 text-base">과거 이야기 펼쳐 보기</summary>
+            <div id="modal-story" class="font-text text-stone-700 text-base leading-[2.05] space-y-4 pb-6"></div>
+          </details>
+        </div>
+        <div>
+          <div class="flex justify-between items-baseline mb-3">
+            <h5 class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Inventory</h5>
+            <span id="modal-inv-count" class="font-mono text-xs text-stone-500 tracking-widest"></span>
+          </div>
+          <div id="modal-inv" class="inv"></div>
+        </div>
+        <div class="border border-stone-200 bg-white/60 p-5 flex gap-4 items-center">
+          <span class="text-2xl" aria-hidden="true">♪</span>
           <div>
-            <span class="font-mono text-[9px] text-neutral-500 tracking-widest uppercase block mb-1">Favorite Item</span>
-            <h6 id="modal-fav-title" class="font-serif text-neutral-900 font-bold mb-1"></h6>
-            <p id="modal-fav-desc" class="font-sans text-xs text-neutral-500"></p>
+            <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase block mb-1">Character Theme</span>
+            <p id="modal-theme" class="font-text text-stone-800 text-base"></p>
           </div>
         </div>
+        <nav class="flex justify-between gap-3 border-t border-stone-200 pt-6" aria-label="캐릭터 이동">
+          <button type="button" id="modal-prev" class="flex-1 text-left py-3 pr-3 hover:text-black text-stone-600"><span class="font-mono text-xs tracking-widest block">← PREV</span><span id="modal-prev-name" class="font-text text-base"></span></button>
+          <button type="button" id="modal-next" class="flex-1 text-right py-3 pl-3 hover:text-black text-stone-600"><span class="font-mono text-xs tracking-widest block">NEXT →</span><span id="modal-next-name" class="font-text text-base"></span></button>
+        </nav>
       </div>
+    </div>
+    <div id="lightbox" class="hidden absolute inset-0 z-30 bg-[#F3EFE8]/97 flex-col items-center justify-center text-center p-8 gap-4" role="dialog" aria-label="아이템 확대">
+      <button type="button" id="lightbox-close" aria-label="확대 닫기" class="absolute top-3 right-3 w-10 h-10 text-2xl text-stone-600 hover:text-black">✕</button>
+      <div id="lightbox-icon" class="text-7xl" aria-hidden="true"></div>
+      <h6 id="lightbox-title" class="font-display title-gold text-2xl"></h6>
+      <p id="lightbox-desc" class="font-text text-stone-700 text-base leading-[1.9] max-w-sm"></p>
     </div>
   </div>
 </div>
@@ -162,26 +216,98 @@ tailwind.config = { theme: { extend: { fontFamily: {
 <script>
 /* ===== 설정 · 데이터 (여기만 고치면 됩니다) ===== */
 const CONFIG = {
-  // Pixabay 핫링크는 막힐 수 있으니, 직접 올린 음원 경로(예: 'assets/bgm.mp3')로 바꾸는 것을 권장합니다.
-  bgm: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3'
+  // 직접 내려받아 레포에 올린 음원 경로 (저작권 확인한 파일만 사용)
+  bgm: 'assets/music/main.mp3'   // 메인 음악: 첫 화면~스크롤 구간
 };
-// video 주소(.mp4 직접 링크)와 poster(대표 이미지, 선택)를 실제 주소로 교체하세요. 비워 두면 'Video coming soon'이 표시됩니다.
+// ※ 아래는 전부 샘플입니다. 이름은 name / nameEn 한 곳에만 적으면 카드·팝업·이동 버튼에 자동으로 같이 쓰입니다(오타 방지).
+// ※ 나이(age)는 작품 속 기준 시점에 맞춰 직접 적습니다. video(.mp4 직접 링크)·poster는 비워 두면 'Video coming soon'이 표시됩니다.
 const characters = {
-  char1: { num:'FILE 01', name:'캐릭터 1', desc:'작품 A의 첫 번째 주인공이자, 특정 규칙에 얽매이지 않고 행동하는 자유로운 영혼.', birth:'03월 15일', height:'176cm', hobby:'야간 산책 및 낙서', favIcon:'🗡️', favTitle:'길들여지지 않은 단검', favDesc:'손때가 묻은 아주 낡고 정교한 무기.', video:'https://my-r2-storage.com/videos/char1_seedance.mp4', poster:'' },
-  char2: { num:'FILE 02', name:'캐릭터 2', desc:'작품 A의 두 번째 등장인물로, 대단한 통찰력을 가졌으나 감정 표현이 다소 서투름.', birth:'12월 24일', height:'182cm', hobby:'오래된 고서적 수집', favIcon:'📜', favTitle:'해독 불가의 스크롤', favDesc:'가장 자주 발견되는 미스터리한 양피지.', video:'https://my-r2-storage.com/videos/char2_seedance.mp4', poster:'' }
+  char1: {
+    num:'FILE 01', name:'한서린', nameEn:'HAN SEORIN',
+    tags:['기록관','냉정','야간근무','미련'],
+    bio:'작품 A의 기록관. 모든 사건을 한 줄도 빠짐없이 적어 두지만, 정작 자신의 이야기는 한 번도 기록하지 않았다. 말수가 적고 판단이 빠르며, 규칙을 어기는 사람 앞에서도 목소리를 높이지 않는다.',
+    birth:'1994.03.15', age:32, mbti:'ISTJ', nationality:'대한민국', height:'168cm',
+    extras:[['혈액형','A형'],['직업','기록관'],['취미','야간 산책, 낡은 장부 정리'],['말버릇','"기록해 둘게요."']],
+    tmi:[
+      { q:'잠버릇이 있다', a:'기록하다 잠들면 펜을 쥔 채로 잔다. 아침마다 손등에 잉크 자국이 남아 있다.' },
+      { q:'의외로 단 음식을 좋아한다', a:'서랍 세 번째 칸에는 언제나 꿀사탕이 들어 있다. 들키면 업무용이라고 말한다.' },
+      { q:'길을 외우는 데 오래 걸린다', a:'기록은 정확하지만 길눈은 어둡다. 같은 골목을 두 번 돌아 나온 적이 있다.' }
+    ],
+    story:['어린 시절의 서린은 집 안의 모든 물건에 이름표를 붙이던 아이였다. 사라지는 것이 무서웠고, 적어 두면 사라지지 않는다고 믿었다.','그 믿음이 처음 깨진 건 열두 살의 겨울이었다. 가장 아끼던 노트가 한밤중에 사라졌고, 끝내 찾지 못했다. 그날 이후 그는 같은 내용을 두 권에 나누어 적는다.','지금의 그는 남의 기록을 지키는 일을 한다. 자신의 빈 페이지가 어디서부터 비어 있는지는 아직 아무에게도 말하지 않았다.'],
+    items:[
+      { icon:'🖋️', title:'잉크가 마른 만년필', desc:'뚜껑에 작은 이름표가 붙어 있다. 오래 쓰지 않았지만 버리지도 못한다.' },
+      { icon:'📒', title:'두 권의 같은 노트', desc:'표지의 흠집까지 똑같이 맞춘 한 쌍. 한 권은 늘 몸에 지니고 다닌다.' },
+      { icon:'🍬', title:'꿀사탕', desc:'서랍 속 상비품. 개수가 줄어드는 속도로 그날의 피로를 알 수 있다.' },
+      { icon:'🕯️', title:'반쯤 탄 양초', desc:'야간 기록 때 켜 두는 초. 불꽃이 흔들리면 하던 말을 멈춘다.' }
+    ],
+    themeTitle:'조용한 밤의 기록 (Sample Theme 01)',
+    video:'', poster:'', music:'assets/music/char1.mp3'
+  },
+  char2: {
+    num:'FILE 02', name:'윤도겸', nameEn:'YUN DOGYEOM',
+    tags:['수집가','통찰','서투름','고서적'],
+    bio:'오래된 책과 문서를 모으는 수집가. 사람의 속마음은 놀랄 만큼 잘 읽어 내지만, 그 마음에 어떤 말을 건네야 할지는 번번이 놓친다. 침묵이 길어질수록 책장을 넘기는 소리가 커진다.',
+    birth:'1989.12.24', age:36, mbti:'INFP', nationality:'대한민국', height:'182cm',
+    extras:[['혈액형','O형'],['직업','고서 수집가'],['취미','고서 복원, 빗소리 듣기'],['말버릇','"그게… 아니, 아닙니다."']],
+    tmi:[
+      { q:'우산을 자주 두고 온다', a:'비 오는 날을 좋아하면서도 정작 우산은 어디에든 두고 온다. 집에는 같은 우산이 네 개 있다.' },
+      { q:'책 냄새로 연도를 맞힌다', a:'정확도는 절반쯤. 틀렸을 때는 조용히 책을 덮고 못 들은 척한다.' },
+      { q:'선물을 고르는 데 일주일이 걸린다', a:'받는 사람이 쓰지 않을까 봐 고민하다가, 결국 책을 고른다.' }
+    ],
+    story:['도겸은 외할아버지의 고서점에서 자랐다. 손님이 없는 오후마다 먼지 쌓인 서가 사이에서 혼자 책의 마지막 장부터 읽는 버릇이 생겼다.','어른이 되어 서점이 문을 닫던 날, 그는 서가 맨 아래 칸에서 해독할 수 없는 두루마리 한 점을 발견한다. 그것이 지금껏 이어진 수집의 시작이다.','그는 아직도 그 두루마리를 읽지 못한다. 다만 읽을 수 없다는 사실이 이상하게도 위로가 된다고 말한다.'],
+    items:[
+      { icon:'📜', title:'해독 불가의 두루마리', desc:'서점 서가 맨 아래에서 나온 양피지. 어느 나라 글자인지조차 알 수 없다.' },
+      { icon:'🔍', title:'황동 돋보기', desc:'손잡이의 도금이 닳아 맨 금속이 드러났다. 복원 작업에는 이것만 쓴다.' },
+      { icon:'☂️', title:'네 번째 우산', desc:'오늘도 어딘가에 두고 왔을지 모르는 검은 우산.' }
+    ],
+    themeTitle:'비 오는 서가 (Sample Theme 02)',
+    video:'', poster:'', music:'assets/music/char2.mp3'
+  },
+  char3: {
+    num:'FILE 03', name:'백이안', nameEn:'BAEK IAN',
+    tags:['신입','낙천','호기심','엉뚱함'],
+    bio:'기록실에 막 들어온 신입. 가만히 있으면 불안하다는 이유로 늘 무언가를 만지작거린다. 분위기를 읽지 못하는 것처럼 보이지만, 가장 먼저 눈치채고 가장 늦게 말하는 쪽에 가깝다.',
+    birth:'2001.07.07', age:25, mbti:'ENFP', nationality:'대한민국', height:'174cm',
+    extras:[['혈액형','B형'],['직업','기록실 견습'],['취미','길고양이 이름 지어 주기'],['말버릇','"잠깐만요, 이거 좀 이상한데요?"']],
+    tmi:[
+      { q:'길고양이에게 전부 이름을 붙였다', a:'기록실 뒤뜰에만 일곱 마리. 이름은 모두 회의록에 쓰인 단어에서 따왔다.' },
+      { q:'지각은 하지 않지만 항상 뛰어서 온다', a:'출근 시간 5분 전에 도착하기 위해 7분 전에 출발하는 법을 아직 모른다.' },
+      { q:'비밀을 지키는 건 의외로 잘한다', a:'수다스러워 보여도, 부탁받은 말은 끝까지 입 밖에 내지 않는다.' }
+    ],
+    story:['이안은 작은 항구 마을에서 자랐다. 배가 들어올 때마다 부두에 나가 낯선 물건의 이름을 하나씩 물어보던 아이였다.','기록실의 모집 공고를 본 건 우연이었다. "모든 것을 적어 두는 곳"이라는 한 줄이 이상하게 오래 남아, 그는 다음 날 첫 기차를 탔다.','아직은 서툴지만, 그는 이곳에서 처음으로 누군가가 자신의 질문을 끝까지 들어 준다는 걸 알게 됐다.'],
+    items:[
+      { icon:'🧭', title:'바늘이 떨리는 나침반', desc:'항구 마을 시절부터 지니던 것. 북쪽을 가리키지만 가끔 이안 쪽으로 기운다.' },
+      { icon:'🐟', title:'간식용 멸치 봉지', desc:'뒤뜰 일곱 마리를 위한 상비품. 주머니마다 조금씩 들어 있다.' },
+      { icon:'📎', title:'구부러진 클립', desc:'생각이 많을 때마다 손에서 모양이 바뀐다. 오늘은 별 모양.' }
+    ],
+    themeTitle:'첫 기차 (Sample Theme 03)',
+    video:'', poster:'', music:'assets/music/char3.mp3'
+  }
 };
+const charIds = Object.keys(characters);
 
 const $ = id => document.getElementById(id);
 
 /* ===== 입장 · BGM ===== */
 const gateway = $('gateway'), mainView = $('main-view'), bgm = $('main-bgm'), bgmBtn = $('bgm-toggle-btn');
 bgm.src = CONFIG.bgm;
-let playing = false, entered = false;
-
+let playing = false, entered = false, seq = 0;
+// iOS Safari는 volume 조절이 무시되어 페이드 없이 바로 전환됩니다(정상 동작).
+const fade = (to, ms) => new Promise(res => {
+  const from = bgm.volume, t0 = performance.now();
+  (function step(t) { const k = Math.min(1, (t - t0) / ms); bgm.volume = from + (to - from) * k; k < 1 ? requestAnimationFrame(step) : res(); })(t0);
+});
 async function setBgm(on) {
-  if (on) { try { await bgm.play(); playing = true; } catch { playing = false; } }
-  else { bgm.pause(); playing = false; }
+  if (on) { try { bgm.volume = 0; await bgm.play(); playing = true; fade(.7, 1200); } catch { playing = false; } }
+  else { playing = false; await fade(0, 400); bgm.pause(); }
   bgmBtn.textContent = playing ? 'Audio On' : 'Audio Off';
+}
+async function switchTrack(src) {
+  if (bgm.src === new URL(src, location.href).href) return;
+  const id = ++seq;
+  if (!playing) { bgm.src = src; return; }   // 음소거 상태면 곡만 바꿔 둠
+  await fade(0, 500); if (id !== seq) return;
+  bgm.src = src; try { await bgm.play(); } catch {} fade(.7, 800);
 }
 function enter(withAudio) {
   if (entered) return; entered = true;
@@ -192,7 +318,7 @@ function enter(withAudio) {
   gateway.classList.add('opacity-0', 'pointer-events-none');
   setTimeout(() => {
     gateway.style.display = 'none';
-    mainView.classList.remove('opacity-0', 'translate-y-4');
+    mainView.classList.remove('opacity-0', 'translate-y-4'); startTicker();
     drawCoin();
   }, 500);
 }
@@ -201,44 +327,82 @@ $('btn-bgm-off').addEventListener('click', () => enter(false));
 $('username').addEventListener('keydown', e => { if (e.key === 'Enter') enter(false); });
 bgmBtn.addEventListener('click', () => setBgm(!playing));
 
-/* ===== 캐릭터 카드 · 팝업 ===== */
-$('character-grid').innerHTML = Object.entries(characters).map(([id, c]) => `
+/* ===== 캐릭터 카드 · 상세 팝업 ===== */
+const esc = t => String(t).replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
+$('character-grid').innerHTML = charIds.map(id => { const c = characters[id]; return `
   <button type="button" data-id="${id}" class="group text-left">
-    <span class="border border-neutral-300 bg-white p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-neutral-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
-      <span class="font-mono text-[10px] text-neutral-500 tracking-widest block mb-3 uppercase">${c.num}</span>
-      <span class="font-serif text-xl text-neutral-800 group-hover:text-black">${c.name}</span>
+    <span class="border border-stone-300 bg-[#FBF8F1] p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-stone-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
+      <span class="font-mono text-xs text-stone-500 tracking-widest block mb-3 uppercase">${esc(c.num)}</span>
+      <span class="font-display title-gold text-2xl">${esc(c.name)}</span>
+      <span class="font-mono text-xs text-stone-500 tracking-[0.25em] mt-2 uppercase">${esc(c.nameEn)}</span>
+      <span class="font-text text-sm text-stone-600 mt-3">${c.tags.slice(0, 2).map(t => '#' + esc(t)).join(' ')}</span>
     </span>
-  </button>`).join('');
+  </button>`; }).join('');
 $('character-grid').addEventListener('click', e => {
   const b = e.target.closest('[data-id]'); if (b) openModal(b.dataset.id);
 });
 
-const modal = $('char-modal'), panel = $('modal-panel'), video = $('modal-video'), fallback = $('modal-video-fallback');
-let lastFocus = null;
+const modal = $('char-modal'), panel = $('modal-panel'), video = $('modal-video'), fallback = $('modal-video-fallback'), lightbox = $('lightbox');
+let lastFocus = null, curId = null;
+const specRow = (k, v) => `<li class="flex border-b border-stone-200 pb-2"><span class="w-24 md:w-28 shrink-0 tracking-widest uppercase">${k}</span><span class="text-stone-900 font-sans text-sm">${esc(v)}</span></li>`;
 
-function openModal(id) {
-  const c = characters[id]; if (!c) return;
-  lastFocus = document.activeElement;
-  const map = { 'modal-subtitle':c.num, 'modal-name':c.name, 'modal-desc':c.desc, 'modal-birth':c.birth, 'modal-height':c.height, 'modal-hobby':c.hobby, 'modal-fav-icon':c.favIcon, 'modal-fav-title':c.favTitle, 'modal-fav-desc':c.favDesc };
-  for (const k in map) $(k).textContent = map[k];
+function fillModal(id) {
+  const c = characters[id]; curId = id;
+  $('modal-subtitle').textContent = c.num; $('modal-name').textContent = c.name; $('modal-name-en').textContent = c.nameEn;
+  $('modal-tags').innerHTML = c.tags.map(t => `<span class="border border-stone-300 text-stone-600 text-xs px-3 py-1 font-text">#${esc(t)}</span>`).join('');
+  $('modal-desc').textContent = c.bio;
+  $('modal-specs').innerHTML = specRow('Birth', `${c.birth} (${c.age}세)`) + specRow('MBTI', c.mbti) + specRow('Nationality', c.nationality) + specRow('Height', c.height);
+  $('modal-extra').innerHTML = `<details class="acc border-y border-stone-200"><summary class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">More Profile</summary><ul class="space-y-3 pb-5 font-mono text-xs text-stone-500">${c.extras.map(([k, v]) => specRow(esc(k), v)).join('')}</ul></details>`;
+  $('modal-tmi').innerHTML = c.tmi.map(t => `<details class="acc border-b border-stone-200"><summary class="font-text text-stone-800 text-base">${esc(t.q)}</summary><p class="font-text text-stone-600 text-base leading-[1.95] pb-5">${esc(t.a)}</p></details>`).join('');
+  $('modal-story').innerHTML = c.story.map(p => `<p>${esc(p)}</p>`).join('');
+  $('modal-inv-count').textContent = String(c.items.length).padStart(2, '0') + ' ITEMS';
+  $('modal-inv').innerHTML = c.items.map((it, i) => `<button type="button" data-item="${i}" class="border border-stone-300 bg-white/70 p-4 text-center hover:border-stone-900 transition-colors"><span class="text-3xl block mb-2" aria-hidden="true">${it.icon}</span><span class="font-text text-sm text-stone-800 block">${esc(it.title)}</span></button>`).join('');
+  $('modal-theme').textContent = c.themeTitle;
+  const i = charIds.indexOf(id), prev = characters[charIds[(i + charIds.length - 1) % charIds.length]], next = characters[charIds[(i + 1) % charIds.length]];
+  $('modal-prev-name').textContent = prev.name; $('modal-next-name').textContent = next.name;
+  $('modal-scroll').scrollTop = 0;
   fallback.classList.replace('flex', 'hidden');
   if (c.video) { video.poster = c.poster || ''; video.src = c.video; video.play().catch(() => {}); }
-  else fallback.classList.replace('hidden', 'flex');
+  else { video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load(); fallback.classList.replace('hidden', 'flex'); }
+  switchTrack(c.music || CONFIG.bgm);
+}
+function openModal(id) {
+  if (!characters[id]) return;
+  lastFocus = document.activeElement; fillModal(id);
   modal.classList.replace('hidden', 'flex');
   document.documentElement.style.overflow = 'hidden';
   requestAnimationFrame(() => { modal.classList.remove('opacity-0'); panel.classList.remove('scale-95'); $('modal-close').focus(); });
 }
+function step(d) { fillModal(charIds[(charIds.indexOf(curId) + d + charIds.length) % charIds.length]); }
+function closeLightbox() { lightbox.classList.replace('flex', 'hidden'); }
 function closeModal() {
   if (modal.classList.contains('hidden')) return;
+  closeLightbox();
   modal.classList.add('opacity-0'); panel.classList.add('scale-95');
   video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load();
-  document.documentElement.style.overflow = '';
+  document.documentElement.style.overflow = ''; switchTrack(CONFIG.bgm);
   setTimeout(() => { modal.classList.replace('flex', 'hidden'); if (lastFocus) lastFocus.focus(); }, 300);
 }
 video.addEventListener('error', () => { if (video.getAttribute('src')) fallback.classList.replace('hidden', 'flex'); });
+$('modal-inv').addEventListener('click', e => {
+  const b = e.target.closest('[data-item]'); if (!b) return;
+  const it = characters[curId].items[+b.dataset.item];
+  $('lightbox-icon').textContent = it.icon; $('lightbox-title').textContent = it.title; $('lightbox-desc').textContent = it.desc;
+  lightbox.classList.replace('hidden', 'flex'); $('lightbox-close').focus();
+});
+$('lightbox-close').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+$('modal-prev').addEventListener('click', () => step(-1));
+$('modal-next').addEventListener('click', () => step(1));
 $('modal-close').addEventListener('click', closeModal);
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (modal.classList.contains('hidden')) return;
+  if (e.key === 'Escape') { lightbox.classList.contains('hidden') ? closeModal() : closeLightbox(); }
+  else if (lightbox.classList.contains('hidden') && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
+    if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1);
+  }
+});
 
 /* ===== 기념주화 제작소: 코난 기념뱃지 같은 앤티크 메탈 음각 (900px로 그려 선명하게 저장) ===== */
 const cv = $('coin-canvas'), ctx = cv.getContext('2d'), SCALE = cv.width / 300, TAU = Math.PI * 2, R = 88;
@@ -261,7 +425,7 @@ const grain = document.createElement('canvas'); grain.width = grain.height = 128
 
 function selectMetal(m) {
   metal = m;
-  document.querySelectorAll('.metal-btn').forEach(b => b.classList.toggle('active', b.dataset.metal === m));
+  document.querySelectorAll('[data-metal]').forEach(b => b.classList.toggle('active', b.dataset.metal === m));
   drawCoin();
 }
 function drawCoin() {
@@ -330,21 +494,41 @@ function silhouette(P) {
   ctx.strokeStyle = P.hi; ctx.lineWidth = 1; ctx.globalAlpha = .6; ctx.stroke(p); ctx.globalAlpha = 1;
 }
 
+let shape = 'sun';
+function outline(t, k) {
+  const p = new Path2D();
+  if (t === 'round') { p.arc(150, 150, 146 * k, 0, TAU); return p; }
+  const n = t === 'sun' ? 48 : 360;
+  for (let i = 0; i <= n; i++) {
+    const a = i / n * TAU - Math.PI / 2;
+    const r = (t === 'sun' ? (i % 2 ? 131 : 148) : 139 + 8 * Math.cos(12 * a)) * k;
+    const x = 150 + r * Math.cos(a), y = 150 + r * Math.sin(a);
+    i ? p.lineTo(x, y) : p.moveTo(x, y);
+  }
+  p.closePath(); return p;
+}
+function selectShape(t) {
+  shape = t;
+  document.querySelectorAll('[data-shape]').forEach(b => b.classList.toggle('active', b.dataset.shape === t));
+  drawCoin();
+}
 function render() {
   const P = METALS[metal], name = ($('coin-name-input').value.trim() || 'GUEST').toUpperCase();
   ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
   ctx.clearRect(0, 0, 300, 300);
 
   // 1. 솟은 테두리 → 파인 바탕 → 사진을 두른 솟은 링
-  disc(147, P.dark);
-  disc(145, mix(P.base, P.light, .25));
-  bevel(142, 5, P.hi, P.dark);
-  disc(137, mix(P.base, P.dark, .5));
-  bevel(137, 3, P.dark, P.light);
+  const out = k => outline(shape, k);
+  ctx.save(); ctx.translate(2, 2); ctx.fillStyle = P.dark; ctx.fill(out(1)); ctx.restore();
+  ctx.fillStyle = P.dark; ctx.fill(out(1));
+  ctx.fillStyle = mix(P.base, P.light, .25); ctx.fill(out(.985));
+  const g1 = ctx.createLinearGradient(20, 20, 280, 280); g1.addColorStop(0, P.hi); g1.addColorStop(1, P.dark);
+  ctx.strokeStyle = g1; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.stroke(out(.97));
+  disc(127, mix(P.base, P.dark, .5)); bevel(127, 3, P.dark, P.light);
   bevel(94, 5, P.hi, P.dark);
 
   // 2. 무광 알갱이
-  ctx.save(); ctx.beginPath(); ctx.arc(150, 150, 147, 0, TAU); ctx.clip();
+  ctx.save(); ctx.clip(out(1));
   const pat = ctx.createPattern(grain, 'repeat');
   if (pat.setTransform) pat.setTransform(new DOMMatrix().scale(1 / SCALE));
   ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300); ctx.restore();
@@ -362,16 +546,16 @@ function render() {
 
   // 4. 음각 글자와 장식 점
   ctx.save(); ctx.translate(150, 150);
-  arcText('PROJECT ARCHIVE OFFICIAL MINT', 115, false, P, 'bold 10px "Space Mono",monospace');
-  arcText(`* ${name} *`, 121, true, P, 'bold 12px "Playfair Display","Noto Serif KR",serif');
+  arcText('PROJECT ARCHIVE OFFICIAL MINT', 113, false, P, 'bold 10px "Cinzel","Gowun Batang",serif');
+  arcText(`* ${name} *`, 119, true, P, 'bold 13px "Cinzel","Gowun Batang",serif');
   [-1, 1].forEach(s => {
-    ctx.globalAlpha = .75; ctx.fillStyle = P.hi; ctx.beginPath(); ctx.arc(s * 123 + .7, .7, 2.4, 0, TAU); ctx.fill();
-    ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.beginPath(); ctx.arc(s * 123, 0, 2.4, 0, TAU); ctx.fill();
+    ctx.globalAlpha = .75; ctx.fillStyle = P.hi; ctx.beginPath(); ctx.arc(s * 120 + .7, .7, 2.4, 0, TAU); ctx.fill();
+    ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.beginPath(); ctx.arc(s * 120, 0, 2.4, 0, TAU); ctx.fill();
   });
   ctx.restore();
 
   // 5. 은은한 광택
-  ctx.save(); ctx.beginPath(); ctx.arc(150, 150, 145, 0, TAU); ctx.clip();
+  ctx.save(); ctx.clip(out(.985));
   const sh = ctx.createLinearGradient(30, 30, 270, 270);
   sh.addColorStop(0, 'rgba(255,255,255,.16)'); sh.addColorStop(.5, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(0,0,0,.2)');
   ctx.fillStyle = sh; ctx.fillRect(0, 0, 300, 300); ctx.restore();
@@ -379,6 +563,7 @@ function render() {
 
 $('metal-group').addEventListener('click', e => { const b = e.target.closest('[data-metal]'); if (b) selectMetal(b.dataset.metal); });
 $('coin-name-input').addEventListener('input', drawCoin);
+$('shape-group').addEventListener('click', e => { const b = e.target.closest('[data-shape]'); if (b) selectShape(b.dataset.shape); });
 $('btn-upload').addEventListener('click', () => $('coin-avatar-upload').click());
 $('coin-avatar-upload').addEventListener('change', e => {
   const f = e.target.files[0]; if (!f || !f.type.startsWith('image/')) return;
@@ -391,12 +576,28 @@ $('btn-download').addEventListener('click', () => {
   a.download = `project-badge-${Date.now()}.png`; a.href = cv.toDataURL('image/png'); a.click();
 });
 
-selectMetal('gold');
+selectMetal('gold'); selectShape('sun');
 Promise.all([
-  document.fonts.load('bold 10px "Space Mono"'),
-  document.fonts.load('bold 12px "Playfair Display"'),
-  document.fonts.load('bold 12px "Noto Serif KR"')
+  document.fonts.load('bold 10px "Cinzel"'),
+  document.fonts.load('bold 13px "Gowun Batang"'),
+  document.fonts.load('16px "Song Myung"')
 ]).then(drawCoin).catch(() => {});
+
+/* ===== 하단 문구: 5초마다 교체 (임시 문구 — 아래 배열만 고치면 됩니다) ===== */
+const TICKER = Array.from({ length: 10 }, (_, i) => `${String.fromCharCode(65 + i)}문구가 출력 중입니다.`);
+const tk = $('ticker-text'); let ti = 0, tickTimer = null;
+function startTicker() {
+  if (tickTimer) return;
+  $('ticker').classList.remove('hidden'); tk.textContent = TICKER[0]; ti = 1;
+  tickTimer = setInterval(() => {
+    tk.style.opacity = 0;
+    setTimeout(() => { tk.textContent = TICKER[ti]; tk.style.opacity = 1; ti = (ti + 1) % TICKER.length; }, 500);
+  }, 5000);
+}
+
+/* ===== 스크롤 등장 ===== */
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
