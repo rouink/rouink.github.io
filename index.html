@@ -76,7 +76,6 @@ tailwind.config = { theme: { extend: { fontFamily: {
         <div class="w-1.5 h-1.5 bg-amber-700 rounded-full animate-pulse"></div>
         <span id="nav-user-label" class="text-stone-600 tracking-wider">GUEST</span>
       </div>
-      <button type="button" id="bgm-toggle-btn" class="font-mono text-xs text-stone-600 hover:text-black transition-colors uppercase tracking-widest border border-stone-300 px-3 py-2 hover:border-black">Audio Off</button>
     </div>
   </nav>
 
@@ -151,16 +150,29 @@ tailwind.config = { theme: { extend: { fontFamily: {
   </footer>
 </div>
 
-<div id="ticker" class="hidden fixed bottom-0 inset-x-0 z-40 border-t border-stone-300/70 bg-[#F3EFE8]/90 backdrop-blur-md" style="padding-bottom:env(safe-area-inset-bottom)">
-  <p id="ticker-text" class="py-3 px-4 text-center font-mono text-xs tracking-widest text-stone-600 transition-opacity duration-500"></p>
+<div id="player" class="hidden fixed bottom-0 inset-x-0 z-[60] border-t border-stone-300/70 bg-[#F3EFE8]/95 backdrop-blur-md" style="padding-bottom:env(safe-area-inset-bottom)">
+  <div class="max-w-5xl mx-auto flex items-center gap-1 md:gap-3 px-2 md:px-4">
+    <button type="button" id="audio-btn" aria-pressed="false" aria-label="음악 켜기/끄기" class="shrink-0 h-12 min-w-[64px] px-2 flex items-center justify-center gap-1.5 text-stone-800 hover:text-black">
+      <span class="text-lg leading-none" aria-hidden="true">♪</span><span id="audio-state" class="font-mono text-xs tracking-widest">OFF</span>
+    </button>
+    <div class="flex-1 min-w-0 text-center">
+      <p id="ticker-text" class="py-3 font-mono text-xs tracking-widest text-stone-800 transition-opacity duration-500 truncate"></p>
+      <p id="audio-notice" class="hidden py-3 font-sans text-xs text-amber-900 truncate"></p>
+    </div>
+    <label class="shrink-0 flex items-center gap-2 pr-1">
+      <span class="sr-only">볼륨</span>
+      <input type="range" id="vol" min="0" max="100" step="1" class="w-16 md:w-28 accent-stone-700">
+    </label>
+  </div>
+  <span id="audio-track" class="sr-only" aria-live="polite"></span>
 </div>
 
 <!-- 3. 캐릭터 상세 팝업 -->
-<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 bg-[#F3EFE8]/95 backdrop-blur-md hidden items-center justify-center p-3 md:p-6 transition-opacity opacity-0">
-  <div id="modal-panel" class="bg-[#FBF8F1] w-full max-w-4xl border border-stone-200 shadow-2xl scale-95 transition-transform duration-500 max-h-[92vh] flex flex-col relative">
+<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 bg-[#F3EFE8]/95 backdrop-blur-md hidden items-center justify-center p-3 pb-[76px] md:p-6 md:pb-[84px] transition-opacity opacity-0">
+  <div id="modal-panel" class="bg-[#FBF8F1] w-full max-w-4xl border border-stone-200 shadow-2xl scale-95 transition-transform duration-500 max-h-full flex flex-col relative">
     <button type="button" id="modal-close" aria-label="닫기" class="absolute top-3 right-3 md:top-5 md:right-5 w-10 h-10 flex items-center justify-center bg-[#FBF8F1]/90 text-stone-600 hover:text-black font-light text-2xl z-20">✕</button>
     <div id="modal-scroll" class="overflow-y-auto flex-grow flex flex-col md:flex-row">
-      <div class="w-full md:w-5/12 bg-stone-100 relative min-h-[240px] md:min-h-0 md:sticky md:top-0 md:self-start md:h-[92vh] shrink-0">
+      <div class="w-full md:w-5/12 bg-stone-100 relative min-h-[240px] md:min-h-0 md:sticky md:top-0 md:self-start md:h-[calc(100vh-120px)] shrink-0">
         <video id="modal-video" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
         <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Video coming soon</div>
       </div>
@@ -291,26 +303,69 @@ const charIds = Object.keys(characters);
 
 const $ = id => document.getElementById(id);
 
-/* ===== 입장 · BGM ===== */
-const gateway = $('gateway'), mainView = $('main-view'), bgm = $('main-bgm'), bgmBtn = $('bgm-toggle-btn');
-bgm.src = CONFIG.bgm;
-let playing = false, entered = false, seq = 0;
-// iOS Safari는 volume 조절이 무시되어 페이드 없이 바로 전환됩니다(정상 동작).
-const fade = (to, ms) => new Promise(res => {
-  const from = bgm.volume, t0 = performance.now();
-  (function step(t) { const k = Math.max(0, Math.min(1, (t - t0) / ms)); bgm.volume = Math.max(0, Math.min(1, from + (to - from) * k)); k < 1 ? requestAnimationFrame(step) : res(); })(t0);
-});
-async function setBgm(on) {
-  if (on) { try { bgm.volume = 0; await bgm.play(); playing = true; fade(.7, 1200); } catch { playing = false; } }
-  else { playing = false; await fade(0, 400); bgm.pause(); }
-  bgmBtn.textContent = playing ? 'Audio On' : 'Audio Off';
+/* ===== 입장 · 음악 =====
+   · Web Audio 게인으로 볼륨/페이드를 처리 → iOS Safari에서도 볼륨이 먹습니다. (file:// 로 직접 열면 브라우저가 막아서 일반 volume으로 대체)
+   · 볼륨은 localStorage에 기억하되, 저장소가 막혀 있어도(시크릿 모드 등) 오류 없이 동작합니다.
+   · 자동재생이 막히면 하단 바에 "TAP FOR SOUND" 안내가 뜹니다. */
+const tk = $('ticker-text');
+const gateway = $('gateway'), mainView = $('main-view'), bgm = $('main-bgm');
+const audioBtn = $('audio-btn'), audioState = $('audio-state'), notice = $('audio-notice'), volEl = $('vol');
+const VOL_KEY = 'pa_volume';
+const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
+let vol = .7; { const v = parseFloat(store.get(VOL_KEY)); if (v >= 0 && v <= 1) vol = v; }
+volEl.value = Math.round(vol * 100);
+
+let actx = null, gainNode = null, useGain = false, env = 0, playing = false, entered = false, seq = 0;
+let curSrc = CONFIG.bgm, curLabel = 'Main Theme'; const resumeAt = {};
+bgm.src = curSrc;
+function initGraph() {
+  if (gainNode || location.protocol === 'file:') return;
+  try {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+    actx = new AC(); const src = actx.createMediaElementSource(bgm);
+    gainNode = actx.createGain(); gainNode.gain.value = 0; src.connect(gainNode); gainNode.connect(actx.destination);
+    bgm.volume = 1; useGain = true;
+  } catch { useGain = false; }
 }
-async function switchTrack(src) {
-  if (bgm.src === new URL(src, location.href).href) return;
+const clamp01 = x => Math.max(0, Math.min(1, x));
+function applyOut() { const v = clamp01(env * vol); if (useGain) gainNode.gain.value = v; else bgm.volume = v; }
+const fade = (to, ms) => new Promise(res => {
+  const from = env, t0 = performance.now();
+  (function step(t) { const k = clamp01((t - t0) / ms); env = from + (to - from) * k; applyOut(); k < 1 ? requestAnimationFrame(step) : res(); })(t0);
+});
+function showNotice(msg) { notice.textContent = msg || ''; notice.classList.toggle('hidden', !msg); tk.classList.toggle('hidden', !!msg); }
+function renderAudioUI() {
+  audioState.textContent = playing ? 'ON' : 'OFF'; audioBtn.setAttribute('aria-pressed', playing);
+  $('audio-track').textContent = playing ? curLabel : '';
+  audioBtn.title = playing ? `${curLabel} 재생 중` : '음악 켜기';
+}
+// 재생 시도: 성공/차단/파일없음을 구분해서 안내
+async function tryPlay() {
+  try { if (actx && actx.state === 'suspended') await actx.resume(); await bgm.play(); playing = true; showNotice(''); return true; }
+  catch (e) {
+    playing = false;
+    showNotice(e && e.name === 'NotAllowedError' ? '♪ 소리를 켜려면 왼쪽 ♪ 를 눌러 주세요 · TAP FOR SOUND' : '음원 파일을 찾을 수 없어요 (assets/music 확인)');
+    return false;
+  }
+}
+async function setBgm(on) {
+  if (on) {
+    initGraph(); env = 0; applyOut();
+    if (await tryPlay()) fade(1, 1200);
+  } else { playing = false; showNotice(''); await fade(0, 400); bgm.pause(); }
+  renderAudioUI();
+}
+async function switchTrack(src, label) {
+  const url = new URL(src, location.href).href;
+  if (bgm.src === url) return;
   const id = ++seq;
-  if (!playing) { bgm.src = src; return; }   // 음소거 상태면 곡만 바꿔 둠
-  await fade(0, 500); if (id !== seq) return;
-  bgm.src = src; try { await bgm.play(); } catch {} fade(.7, 800);
+  resumeAt[bgm.src] = bgm.currentTime;                       // 떠나는 곡의 위치 기억
+  if (playing) { await fade(0, 450); if (id !== seq) return; }
+  curSrc = src; curLabel = label || curLabel; bgm.src = src;
+  const start = resumeAt[url] || 0;
+  if (start) bgm.addEventListener('loadedmetadata', () => { try { bgm.currentTime = start; } catch {} }, { once: true });
+  if (!playing) { renderAudioUI(); return; }                  // 꺼 둔 상태면 곡만 바꿔 둠
+  if (await tryPlay()) { fade(1, 800); } renderAudioUI();
 }
 function enter(withAudio) {
   if (entered) return; entered = true;
@@ -328,7 +383,9 @@ function enter(withAudio) {
 $('btn-bgm-on').addEventListener('click', () => enter(true));
 $('btn-bgm-off').addEventListener('click', () => enter(false));
 $('username').addEventListener('keydown', e => { if (e.key === 'Enter') enter(false); });
-bgmBtn.addEventListener('click', () => setBgm(!playing));
+audioBtn.addEventListener('click', () => setBgm(!playing));
+volEl.addEventListener('input', () => { vol = volEl.value / 100; store.set(VOL_KEY, vol); applyOut(); });
+bgm.addEventListener('error', () => { if (bgm.getAttribute('src')) { playing = false; showNotice('음원 파일을 찾을 수 없어요 (assets/music 확인)'); renderAudioUI(); } });
 
 /* ===== 캐릭터 카드 · 상세 팝업 ===== */
 const esc = t => String(t).replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
@@ -367,7 +424,7 @@ function fillModal(id) {
   fallback.classList.replace('flex', 'hidden');
   if (c.video) { video.poster = c.poster || ''; video.src = c.video; video.play().catch(() => {}); }
   else { video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load(); fallback.classList.replace('hidden', 'flex'); }
-  switchTrack(c.music || CONFIG.bgm);
+  switchTrack(c.music || CONFIG.bgm, c.name + ' Theme Song');
 }
 function openModal(id) {
   if (!characters[id]) return;
@@ -383,7 +440,7 @@ function closeModal() {
   closeLightbox();
   modal.classList.add('opacity-0'); panel.classList.add('scale-95');
   video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load();
-  document.documentElement.style.overflow = ''; switchTrack(CONFIG.bgm);
+  document.documentElement.style.overflow = ''; switchTrack(CONFIG.bgm, 'Main Theme');
   setTimeout(() => { modal.classList.replace('flex', 'hidden'); if (lastFocus) lastFocus.focus(); }, 300);
 }
 video.addEventListener('error', () => { if (video.getAttribute('src')) fallback.classList.replace('hidden', 'flex'); });
@@ -655,10 +712,10 @@ Promise.all([
 
 /* ===== 하단 문구: 5초마다 교체 (임시 문구 — 아래 배열만 고치면 됩니다) ===== */
 const TICKER = Array.from({ length: 10 }, (_, i) => `${String.fromCharCode(65 + i)}문구가 출력 중입니다.`);
-const tk = $('ticker-text'); let ti = 0, tickTimer = null;
+let ti = 0, tickTimer = null;
 function startTicker() {
   if (tickTimer) return;
-  $('ticker').classList.remove('hidden'); tk.textContent = TICKER[0]; ti = 1;
+  $('player').classList.remove('hidden'); tk.textContent = TICKER[0]; ti = 1;
   tickTimer = setInterval(() => {
     tk.style.opacity = 0;
     setTimeout(() => { tk.textContent = TICKER[ti]; tk.style.opacity = 1; ti = (ti + 1) % TICKER.length; }, 500);
