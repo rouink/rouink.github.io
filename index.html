@@ -125,10 +125,11 @@ tailwind.config = { theme: { extend: { fontFamily: {
           </div>
           <div class="space-y-3">
             <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Metal</span>
-            <div class="flex gap-3" id="metal-group">
-              <button type="button" data-metal="bronze" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Bronze</button>
-              <button type="button" data-metal="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Gold</button>
-              <button type="button" data-metal="iron" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Pewter</button>
+            <div class="flex gap-2" id="metal-group">
+              <button type="button" data-metal="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Gold</button>
+              <button type="button" data-metal="rose" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Rose</button>
+              <button type="button" data-metal="silver" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Platinum</button>
+              <button type="button" data-metal="aurora" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Aurora</button>
             </div>
           </div>
           <div class="space-y-3">
@@ -465,11 +466,12 @@ document.addEventListener('keydown', e => {
 });
 
 /* ===== 기념주화 제작소: 코난 기념뱃지 같은 앤티크 메탈 음각 (900px로 그려 선명하게 저장) ===== */
-const cv = $('coin-canvas'), ctx = cv.getContext('2d'), SCALE = cv.width / 300, TAU = Math.PI * 2, R = 88;
+const cv = $('coin-canvas'), TAU = Math.PI * 2, R = 88; let ctx = cv.getContext('2d'), SCALE = cv.width / 300;
 const METALS = {
-  bronze: { base:'#B5693A', light:'#EDB07E', dark:'#3A1B09', hi:'#FFE2C4' },
-  gold:   { base:'#C8A03C', light:'#F1D37E', dark:'#47330A', hi:'#FFF4C6' },
-  iron:   { base:'#8892A4', light:'#D5DBE5', dark:'#1E2632', hi:'#FFFFFF' }
+  gold:   { base:'#C9A55C', light:'#EFD9A0', dark:'#4E3A18', hi:'#FFF8E1', enamel:['#2B407A','#0F1A38'] },
+  rose:   { base:'#C98F7F', light:'#F2CBBD', dark:'#5C2E27', hi:'#FFF1EB', enamel:['#8A3347','#3A111D'] },
+  silver: { base:'#A9B3C2', light:'#E6EBF3', dark:'#2B3342', hi:'#FFFFFF', enamel:['#2F6479','#12303E'] },
+  aurora: { base:'#B9A4E6', light:'#EFE6FF', dark:'#3A2F66', hi:'#FFFFFF', enamel:['#5642AE','#1C1450'] }
 };
 let metal = 'gold', avatar = null, avatarId = 0, queued = false, relief = null, reliefKey = '';
 const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
@@ -506,9 +508,9 @@ function carve(ch, x, y, a, P) {
   ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.fillText(ch, x, y);
 }
 // 글자 폭을 재서 호 위에 중앙 정렬 (한글·영문 모두 겹치지 않음)
-function arcText(text, r, bottom, P, font) {
+function arcText(text, r, bottom, P, font, gap = 1.5) {
   ctx.font = font; ctx.textAlign = 'center';
-  const chars = [...text], w = chars.map(c => ctx.measureText(c).width + 1.5);
+  const chars = [...text], w = chars.map(c => ctx.measureText(c).width + gap);
   const d = bottom ? -1 : 1, y = bottom ? r : -r;
   let a = -d * (w.reduce((s, x) => s + x, 0) / r) / 2;
   chars.forEach((ch, i) => {
@@ -549,18 +551,13 @@ function raised(p, P) {
   ctx.fillStyle = g; ctx.fill(p);
   ctx.save(); ctx.globalAlpha = .6; ctx.lineWidth = .7; ctx.strokeStyle = P.hi; ctx.stroke(p); ctx.restore();
 }
-// 사진이 없을 때 배경: 방사형 햇살 무늬(기요셰) + 가장자리 비네트
-function field(P) {
-  disc(R, mix(P.base, P.dark, .42));
+// 에나멜 면: 깊은 색 + 은은한 금빛 햇살 (디자인 좌표계 150,150 중심)
+function enamelField(P) {
+  const g = ctx.createRadialGradient(125, 105, 8, 150, 150, 118); g.addColorStop(0, P.enamel[0]); g.addColorStop(1, P.enamel[1]);
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(150, 150, 100, 0, TAU); ctx.fill();
   ctx.save(); ctx.translate(150, 150);
-  const n = 96;
-  for (let i = 0; i < n; i++) {
-    ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R + 2, i / n * TAU, (i + .5) / n * TAU); ctx.closePath();
-    ctx.fillStyle = i % 2 ? 'rgba(255,245,200,.09)' : 'rgba(0,0,0,.12)'; ctx.fill();
-  }
-  const g = ctx.createRadialGradient(0, -14, 6, 0, 0, R);
-  g.addColorStop(0, 'rgba(255,240,190,.30)'); g.addColorStop(.55, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.38)');
-  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R + 2, 0, TAU); ctx.fill();
+  for (let i = 0; i < 60; i++) { ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 100, i / 60 * TAU, (i + .5) / 60 * TAU); ctx.closePath(); ctx.fillStyle = i % 2 ? 'rgba(255,235,170,.07)' : 'rgba(0,0,0,.10)'; ctx.fill(); }
+  ctx.strokeStyle = 'rgba(240,215,150,.55)'; ctx.lineWidth = .9; ctx.beginPath(); ctx.arc(0, 0, 84, 0, TAU); ctx.stroke();
   ctx.restore();
 }
 function star(cx, cy, r) {
@@ -585,7 +582,7 @@ function emblem(P, initial) {
       });
     }
   });
-  raised(star(150, 71, 8), P);
+  raised(star(150, 68, 8.5), P); raised(star(127, 76, 4.6), P); raised(star(173, 76, 4.6), P);
   const d = new Path2D(); d.moveTo(150, 226); d.lineTo(155, 231); d.lineTo(150, 236); d.lineTo(145, 231); d.closePath(); raised(d, P);
   // 중앙 이니셜 (이름의 첫 글자)
   ctx.save(); ctx.font = 'bold 78px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
@@ -600,13 +597,13 @@ function emblem(P, initial) {
 /* ===== 뱃지 외형: 둥근 동전이 아니라 소장용 핀뱃지처럼 윤곽이 있는 모양 ===== */
 const MS = .74;   // 중앙 메달 크기 비율
 const SHAPES = {
-  shield: { cx:150, cy:132, sc:[150,150], plaque:{ y:238, w:100 },
+  shield: { cx:150, cy:132, sc:[150,150], plaque:{ y:238, w:100 }, studs:[[62,52],[238,52]], glint:[62,50],
     path(p) { p.moveTo(50, 22); p.lineTo(250, 22); p.lineTo(264, 42); p.lineTo(264, 150); p.bezierCurveTo(264, 232, 212, 264, 150, 290); p.bezierCurveTo(88, 264, 36, 232, 36, 150); p.lineTo(36, 42); p.closePath(); } },
-  arch: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:140 },
+  arch: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:140 }, studs:[[60,262],[240,262]], glint:[66,70],
     path(p) { p.moveTo(52, 288); p.lineTo(38, 274); p.lineTo(38, 120); p.arc(150, 120, 112, Math.PI, 0); p.lineTo(262, 274); p.lineTo(248, 288); p.closePath(); } },
-  deco: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 },
+  deco: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[56,56],[244,56],[56,244],[244,244]], glint:[58,60],
     path(p) { p.moveTo(66, 30); p.lineTo(234, 30); p.arc(268, 30, 34, Math.PI, Math.PI / 2, true); p.lineTo(270, 234); p.arc(268, 268, 34, -Math.PI / 2, Math.PI, true); p.lineTo(66, 270); p.arc(32, 268, 34, 0, -Math.PI / 2, true); p.lineTo(30, 66); p.arc(32, 32, 34, Math.PI / 2, 0, true); p.closePath(); } },
-  round: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 },
+  round: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[70,70],[230,70]], glint:[68,86],
     path(p) { p.arc(150, 150, 140, 0, TAU); } }
 };
 let shape = 'shield';
@@ -619,72 +616,132 @@ function selectShape(t) {
   document.querySelectorAll('[data-shape]').forEach(b => b.classList.toggle('active', b.dataset.shape === t));
   drawCoin();
 }
-// 이름 명판: 양끝이 뾰족한 리본 + 음각 글자 (글자 수에 맞춰 크기 조절)
+function sparkle(x, y, r, a) {
+  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#fff';
+  ctx.beginPath(); ctx.moveTo(x, y - r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.quadraticCurveTo(x, y, x, y + r); ctx.quadraticCurveTo(x, y, x - r, y); ctx.quadraticCurveTo(x, y, x, y - r); ctx.fill();
+  const g = ctx.createRadialGradient(x, y, 0, x, y, r * .9); g.addColorStop(0, 'rgba(255,255,255,.6)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * .9, 0, TAU); ctx.fill(); ctx.restore();
+}
+function diamond(x, y, r) { const p = new Path2D(); p.moveTo(x, y - r * 1.3); p.lineTo(x + r, y); p.lineTo(x, y + r * 1.3); p.lineTo(x - r, y); p.closePath(); return p; }
+function mring(r, w, c1, c2) {
+  const g = ctx.createLinearGradient(-r, -r, r, r); g.addColorStop(0, c1); g.addColorStop(1, c2);
+  ctx.strokeStyle = g; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.stroke();
+}
+const serialOf = n => { let h = 0; for (const c of n) h = (h * 31 + c.codePointAt(0)) % 9000; return 'NO. ' + String(1000 + h); };
+// 이름 명판: 가는 이중선 프레임 + 자간을 넓힌 음각 이름
 function plaque(P, text, y, w) {
-  const x0 = 150 - w / 2, x1 = 150 + w / 2, h = 15, p = new Path2D();
-  p.moveTo(x0, y - h); p.lineTo(x1, y - h); p.lineTo(x1 + 11, y); p.lineTo(x1, y + h); p.lineTo(x0, y + h); p.lineTo(x0 - 11, y); p.closePath();
-  ctx.save(); ctx.translate(1.5, 2); ctx.globalAlpha = .6; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
-  const g = ctx.createLinearGradient(x0, y - h, x1, y + h); g.addColorStop(0, P.light); g.addColorStop(.5, P.base); g.addColorStop(1, mix(P.base, P.dark, .5));
+  const x0 = 150 - w / 2, x1 = 150 + w / 2, h = 13, p = new Path2D();
+  p.moveTo(x0, y - h); p.lineTo(x1, y - h); p.lineTo(x1 + 8, y); p.lineTo(x1, y + h); p.lineTo(x0, y + h); p.lineTo(x0 - 8, y); p.closePath();
+  ctx.save(); ctx.translate(1.2, 1.8); ctx.globalAlpha = .5; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
+  const g = ctx.createLinearGradient(x0, y - h, x1, y + h); g.addColorStop(0, P.hi); g.addColorStop(.35, P.light); g.addColorStop(1, mix(P.base, P.dark, .25));
   ctx.fillStyle = g; ctx.fill(p);
-  const gb = ctx.createLinearGradient(x0, y - h, x1, y + h); gb.addColorStop(0, P.hi); gb.addColorStop(1, P.dark);
-  ctx.lineJoin = 'round'; ctx.lineWidth = 2; ctx.strokeStyle = gb; ctx.stroke(p);
+  ctx.lineJoin = 'round'; ctx.lineWidth = 1.1; ctx.strokeStyle = P.dark; ctx.stroke(p);
+  const inner = new Path2D(); inner.addPath(p, new DOMMatrix().translate(150, y).scale(.9, .72).translate(-150, -y));
+  ctx.lineWidth = .6; ctx.strokeStyle = 'rgba(70,45,10,.55)'; ctx.stroke(inner);
+  const chars = [...text], sp = chars.length > 7 ? 1 : 2.2;
   ctx.font = 'bold 10px "Cinzel","Gowun Batang",serif';
-  const size = Math.max(9, Math.min(17, 10 * (w - 14) / ctx.measureText(text).width));
+  const base = chars.reduce((a, c) => a + ctx.measureText(c).width + sp, -sp);
+  const size = Math.max(8.5, Math.min(14, 10 * (w - 10) / base));
   ctx.font = `bold ${size}px "Cinzel","Gowun Batang",serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-  carve(text, 150, y + size * .36, 0, P);
+  const ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + sp * (chars.length - 1);
+  let x = 150 - total / 2; chars.forEach((c, i) => { carve(c, x + ws[i] / 2, y + size * .35, 0, P); x += ws[i] + sp; });
 }
 function render() {
   const P = METALS[metal], name = ($('coin-name-input').value.trim() || 'GUEST').toUpperCase(), S = SHAPES[shape];
   ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
   ctx.clearRect(0, 0, 300, 300);
   const out = k => outline(shape, k);
+  const conic = (a, alpha) => { if (!ctx.createConicGradient) return; const cg = ctx.createConicGradient(a, 150, 150);
+    [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .32)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .32)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
+    ctx.globalAlpha = alpha; ctx.fillStyle = cg; ctx.fillRect(0, 0, 300, 300); ctx.globalAlpha = 1; };
 
   // 1. 판 → 솟은 테두리 → 한 단 파인 안쪽 면
-  const g0 = ctx.createLinearGradient(30, 20, 270, 290); g0.addColorStop(0, P.light); g0.addColorStop(.5, P.base); g0.addColorStop(1, mix(P.base, P.dark, .45));
+  const g0 = ctx.createLinearGradient(30, 20, 270, 290); g0.addColorStop(0, P.light); g0.addColorStop(.5, P.base); g0.addColorStop(1, mix(P.base, P.dark, .4));
   ctx.fillStyle = g0; ctx.fill(out(1));
   ctx.save(); ctx.clip(out(1)); ctx.lineJoin = 'round';
   const gr = ctx.createLinearGradient(20, 20, 280, 280); gr.addColorStop(0, P.hi); gr.addColorStop(.45, P.light); gr.addColorStop(1, P.dark);
   ctx.strokeStyle = gr; ctx.lineWidth = 19; ctx.stroke(out(1)); ctx.restore();
-  ctx.fillStyle = mix(P.base, P.dark, .3); ctx.fill(out(.925));
-  const gi = ctx.createLinearGradient(20, 20, 280, 280); gi.addColorStop(0, P.dark); gi.addColorStop(1, P.hi);
-  ctx.lineJoin = 'round'; ctx.strokeStyle = gi; ctx.lineWidth = 1.8; ctx.stroke(out(.925));
-  ctx.strokeStyle = P.dark; ctx.lineWidth = 1.6; ctx.stroke(out(1));
+  ctx.fillStyle = mix(P.base, P.dark, .1); ctx.fill(out(.925));
 
-  // 2. 무광 알갱이
+  // 2. 안쪽 면: 금속 광택 + 방사형 가는 선(아르데코) + 알갱이
+  ctx.save(); ctx.clip(out(.925));
+  conic(-.35, .42);
+  ctx.translate(S.cx, S.cy); ctx.lineWidth = .55;
+  for (let i = 0; i < 90; i++) {
+    const a = i / 90 * TAU, c = Math.cos(a), sn = Math.sin(a);
+    ctx.strokeStyle = 'rgba(255,248,220,.30)'; ctx.beginPath(); ctx.moveTo(c * 92, sn * 92); ctx.lineTo(c * 260, sn * 260); ctx.stroke();
+    ctx.strokeStyle = 'rgba(60,40,10,.20)'; ctx.beginPath(); ctx.moveTo(c * 92 + .6, sn * 92 + .6); ctx.lineTo(c * 260 + .6, sn * 260 + .6); ctx.stroke();
+  }
+  ctx.restore();
   ctx.save(); ctx.clip(out(1));
   const pat = ctx.createPattern(grain, 'repeat');
   if (pat.setTransform) pat.setTransform(new DOMMatrix().scale(1 / SCALE));
-  ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300); ctx.restore();
-
-  // 3. 중앙 메달 (좌표계를 옮겨 기존 메달 디자인을 축소해서 사용)
-  ctx.save(); ctx.translate(S.cx, S.cy); ctx.scale(MS, MS); ctx.translate(-150, -150);
-  disc(127, mix(P.base, P.light, .12)); bevel(127, 3, P.dark, P.light); bevel(94, 5, P.hi, P.dark);
-  ctx.save(); ctx.translate(150, 150);
-  arcText('PROJECT ARCHIVE OFFICIAL MINT', 112, false, P, 'bold 12px "Cinzel","Gowun Batang",serif');
-  [-1, 1].forEach(s => {
-    ctx.globalAlpha = .75; ctx.fillStyle = P.hi; ctx.beginPath(); ctx.arc(s * 118 + .7, 22.7, 2.6, 0, TAU); ctx.fill();
-    ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.beginPath(); ctx.arc(s * 118, 22, 2.6, 0, TAU); ctx.fill();
-  });
+  ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300);
+  if (metal === 'aurora') {   // 오로라: 진주빛 무지개 홀로그램 광택
+    ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = .85;
+    const ir = ctx.createLinearGradient(20, 30, 280, 270);
+    [[0, '#FF9FD6'], [.25, '#9FE8FF'], [.5, '#FFF0A6'], [.75, '#C9A8FF'], [1, '#FF9FD6']].forEach(([t, c]) => ir.addColorStop(t, c));
+    ctx.fillStyle = ir; ctx.fillRect(0, 0, 300, 300);
+  }
   ctx.restore();
-  ctx.save(); ctx.beginPath(); ctx.arc(150, 150, R, 0, TAU); ctx.clip();
+  // 테두리 선: 홈 + 가는 이중선 + 바깥 윤곽
+  const gi = ctx.createLinearGradient(20, 20, 280, 280); gi.addColorStop(0, P.dark); gi.addColorStop(1, P.hi);
+  ctx.lineJoin = 'round'; ctx.strokeStyle = gi; ctx.lineWidth = 1.6; ctx.stroke(out(.925));
+  ctx.strokeStyle = 'rgba(255,246,215,.75)'; ctx.lineWidth = .7; ctx.stroke(out(.895));
+  ctx.strokeStyle = P.dark; ctx.lineWidth = 1.5; ctx.stroke(out(1));
+
+  // 3. 중앙 메달: 눈금 베젤 → 글귀 띠 → 에나멜
+  ctx.save(); ctx.translate(S.cx, S.cy);
+  for (let i = 0; i < 120; i++) {
+    const len = i % 5 ? 2.4 : 4.6; ctx.save(); ctx.rotate(i * Math.PI / 60);
+    ctx.strokeStyle = 'rgba(255,246,215,.85)'; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(.5, -85.2); ctx.lineTo(.5, -85.2 - len); ctx.stroke();
+    ctx.strokeStyle = P.dark; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(0, -85); ctx.lineTo(0, -85 - len); ctx.stroke(); ctx.restore();
+  }
+  ctx.fillStyle = mix(P.base, P.light, .15); ctx.beginPath(); ctx.arc(0, 0, 82, 0, TAU); ctx.fill();
+  if (ctx.createConicGradient) {
+    const cg = ctx.createConicGradient(-.6, 0, 0);
+    [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .3)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .3)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
+    ctx.save(); ctx.globalAlpha = .6; ctx.beginPath(); ctx.arc(0, 0, 81, 0, TAU); ctx.arc(0, 0, 63, 0, TAU, true); ctx.fillStyle = cg; ctx.fill(); ctx.restore();
+  }
+  mring(82, 2.4, P.dark, P.light); mring(63.5, 3.6, P.hi, P.dark);
+  arcText('PROJECT ARCHIVE', 67.6, false, P, 'bold 8.4px "Cinzel","Gowun Batang",serif', 3);
+  arcText(serialOf(name) + ' · 2026', 73.6, true, P, 'bold 7.4px "Cinzel","Gowun Batang",serif', 2);
+  [[-1, 62], [1, 62]].forEach(([sd]) => raised2(diamond(sd * 72.5, 0, 2.2), P));
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 58.6, 0, TAU); ctx.clip();
+  ctx.save(); ctx.scale(.62, .62); ctx.translate(-150, -150);
+  enamelField(P);
   if (avatar) {
-    disc(R, mix(P.base, P.dark, .6));
-    const key = metal + avatarId;
+    ctx.save(); ctx.beginPath(); ctx.arc(150, 150, R, 0, TAU); ctx.clip();
+    const key = metal + avatarId + '@' + SCALE;
     if (key !== reliefKey) { relief = buildRelief(P); reliefKey = key; }
-    ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R);
-  } else { field(P); emblem(P, [...name][0] || 'G'); }
+    ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R); ctx.restore();
+  } else emblem(P, [...name][0] || 'G');
   ctx.restore();
-  bevel(R + 1.5, 3, P.dark, P.light);
+  // 에나멜 유리 광택
+  const gl = ctx.createLinearGradient(-40, -52, 12, 6); gl.addColorStop(0, 'rgba(255,255,255,.38)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(-14, -30, 46, 22, -.6, 0, TAU); ctx.fill();
+  ctx.restore();
+  mring(59.4, 2, P.dark, P.hi);
   ctx.restore();
 
-  // 4. 이름 명판
+  // 4. 모서리 장식(마름모) + 이름 명판
+  S.studs.forEach(([x, y]) => raised2(diamond(x, y, 3.6), P));
   plaque(P, name, S.plaque.y, S.plaque.w);
+  [-1, 1].forEach(sd => raised2(diamond(150 + sd * (S.plaque.w / 2 + 24), S.plaque.y, 3.2), P));
 
-  // 5. 은은한 광택
+  // 5. 광택
   ctx.save(); ctx.clip(out(.99));
   const sh = ctx.createLinearGradient(30, 30, 270, 270);
   sh.addColorStop(0, 'rgba(255,255,255,.18)'); sh.addColorStop(.5, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(0,0,0,.2)');
-  ctx.fillStyle = sh; ctx.fillRect(0, 0, 300, 300); ctx.restore();
+  ctx.fillStyle = sh; ctx.fillRect(0, 0, 300, 300);
+  const bd = ctx.createLinearGradient(40, 30, 200, 190); bd.addColorStop(.3, 'rgba(255,255,255,0)'); bd.addColorStop(.4, 'rgba(255,255,255,.17)'); bd.addColorStop(.5, 'rgba(255,255,255,0)');
+  ctx.fillStyle = bd; ctx.fillRect(0, 0, 300, 300); ctx.restore();
+  sparkle(S.glint[0], S.glint[1], 11, .9); sparkle(S.glint[0] - 9, S.glint[1] + 11, 5, .75);
+}
+// 현재 좌표계 기준의 작은 부조 (그라데이션을 도형 위치에 맞춰 생성)
+function raised2(p, P) {
+  ctx.save(); ctx.translate(.9, 1.2); ctx.globalAlpha = .6; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
+  ctx.fillStyle = mix(P.light, P.hi, .5); ctx.fill(p); ctx.lineWidth = .6; ctx.strokeStyle = P.dark; ctx.stroke(p);
 }
 
 $('metal-group').addEventListener('click', e => { const b = e.target.closest('[data-metal]'); if (b) selectMetal(b.dataset.metal); });
@@ -697,9 +754,19 @@ $('coin-avatar-upload').addEventListener('change', e => {
   img.onload = () => { avatar = img; avatarId++; URL.revokeObjectURL(url); drawCoin(); };
   img.src = url;
 });
+
+/* ===== 저장: 고해상도(1800px) 투명 PNG ===== */
+function badgeCanvas(size) {           // 화면 캔버스를 건드리지 않고 원하는 크기로 다시 그림
+  const off = document.createElement('canvas'); off.width = off.height = size;
+  const saved = [ctx, SCALE]; ctx = off.getContext('2d'); SCALE = size / 300;
+  try { render(); } finally { [ctx, SCALE] = saved; }
+  return off;
+}
 $('btn-download').addEventListener('click', () => {
-  const a = document.createElement('a');
-  a.download = `project-badge-${Date.now()}.png`; a.href = cv.toDataURL('image/png'); a.click();
+  badgeCanvas(1800).toBlob(b => {
+    const a = document.createElement('a'); a.download = `project-badge-${Date.now()}.png`; a.href = URL.createObjectURL(b); a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  }, 'image/png');
 });
 
 selectMetal('gold'); selectShape('shield');
