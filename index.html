@@ -116,16 +116,11 @@ tailwind.config = { theme: { extend: { fontFamily: {
         <div class="space-y-8 md:w-1/2 w-full font-mono">
           <div class="space-y-3">
             <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Shape</span>
-            <div class="grid grid-cols-3 gap-2" id="shape-group">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="shape-group">
               <button type="button" data-shape="card" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Photocard</button>
               <button type="button" data-shape="can" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Can Badge</button>
               <button type="button" data-shape="shield" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Shield</button>
-              <button type="button" data-shape="arch" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Arch</button>
               <button type="button" data-shape="deco" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Deco</button>
-              <button type="button" data-shape="round" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Round</button>
-              <button type="button" data-shape="medal" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Medal</button>
-              <button type="button" data-shape="sparkle4" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Sparkle</button>
-              <button type="button" data-shape="petal" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Petal</button>
             </div>
           </div>
           <div class="space-y-3">
@@ -152,6 +147,49 @@ tailwind.config = { theme: { extend: { fontFamily: {
           <div class="flex gap-3 pt-4">
             <button type="button" id="btn-upload" class="w-1/3 py-3 border border-stone-900 text-stone-900 hover:bg-stone-900 hover:text-white transition-colors text-xs tracking-widest uppercase">Upload</button>
             <button type="button" id="btn-download" class="w-2/3 py-3 bg-stone-900 text-white hover:bg-stone-800 transition-colors text-xs tracking-widest uppercase shadow-md">Mint &amp; Download</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="border-t border-stone-300 pt-16 md:pt-24 fade-up">
+      <div class="text-center space-y-2 mb-16">
+        <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Chapter IV</span>
+        <h3 class="font-display title-gold text-3xl">인생 2컷</h3>
+        <p class="font-mono text-xs text-stone-600 mt-2 tracking-wide">* 올린 사진은 내 기기에서만 처리됩니다.</p>
+      </div>
+      <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-white p-6 md:p-10 border border-stone-200 shadow-sm">
+        <div class="flex justify-center md:w-1/2">
+          <canvas id="booth-canvas" width="600" height="1500" aria-label="인생 2컷 미리보기" class="w-full max-w-[230px] shadow-[0_12px_40px_rgba(40,30,10,0.22)]"></canvas>
+        </div>
+        <div class="space-y-8 md:w-1/2 w-full font-mono">
+          <div class="space-y-3">
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Character</span>
+            <div class="grid grid-cols-3 gap-2" id="booth-char-group"></div>
+          </div>
+          <div class="space-y-3">
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Frame</span>
+            <div class="flex gap-2" id="booth-frame-group">
+              <button type="button" data-bframe="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Gold</button>
+              <button type="button" data-bframe="rose" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Rose</button>
+              <button type="button" data-bframe="silver" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Platinum</button>
+              <button type="button" data-bframe="aurora" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Aurora</button>
+            </div>
+          </div>
+          <div class="space-y-3">
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Character Side</span>
+            <div class="flex gap-2" id="booth-side-group">
+              <button type="button" data-bside="left" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Left</button>
+              <button type="button" data-bside="right" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Right</button>
+            </div>
+          </div>
+          <p id="booth-step" class="font-text text-base text-stone-800" aria-live="polite"></p>
+          <input type="file" id="booth-upload" accept="image/*" class="hidden" />
+          <div class="space-y-3">
+            <div class="flex gap-3">
+              <button type="button" id="booth-upload-btn" class="w-2/3 py-3 border border-stone-900 text-stone-900 hover:bg-stone-900 hover:text-white transition-colors text-xs tracking-widest uppercase"></button>
+              <button type="button" id="booth-reset" class="w-1/3 py-3 border border-stone-300 text-stone-700 hover:border-black transition-colors text-xs tracking-widest uppercase">Reset</button>
+            </div>
+            <button type="button" id="booth-download" class="w-full py-3 bg-stone-900 text-white hover:bg-stone-800 transition-colors text-xs tracking-widest uppercase shadow-md disabled:opacity-40 disabled:cursor-not-allowed" disabled>Print &amp; Download</button>
           </div>
         </div>
       </div>
@@ -269,7 +307,8 @@ const characters = {
       { icon:'🕯️', title:'반쯤 탄 양초', desc:'야간 기록 때 켜 두는 초. 불꽃이 흔들리면 하던 말을 멈춘다.' }
     ],
     themeTitle:'조용한 밤의 기록 (Sample Theme 01)',
-    video:'', poster:'', music:'assets/music/char1.mp3'
+    video:'', poster:'', music:'assets/music/char1.mp3',
+    booth:['assets/booth/char1_1.png', 'assets/booth/char1_2.png']   // 인생 2컷용 배경 투명 PNG (1컷, 2컷)
   },
   char2: {
     num:'FILE 02', name:'윤도겸', nameEn:'YUN DOGYEOM',
@@ -289,7 +328,8 @@ const characters = {
       { icon:'☂️', title:'네 번째 우산', desc:'오늘도 어딘가에 두고 왔을지 모르는 검은 우산.' }
     ],
     themeTitle:'비 오는 서가 (Sample Theme 02)',
-    video:'', poster:'', music:'assets/music/char2.mp3'
+    video:'', poster:'', music:'assets/music/char2.mp3',
+    booth:['assets/booth/char2_1.png', 'assets/booth/char2_2.png']   // 인생 2컷용 배경 투명 PNG (1컷, 2컷)
   },
   char3: {
     num:'FILE 03', name:'백이안', nameEn:'BAEK IAN',
@@ -309,7 +349,8 @@ const characters = {
       { icon:'📎', title:'구부러진 클립', desc:'생각이 많을 때마다 손에서 모양이 바뀐다. 오늘은 별 모양.' }
     ],
     themeTitle:'첫 기차 (Sample Theme 03)',
-    video:'', poster:'', music:'assets/music/char3.mp3'
+    video:'', poster:'', music:'assets/music/char3.mp3',
+    booth:['assets/booth/char3_1.png', 'assets/booth/char3_2.png']   // 인생 2컷용 배경 투명 PNG (1컷, 2컷)
   }
 };
 const charIds = Object.keys(characters);
@@ -614,21 +655,9 @@ const SHAPES = {
   can:  { custom:'can',  sc:[150,150], path(p) { p.arc(150, 150, 140, 0, TAU); } },
   shield: { cx:150, cy:132, sc:[150,150], plaque:{ y:238, w:100 }, studs:[[62,52],[238,52]], glint:[62,50],
     path(p) { p.moveTo(50, 22); p.lineTo(250, 22); p.lineTo(264, 42); p.lineTo(264, 150); p.bezierCurveTo(264, 232, 212, 264, 150, 290); p.bezierCurveTo(88, 264, 36, 232, 36, 150); p.lineTo(36, 42); p.closePath(); } },
-  arch: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:140 }, studs:[[60,262],[240,262]], glint:[66,70],
-    path(p) { p.moveTo(52, 288); p.lineTo(38, 274); p.lineTo(38, 120); p.arc(150, 120, 112, Math.PI, 0); p.lineTo(262, 274); p.lineTo(248, 288); p.closePath(); } },
   deco: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[56,56],[244,56],[56,244],[244,244]], glint:[58,60],
     path(p) { p.moveTo(66, 30); p.lineTo(234, 30); p.arc(268, 30, 34, Math.PI, Math.PI / 2, true); p.lineTo(270, 234); p.arc(268, 268, 34, -Math.PI / 2, Math.PI, true); p.lineTo(66, 270); p.arc(32, 268, 34, 0, -Math.PI / 2, true); p.lineTo(30, 66); p.arc(32, 32, 34, Math.PI / 2, 0, true); p.closePath(); } },
-  round: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[70,70],[230,70]], glint:[68,86],
-    path(p) { p.arc(150, 150, 140, 0, TAU); } },
-  // 훈장: 리본이 달린 24각 별 메달
-  medal: { cx:150, cy:168, sc:[150,170], ms:.86, ribbon:true, dd:null, plaque:{ y:262, w:84 }, studs:[], glint:[98,118],
-    path(p) { for (let i = 0; i <= 48; i++) { const a = i / 48 * TAU - Math.PI / 2, r = i % 2 ? 106 : 118; const x = 150 + r * Math.cos(a), y = 170 + r * Math.sin(a); i ? p.lineTo(x, y) : p.moveTo(x, y); } p.closePath(); } },
-  // 스파클: 통통한 4각 반짝이 별 (에나멜 핀 스타일)
-  sparkle4: { pin:true, cx:150, cy:150, sc:[150,150], dd:null, plaque:{ y:262, w:84 }, studs:[], glint:[96,92], twinkles:[[238,62,9],[58,236,6],[246,224,4.5]],
-    path(p) { const c = 46; p.moveTo(150, 10); p.quadraticCurveTo(150 + c, 150 - c, 290, 150); p.quadraticCurveTo(150 + c, 150 + c, 150, 290); p.quadraticCurveTo(150 - c, 150 + c, 10, 150); p.quadraticCurveTo(150 - c, 150 - c, 150, 10); p.closePath(); } },
-  // 페탈: 둥글고 부드러운 8장 꽃잎 (에나멜 핀 스타일)
-  petal: { pin:true, cx:150, cy:148, sc:[150,148], dd:null, plaque:{ y:254, w:96 }, studs:[], glint:[84,70], twinkles:[[252,52,7],[44,248,5]],
-    path(p) { for (let i = 0; i <= 720; i++) { const a = i / 720 * TAU, r = 117 + 25 * Math.abs(Math.cos(4 * a)); const x = 150 + r * Math.cos(a), y = 148 + r * Math.sin(a); i ? p.lineTo(x, y) : p.moveTo(x, y); } p.closePath(); } }
+
 };
 let shape = 'card', photoMode = 'color';
 function outline(t, k) {
@@ -675,18 +704,6 @@ function plaque(P, text, y, w) {
   ctx.font = `bold ${size}px "Cinzel","Gowun Batang",serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
   const ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + sp * (chars.length - 1);
   let x = 150 - total / 2; chars.forEach((c, i) => { carve(c, x + ws[i] / 2, y + size * .35, 0, P); x += ws[i] + sp; });
-}
-// 훈장 리본: 에나멜 색 두 가닥이 X자로 겹치고 금 고리로 메달에 매달림
-function ribbon(P) {
-  [[[96, 2], [142, 2], [176, 84], [130, 84]], [[204, 2], [158, 2], [124, 84], [170, 84]]].forEach(b => {
-    const p = new Path2D(); b.forEach(([x, y], k) => k ? p.lineTo(x, y) : p.moveTo(x, y)); p.closePath();
-    ctx.save(); ctx.translate(1.5, 2); ctx.globalAlpha = .35; ctx.fillStyle = '#000'; ctx.fill(p); ctx.restore();
-    const g = ctx.createLinearGradient(100, 0, 200, 90); g.addColorStop(0, P.enamel[0]); g.addColorStop(1, P.enamel[1]);
-    ctx.fillStyle = g; ctx.fill(p); ctx.lineJoin = 'round'; ctx.lineWidth = 1.4; ctx.strokeStyle = P.base; ctx.stroke(p);
-    ctx.strokeStyle = P.light; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo((b[0][0] + b[1][0]) / 2, 2); ctx.lineTo((b[3][0] + b[2][0]) / 2, 84); ctx.stroke();
-  });
-  const rg = ctx.createLinearGradient(138, 36, 162, 58); rg.addColorStop(0, P.hi); rg.addColorStop(1, P.dark);
-  ctx.strokeStyle = rg; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(150, 47, 10, 0, TAU); ctx.stroke();
 }
 // ===== 풀컬러 굿즈: 홀로그램 포토카드 · 캔뱃지 =====
 const HOLO = [[0, '#FFB8E0'], [.18, '#FFD9B0'], [.34, '#FFF6B8'], [.5, '#B8FFE4'], [.66, '#B0E6FF'], [.82, '#D8C2FF'], [1, '#FFB8E0']];
@@ -792,83 +809,13 @@ function renderCan(P, name) {
   ctx.strokeStyle = 'rgba(0,0,0,.4)'; ctx.beginPath(); ctx.arc(C, C, r, 0, TAU); ctx.stroke();
   sparkle(C + 92, C - 92, 9, .95); sparkle(C + 108, C - 64, 4.5, .85);
 }
-// ===== 에나멜 핀 스타일 (스파클 / 페탈): 단색 에나멜 몸체 + 가는 금속 테두리 + 유리 광택 =====
-function pill(P, text, y, w) {
-  const h = 12, x0 = 150 - w / 2 - 6, x1 = 150 + w / 2 + 6, p = new Path2D();
-  p.moveTo(x0 + h, y - h); p.lineTo(x1 - h, y - h); p.arc(x1 - h, y, h, -Math.PI / 2, Math.PI / 2); p.lineTo(x0 + h, y + h); p.arc(x0 + h, y, h, Math.PI / 2, Math.PI * 1.5); p.closePath();
-  ctx.save(); ctx.translate(0, 2); ctx.globalAlpha = .35; ctx.fillStyle = '#000'; ctx.fill(p); ctx.restore();
-  const g = ctx.createLinearGradient(0, y - h, 0, y + h); g.addColorStop(0, P.hi); g.addColorStop(.5, P.light); g.addColorStop(1, mix(P.base, P.dark, .2));
-  ctx.fillStyle = g; ctx.fill(p); ctx.lineWidth = 1; ctx.strokeStyle = P.dark; ctx.stroke(p);
-  const chars = [...text], sp = chars.length > 7 ? .8 : 1.8;
-  ctx.font = 'bold 10px "Cinzel","Gowun Batang",serif';
-  const base = chars.reduce((a, c) => a + ctx.measureText(c).width + sp, -sp), size = Math.max(8.5, Math.min(13, 10 * (w - 10) / base));
-  ctx.font = `bold ${size}px "Cinzel","Gowun Batang",serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-  const ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + sp * (chars.length - 1);
-  ctx.fillStyle = P.dark; let x = 150 - total / 2; chars.forEach((c, i) => { ctx.fillText(c, x + ws[i] / 2, y + size * .35); x += ws[i] + sp; });
-}
-function renderPin(P, name, S) {
-  const out = k => outline(shape, k), E = P.enamel;
-  // 몸체: 대각선 에나멜 그라데이션 + 은은한 방사형 줄무늬 + 중앙 빛
-  const g = ctx.createLinearGradient(30, 10, 270, 290); g.addColorStop(0, mix(E[0], '#FFFFFF', .14)); g.addColorStop(.55, E[0]); g.addColorStop(1, E[1]);
-  ctx.fillStyle = g; ctx.fill(out(1));
-  ctx.save(); ctx.clip(out(1)); ctx.translate(S.cx, S.cy);
-  for (let i = 0; i < 48; i++) { ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 220, i / 48 * TAU, (i + .5) / 48 * TAU); ctx.closePath(); ctx.fillStyle = i % 2 ? 'rgba(255,255,255,.045)' : 'rgba(0,0,0,.07)'; ctx.fill(); }
-  ctx.restore();
-  ctx.save(); ctx.clip(out(1));
-  const glow = ctx.createRadialGradient(S.cx, S.cy - 10, 10, S.cx, S.cy, 140); glow.addColorStop(0, 'rgba(255,255,255,.20)'); glow.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = glow; ctx.fillRect(0, 0, 300, 300);
-  const pat = ctx.createPattern(grain, 'repeat'); if (pat.setTransform) pat.setTransform(new DOMMatrix().scale(1 / SCALE));
-  ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = .6; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300); ctx.globalAlpha = 1;
-  if (metal === 'aurora') {
-    ctx.globalCompositeOperation = 'soft-light'; const ir = ctx.createLinearGradient(20, 30, 280, 270);
-    [[0, '#FF9FD6'], [.25, '#9FE8FF'], [.5, '#FFF0A6'], [.75, '#C9A8FF'], [1, '#FF9FD6']].forEach(([t, c]) => ir.addColorStop(t, c)); ctx.fillStyle = ir; ctx.fillRect(0, 0, 300, 300);
-  }
-  ctx.globalCompositeOperation = 'source-over';
-  // 금속 테두리 (안쪽으로 4.5px)
-  const gr = ctx.createLinearGradient(20, 20, 280, 280); gr.addColorStop(0, P.hi); gr.addColorStop(.45, P.light); gr.addColorStop(1, P.dark);
-  ctx.lineJoin = 'round'; ctx.strokeStyle = gr; ctx.lineWidth = 9; ctx.stroke(out(1));
-  ctx.restore();
-  ctx.lineJoin = 'round'; ctx.strokeStyle = P.dark; ctx.lineWidth = 1.3; ctx.stroke(out(1));
-  // 중앙 메달: 금속 링 + 안쪽 면
-  ctx.save(); ctx.translate(S.cx, S.cy);
-  const rg = ctx.createLinearGradient(-72, -72, 72, 72); rg.addColorStop(0, P.hi); rg.addColorStop(.5, P.base); rg.addColorStop(1, P.dark);
-  ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(0, 0, 73, 0, TAU); ctx.fill();
-  ctx.fillStyle = P.dark; ctx.beginPath(); ctx.arc(0, 0, 67.5, 0, TAU); ctx.fill();
-  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 66.5, 0, TAU); ctx.clip();
-  if (avatar) {
-    ctx.scale(.75, .75); ctx.translate(-150, -150);
-    ctx.fillStyle = mix(P.base, P.dark, .55); ctx.fillRect(0, 0, 300, 300);
-    drawPhoto(P);
-  } else {
-    const fg = ctx.createRadialGradient(-18, -22, 6, 0, 0, 72); fg.addColorStop(0, mix(E[0], '#FFFFFF', .08)); fg.addColorStop(1, E[1]);
-    ctx.fillStyle = fg; ctx.fillRect(-80, -80, 160, 160);
-    ctx.font = 'bold 88px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    const ch = [...name][0] || 'G';
-    ctx.globalAlpha = .6; ctx.fillStyle = '#000'; ctx.fillText(ch, 1.8, 6.4); ctx.globalAlpha = 1;
-    const lg = ctx.createLinearGradient(0, -40, 0, 50); lg.addColorStop(0, P.hi); lg.addColorStop(.5, P.light); lg.addColorStop(1, P.base);
-    ctx.fillStyle = lg; ctx.fillText(ch, 0, 4);
-  }
-  ctx.restore();
-  const gl = ctx.createLinearGradient(-50, -60, 10, 0); gl.addColorStop(0, 'rgba(255,255,255,.30)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 66.5, 0, TAU); ctx.clip(); ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(-14, -34, 44, 22, -.6, 0, TAU); ctx.fill(); ctx.restore();
-  ctx.restore();
-  pill(P, name, S.plaque.y, S.plaque.w);
-  // 유리 광택(위쪽 돔) + 반짝임
-  ctx.save(); ctx.clip(out(1));
-  const dome = ctx.createLinearGradient(0, 0, 0, 300); dome.addColorStop(0, 'rgba(255,255,255,.22)'); dome.addColorStop(.42, 'rgba(255,255,255,0)'); dome.addColorStop(1, 'rgba(0,0,0,.16)');
-  ctx.fillStyle = dome; ctx.fillRect(0, 0, 300, 300); ctx.restore();
-  sparkle(S.glint[0], S.glint[1], 11, .95);
-  (S.twinkles || []).forEach(([x, y, r]) => sparkle(x, y, r * 1.4, .95));
-}
 function render() {
   const P = METALS[metal], name = ($('coin-name-input').value.trim() || 'GUEST').toUpperCase(), S = SHAPES[shape];
   ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
   ctx.clearRect(0, 0, 300, 300);
   if (S.custom === 'card') { renderCard(P, name); return; }
   if (S.custom === 'can') { renderCan(P, name); return; }
-  if (S.pin) { renderPin(P, name, S); return; }
   const out = k => outline(shape, k);
-  if (S.ribbon) ribbon(P);
   const conic = (a, alpha) => { if (!ctx.createConicGradient) return; const cg = ctx.createConicGradient(a, 150, 150);
     [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .32)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .32)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
     ctx.globalAlpha = alpha; ctx.fillStyle = cg; ctx.fillRect(0, 0, 300, 300); ctx.globalAlpha = 1; };
@@ -1000,6 +947,109 @@ Promise.all([
   document.fonts.load('bold 13px "Gowun Batang"'),
   document.fonts.load('16px "Song Myung"')
 ]).then(drawCoin).catch(() => {});
+
+/* ===== 인생 2컷: 사진 2장을 순서대로 올리면 프레임에 합성 + 캐릭터 PNG 겹치기 =====
+   캐릭터 PNG는 characters[id].booth 경로에 넣으면 자동으로 쓰입니다(없으면 자리표시 실루엣). */
+const bcv = $('booth-canvas');
+const BW = 600, BH = 1500, CUTS = [{ x:36, y:104, w:528, h:612 }, { x:36, y:744, w:528, h:612 }];
+const booth = { char: charIds[0], frame: 'gold', side: 'right', photos: [null, null] };
+const boothImgs = {};   // 경로 → { img, ok }
+function boothImg(src) {
+  if (!src) return null;
+  if (!boothImgs[src]) { const img = new Image(); boothImgs[src] = { img, ok: false }; img.onload = () => { boothImgs[src].ok = true; drawBooth(); }; img.onerror = () => {}; img.src = src; }
+  return boothImgs[src].ok ? boothImgs[src].img : null;
+}
+function bRR(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function bFoil(g, x0, y0, x1, y1, key) {
+  const P = METALS[key], gr = g.createLinearGradient(x0, y0, x1, y1);
+  (key === 'aurora' ? HOLO : [[0, P.hi], [.2, P.light], [.42, P.base], [.58, P.hi], [.78, P.base], [1, P.dark]]).forEach(([t, c]) => gr.addColorStop(t, c));
+  return gr;
+}
+function bSpaced(g, text, x, y, gap) {
+  const ch = [...text], ws = ch.map(c => g.measureText(c).width), tw = ws.reduce((a, b) => a + b, 0) + gap * (ch.length - 1);
+  let cx = x - tw / 2; g.textAlign = 'left'; ch.forEach((c, i) => { g.fillText(c, cx, y); cx += ws[i] + gap; });
+}
+function bSparkle(g, x, y, r, a) {
+  g.save(); g.globalAlpha = a; g.fillStyle = '#fff'; g.beginPath(); g.moveTo(x, y - r); g.quadraticCurveTo(x, y, x + r, y); g.quadraticCurveTo(x, y, x, y + r); g.quadraticCurveTo(x, y, x - r, y); g.quadraticCurveTo(x, y, x, y - r); g.fill(); g.restore();
+}
+// 캐릭터 PNG가 아직 없을 때: 반투명 실루엣 + 안내
+function charPlaceholder(g, x, y, w, h, path) {
+  g.save(); g.globalAlpha = .55; g.fillStyle = '#FFFFFF';
+  const cx = x + w / 2; g.beginPath(); g.arc(cx, y + h * .2, w * .2, 0, TAU); g.fill();
+  g.beginPath(); g.moveTo(x + w * .08, y + h); g.bezierCurveTo(x + w * .08, y + h * .48, x + w * .92, y + h * .48, x + w * .92, y + h); g.closePath(); g.fill();
+  g.globalAlpha = 1; g.setLineDash([8, 6]); g.lineWidth = 2; g.strokeStyle = 'rgba(80,60,40,.55)'; g.strokeRect(x + 4, y + 4, w - 8, h - 8); g.setLineDash([]);
+  g.fillStyle = 'rgba(60,45,30,.85)'; g.font = 'bold 15px "Cinzel","Gowun Batang",serif'; g.textAlign = 'center';
+  g.fillText('CHARACTER PNG', cx, y + h * .62); g.font = '12px Pretendard, sans-serif'; g.fillText(path.split('/').pop(), cx, y + h * .62 + 20);
+  g.restore();
+}
+function renderBooth(g, scale) {
+  const c = characters[booth.char], P = METALS[booth.frame];
+  g.setTransform(scale, 0, 0, scale, 0, 0); g.clearRect(0, 0, BW, BH);
+  // 종이 바탕 + 포일 테두리
+  const bg = g.createLinearGradient(0, 0, BW, BH); bg.addColorStop(0, '#FCF9F2'); bg.addColorStop(1, '#EFE6D4');
+  g.fillStyle = bg; g.fillRect(0, 0, BW, BH);
+  g.strokeStyle = bFoil(g, 0, 0, BW, BH, booth.frame); g.lineWidth = 14; g.strokeRect(7, 7, BW - 14, BH - 14);
+  g.strokeStyle = 'rgba(120,90,50,.35)'; g.lineWidth = 1; g.strokeRect(20, 20, BW - 40, BH - 40);
+  // 머리글
+  g.textBaseline = 'alphabetic'; g.fillStyle = '#3B2F22'; g.font = 'bold 24px "Cinzel","Gowun Batang",serif'; bSpaced(g, 'PROJECT ARCHIVE', BW / 2, 62, 5);
+  g.fillStyle = mix(P.base, P.dark, .45); g.font = 'bold 12px "Cinzel","Gowun Batang",serif'; bSpaced(g, 'LIFE  ·  TWO  CUTS', BW / 2, 86, 3);
+  // 두 컷
+  CUTS.forEach((k, i) => {
+    g.save(); bRR(g, k.x, k.y, k.w, k.h, 10); g.clip();
+    const ph = booth.photos[i];
+    if (ph) { const s = Math.max(k.w / ph.width, k.h / ph.height), iw = ph.width * s, ih = ph.height * s; g.drawImage(ph, k.x + (k.w - iw) / 2, k.y + (k.h - ih) * .35, iw, ih); }
+    else {
+      const eg = g.createLinearGradient(k.x, k.y, k.x + k.w, k.y + k.h); eg.addColorStop(0, '#E9E2D4'); eg.addColorStop(1, '#D8CDB8'); g.fillStyle = eg; g.fillRect(k.x, k.y, k.w, k.h);
+      g.fillStyle = 'rgba(70,55,35,.75)'; g.textAlign = 'center'; g.font = 'bold 54px "Cinzel","Gowun Batang",serif'; g.fillText(String(i + 1).padStart(2, '0'), k.x + (booth.side === 'right' ? k.w * .3 : k.w * .7), k.y + k.h * .45);
+      g.font = '18px "Gowun Batang", serif'; g.fillText(`${i + 1}번째 사진을 올려 주세요`, k.x + (booth.side === 'right' ? k.w * .3 : k.w * .7), k.y + k.h * .45 + 36);
+    }
+    // 캐릭터 (아래쪽 기준, 좌/우)
+    const src = c.booth && c.booth[i], ci = boothImg(src), chH = k.h * .9;
+    if (ci) { const chW = ci.width * chH / ci.height, x = booth.side === 'right' ? k.x + k.w - chW * .96 : k.x - chW * .04; g.drawImage(ci, x, k.y + k.h - chH, chW, chH); }
+    else if (src) { const chW = k.w * .44, x = booth.side === 'right' ? k.x + k.w - chW - 10 : k.x + 10; charPlaceholder(g, x, k.y + k.h - chH, chW, chH, src); }
+    // 사진 톤: 은은한 따뜻함 + 가장자리
+    g.fillStyle = 'rgba(255,236,210,.06)'; g.fillRect(k.x, k.y, k.w, k.h);
+    const vg = g.createRadialGradient(k.x + k.w / 2, k.y + k.h / 2, k.h * .35, k.x + k.w / 2, k.y + k.h / 2, k.h * .8); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.16)'); g.fillStyle = vg; g.fillRect(k.x, k.y, k.w, k.h);
+    g.restore();
+    bRR(g, k.x, k.y, k.w, k.h, 10); g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.9)'; g.stroke();
+    g.fillStyle = 'rgba(255,255,255,.95)'; g.font = 'bold 14px "Cinzel","Gowun Batang",serif'; g.textAlign = 'left'; g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 4;
+    g.fillText(`CUT ${String(i + 1).padStart(2, '0')}`, k.x + 16, k.y + 30); g.shadowBlur = 0;
+  });
+  // 바닥글: with 캐릭터 · 날짜 · 이름 · 번호
+  const user = ($('username').value.trim() || $('coin-name-input').value.trim() || 'GUEST');
+  const d = new Date(), date = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+  g.textAlign = 'center'; g.fillStyle = '#3B2F22'; g.font = '30px "Song Myung","Gowun Batang",serif'; g.fillText(`with ${c.name}`, BW / 2, 1412);
+  g.fillStyle = bFoil(g, 150, 1420, 450, 1450, booth.frame); g.fillRect(BW / 2 - 90, 1426, 180, 1.5);
+  g.fillStyle = '#5A4A38'; g.font = 'bold 13px "Cinzel","Gowun Batang",serif'; bSpaced(g, `${date}  ·  ${user.toUpperCase()}  ·  ${serialOf(user.toUpperCase())}`, BW / 2, 1456, 2);
+  bSparkle(g, 66, 1400, 12, .9); bSparkle(g, 534, 1430, 9, .9);
+}
+function drawBooth() { renderBooth(bcv.getContext('2d'), bcv.width / BW); updateBoothUI(); }
+function updateBoothUI() {
+  const n = booth.photos.filter(Boolean).length;
+  $('booth-upload-btn').textContent = n === 0 ? 'Upload Photo 1' : n === 1 ? 'Upload Photo 2' : 'Change Photo 2';
+  $('booth-step').textContent = n === 0 ? `① 첫 번째 사진을 올려 주세요. 캐릭터가 설 ${booth.side === 'right' ? '오른쪽' : '왼쪽'} 자리를 비워 두고 찍은 사진이 잘 어울려요.` : n === 1 ? '② 두 번째 사진을 올려 주세요.' : '완성! 마음에 들면 저장하세요. (Reset으로 처음부터)';
+  $('booth-download').disabled = n < 2;
+}
+$('booth-char-group').innerHTML = charIds.map(id => `<button type="button" data-bchar="${id}" class="opt-btn py-3 text-xs border border-stone-300 text-stone-700 hover:border-black hover:text-black transition-colors font-text">${esc(characters[id].name)}</button>`).join('');
+const markActive = (attr, val) => document.querySelectorAll(`[data-${attr}]`).forEach(b => b.classList.toggle('active', b.dataset[attr] === val));
+$('booth-char-group').addEventListener('click', e => { const b = e.target.closest('[data-bchar]'); if (b) { booth.char = b.dataset.bchar; markActive('bchar', booth.char); drawBooth(); } });
+$('booth-frame-group').addEventListener('click', e => { const b = e.target.closest('[data-bframe]'); if (b) { booth.frame = b.dataset.bframe; markActive('bframe', booth.frame); drawBooth(); } });
+$('booth-side-group').addEventListener('click', e => { const b = e.target.closest('[data-bside]'); if (b) { booth.side = b.dataset.bside; markActive('bside', booth.side); drawBooth(); } });
+$('booth-upload-btn').addEventListener('click', () => $('booth-upload').click());
+$('booth-upload').addEventListener('change', e => {
+  const f = e.target.files[0]; e.target.value = ''; if (!f || !f.type.startsWith('image/')) return;
+  const url = URL.createObjectURL(f), img = new Image();
+  img.onload = () => { const i = booth.photos[0] ? 1 : 0; booth.photos[i] = img; URL.revokeObjectURL(url); drawBooth(); };
+  img.src = url;
+});
+$('booth-reset').addEventListener('click', () => { booth.photos = [null, null]; drawBooth(); });
+$('booth-download').addEventListener('click', () => {
+  const off = document.createElement('canvas'); off.width = BW * 2; off.height = BH * 2; renderBooth(off.getContext('2d'), 2);
+  off.toBlob(b => { const a = document.createElement('a'); a.download = `life-2cut-${Date.now()}.png`; a.href = URL.createObjectURL(b); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }, 'image/png');
+});
+markActive('bchar', booth.char); markActive('bframe', booth.frame); markActive('bside', booth.side);
+drawBooth();
+document.fonts && document.fonts.ready.then(drawBooth);
 
 /* ===== 하단 문구: 5초마다 교체 (임시 문구 — 아래 배열만 고치면 됩니다) ===== */
 const TICKER = Array.from({ length: 10 }, (_, i) => `${String.fromCharCode(65 + i)}문구가 출력 중입니다.`);
