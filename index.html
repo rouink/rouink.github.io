@@ -23,10 +23,10 @@ tailwind.config = { theme: { extend: { fontFamily: {
 </script>
 <style>
   body { background:radial-gradient(1100px 520px at 50% -8%,#FBF8F1,transparent),#F3EFE8; color:#2B2622; }
-  .reveal { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
-  .reveal.in { opacity:1; transform:none; }
-  .hero-glow { position:relative; isolation:isolate; }
-  .hero-glow::before { content:''; position:absolute; inset:-50px -12%; z-index:-1; background:radial-gradient(closest-side,rgba(184,140,60,.17),transparent); animation:drift 16s ease-in-out infinite alternate; }
+  .fade-up { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
+  .fade-up.in { opacity:1; transform:none; }
+  .hero-aura { position:relative; isolation:isolate; }
+  .hero-aura::before { content:''; position:absolute; inset:-50px -12%; z-index:-1; background:radial-gradient(closest-side,rgba(184,140,60,.17),transparent); animation:drift 16s ease-in-out infinite alternate; }
   @keyframes drift { to { transform:translate(4%,6%) scale(1.1); } }
   .decor-line { position:relative; }
   .decor-line::after { content:''; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); width:132px; height:16px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='16' viewBox='0 0 132 16'%3E%3Cpath d='M0 8H54M78 8H132' stroke='%23B8914A' stroke-width='1'/%3E%3Cpath d='M66 1.5 72.5 8 66 14.5 59.5 8z' fill='none' stroke='%23B8914A' stroke-width='1.2'/%3E%3Ccircle cx='66' cy='8' r='1.8' fill='%23B8914A'/%3E%3Ccircle cx='48' cy='8' r='1.2' fill='%23B8914A'/%3E%3Ccircle cx='84' cy='8' r='1.2' fill='%23B8914A'/%3E%3C/svg%3E") center/contain no-repeat; }
@@ -74,17 +74,17 @@ tailwind.config = { theme: { extend: { fontFamily: {
     <div class="flex items-center gap-3 md:gap-6">
       <div class="flex items-center gap-2 font-mono text-xs">
         <div class="w-1.5 h-1.5 bg-amber-700 rounded-full animate-pulse"></div>
-        <span id="nav-user-label" class="text-stone-500 tracking-wider">GUEST</span>
+        <span id="nav-user-label" class="text-stone-600 tracking-wider">GUEST</span>
       </div>
-      <button type="button" id="bgm-toggle-btn" class="font-mono text-xs text-stone-500 hover:text-black transition-colors uppercase tracking-widest border border-stone-300 px-3 py-2 hover:border-black">Audio Off</button>
+      <button type="button" id="bgm-toggle-btn" class="font-mono text-xs text-stone-600 hover:text-black transition-colors uppercase tracking-widest border border-stone-300 px-3 py-2 hover:border-black">Audio Off</button>
     </div>
   </nav>
 
   <main class="flex-grow max-w-5xl mx-auto px-5 md:px-6 py-16 md:py-24 w-full space-y-24 md:space-y-32">
-    <section class="text-center max-w-3xl mx-auto space-y-8 reveal hero-glow">
-      <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase block">Chapter I</span>
+    <section class="text-center max-w-3xl mx-auto space-y-8 fade-up hero-aura">
+      <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase block">Chapter I</span>
       <h2 class="text-4xl md:text-5xl font-display title-gold decor-line pb-6">작품 A의 세계</h2>
-      <p class="font-text text-stone-600 text-base md:text-lg leading-[2.1] pt-8">
+      <p class="font-text text-stone-800 text-base md:text-lg leading-[2.1] pt-8">
         이곳은 작품 A의 세계관이 펼쳐지는 중심부입니다.<br>
         아직 밝혀지지 않은 수많은 역사와 기록의 파편들이 이 공간에 잠들어 있습니다.<br>
         각기 다른 목적을 지닌 인물들이 거대한 흐름 속에서 자신들만의 궤적을 그리며 움직입니다.<br>
@@ -93,20 +93,20 @@ tailwind.config = { theme: { extend: { fontFamily: {
       </p>
     </section>
 
-    <section class="space-y-12 reveal">
+    <section class="space-y-12 fade-up">
       <div class="text-center space-y-2">
-        <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Chapter II</span>
+        <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Chapter II</span>
         <h3 class="font-display title-gold text-3xl">등장인물 기록</h3>
       </div>
       <!-- 카드는 아래 characters 데이터에서 자동 생성됩니다 -->
       <div id="character-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto"></div>
     </section>
 
-    <section class="border-t border-stone-300 pt-16 md:pt-24 reveal">
+    <section class="border-t border-stone-300 pt-16 md:pt-24 fade-up">
       <div class="text-center space-y-2 mb-16">
-        <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Chapter III</span>
+        <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Chapter III</span>
         <h3 class="font-display title-gold text-3xl">기념주화 제작소</h3>
-        <p class="font-mono text-xs text-stone-500 mt-2 tracking-wide">* 입력한 이름과 사진은 내 기기에서만 처리됩니다.</p>
+        <p class="font-mono text-xs text-stone-600 mt-2 tracking-wide">* 입력한 이름과 사진은 내 기기에서만 처리됩니다.</p>
       </div>
       <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-white p-6 md:p-10 border border-stone-200 shadow-sm">
         <div class="flex justify-center md:w-1/2">
@@ -116,7 +116,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
         </div>
         <div class="space-y-8 md:w-1/2 w-full font-mono">
           <div class="space-y-3">
-            <span class="text-xs text-stone-500 uppercase tracking-[0.2em]">Shape</span>
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Shape</span>
             <div class="flex gap-3" id="shape-group">
               <button type="button" data-shape="sun" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Sunburst</button>
               <button type="button" data-shape="flower" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Flower</button>
@@ -124,7 +124,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
             </div>
           </div>
           <div class="space-y-3">
-            <span class="text-xs text-stone-500 uppercase tracking-[0.2em]">Metal</span>
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Metal</span>
             <div class="flex gap-3" id="metal-group">
               <button type="button" data-metal="bronze" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Bronze</button>
               <button type="button" data-metal="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Gold</button>
@@ -132,7 +132,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
             </div>
           </div>
           <div class="space-y-3">
-            <label for="coin-name-input" class="text-xs text-stone-500 uppercase tracking-[0.2em]">Engraving Name</label>
+            <label for="coin-name-input" class="text-xs text-stone-600 uppercase tracking-[0.2em]">Engraving Name</label>
             <input type="text" id="coin-name-input" placeholder="이름을 입력하세요" maxlength="10" class="w-full px-0 py-2 border-b border-stone-300 bg-transparent outline-none focus:border-black transition-colors font-text text-lg" />
           </div>
           <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden" />
@@ -145,7 +145,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
     </section>
   </main>
 
-  <footer class="border-t border-stone-200 pt-10 pb-24 mt-auto text-center font-mono text-xs text-stone-500 tracking-widest uppercase">
+  <footer class="border-t border-stone-200 pt-10 pb-24 mt-auto text-center font-mono text-xs text-stone-600 tracking-widest uppercase">
     © ROUINK PROJECT HUB. ALL RIGHTS RESERVED.
   </footer>
 </div>
@@ -161,41 +161,41 @@ tailwind.config = { theme: { extend: { fontFamily: {
     <div id="modal-scroll" class="overflow-y-auto flex-grow flex flex-col md:flex-row">
       <div class="w-full md:w-5/12 bg-stone-100 relative min-h-[240px] md:min-h-0 md:sticky md:top-0 md:self-start md:h-[92vh] shrink-0">
         <video id="modal-video" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
-        <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Video coming soon</div>
+        <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Video coming soon</div>
       </div>
       <div class="w-full md:w-7/12 p-6 md:p-10 space-y-8">
         <div class="space-y-3">
-          <span id="modal-subtitle" class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase"></span>
+          <span id="modal-subtitle" class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase"></span>
           <h4 id="modal-name" class="text-4xl md:text-5xl font-display title-gold leading-tight"></h4>
-          <p id="modal-name-en" class="font-mono text-xs text-stone-500 tracking-[0.35em] uppercase"></p>
+          <p id="modal-name-en" class="font-mono text-xs text-stone-600 tracking-[0.35em] uppercase"></p>
           <div id="modal-tags" class="flex flex-wrap gap-2 pt-2"></div>
         </div>
-        <p id="modal-desc" class="font-text text-stone-700 text-base leading-[2]"></p>
-        <ul id="modal-specs" class="space-y-3 font-mono text-xs text-stone-500"></ul>
+        <p id="modal-desc" class="font-text text-stone-900 text-base leading-[2]"></p>
+        <ul id="modal-specs" class="space-y-3 font-mono text-xs text-stone-600"></ul>
         <div id="modal-extra"></div>
         <div>
-          <h5 class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase mb-1">TMI</h5>
+          <h5 class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase mb-1">TMI</h5>
           <div id="modal-tmi" class="border-t border-stone-200"></div>
         </div>
         <div>
-          <h5 class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase mb-1">Past Story</h5>
+          <h5 class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase mb-1">History</h5>
           <details class="acc border-y border-stone-200">
-            <summary class="font-text text-stone-800 text-base">과거 이야기 펼쳐 보기</summary>
-            <div id="modal-story" class="font-text text-stone-700 text-base leading-[2.05] space-y-4 pb-6"></div>
+            <summary class="font-text text-stone-900 text-base">지나온 이야기 펼쳐 보기</summary>
+            <div id="modal-story" class="font-text text-stone-900 text-base leading-[2.05] space-y-4 pb-6"></div>
           </details>
         </div>
         <div>
           <div class="flex justify-between items-baseline mb-3">
-            <h5 class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">Inventory</h5>
-            <span id="modal-inv-count" class="font-mono text-xs text-stone-500 tracking-widest"></span>
+            <h5 class="font-mono text-xs text-stone-600 tracking-[0.3em] ">What's in My Bag</h5>
+            <span id="modal-inv-count" class="font-mono text-xs text-stone-600 tracking-widest"></span>
           </div>
           <div id="modal-inv" class="inv"></div>
         </div>
         <div class="border border-stone-200 bg-white/60 p-5 flex gap-4 items-center">
           <span class="text-2xl" aria-hidden="true">♪</span>
           <div>
-            <span class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase block mb-1">Character Theme</span>
-            <p id="modal-theme" class="font-text text-stone-800 text-base"></p>
+            <span id="modal-theme-label" class="font-mono text-xs text-stone-600 tracking-[0.2em] block mb-1"></span>
+            <p id="modal-theme" class="font-text text-stone-900 text-base"></p>
           </div>
         </div>
         <nav class="flex justify-between gap-3 border-t border-stone-200 pt-6" aria-label="캐릭터 이동">
@@ -204,11 +204,13 @@ tailwind.config = { theme: { extend: { fontFamily: {
         </nav>
       </div>
     </div>
-    <div id="lightbox" class="hidden absolute inset-0 z-30 bg-[#F3EFE8]/97 flex-col items-center justify-center text-center p-8 gap-4" role="dialog" aria-label="아이템 확대">
-      <button type="button" id="lightbox-close" aria-label="확대 닫기" class="absolute top-3 right-3 w-10 h-10 text-2xl text-stone-600 hover:text-black">✕</button>
-      <div id="lightbox-icon" class="text-7xl" aria-hidden="true"></div>
-      <h6 id="lightbox-title" class="font-display title-gold text-2xl"></h6>
-      <p id="lightbox-desc" class="font-text text-stone-700 text-base leading-[1.9] max-w-sm"></p>
+    <div id="lightbox" class="hidden absolute inset-0 z-30 items-center justify-center p-6" style="background:rgba(43,38,34,.32)" role="dialog" aria-label="아이템 상세">
+      <div class="relative w-full max-w-xs border border-stone-300 shadow-xl text-center px-6 py-7 space-y-3" style="background:#FBF8F1">
+        <button type="button" id="lightbox-close" aria-label="닫기" class="absolute top-1 right-1 w-10 h-10 text-xl text-stone-600 hover:text-black">✕</button>
+        <div id="lightbox-icon" class="text-5xl" aria-hidden="true"></div>
+        <h6 id="lightbox-title" class="font-display title-gold text-xl"></h6>
+        <p id="lightbox-desc" class="font-text text-stone-900 text-base leading-[1.9]"></p>
+      </div>
     </div>
   </div>
 </div>
@@ -226,7 +228,7 @@ const characters = {
     num:'FILE 01', name:'한서린', nameEn:'HAN SEORIN',
     tags:['기록관','냉정','야간근무','미련'],
     bio:'작품 A의 기록관. 모든 사건을 한 줄도 빠짐없이 적어 두지만, 정작 자신의 이야기는 한 번도 기록하지 않았다. 말수가 적고 판단이 빠르며, 규칙을 어기는 사람 앞에서도 목소리를 높이지 않는다.',
-    birth:'1994.03.15', age:32, mbti:'ISTJ', nationality:'대한민국', height:'168cm',
+    birth:'1994년 3월 15일', age:32, mbti:'ISTJ', nationality:'대한민국', height:'168cm',
     extras:[['혈액형','A형'],['직업','기록관'],['취미','야간 산책, 낡은 장부 정리'],['말버릇','"기록해 둘게요."']],
     tmi:[
       { q:'잠버릇이 있다', a:'기록하다 잠들면 펜을 쥔 채로 잔다. 아침마다 손등에 잉크 자국이 남아 있다.' },
@@ -247,7 +249,7 @@ const characters = {
     num:'FILE 02', name:'윤도겸', nameEn:'YUN DOGYEOM',
     tags:['수집가','통찰','서투름','고서적'],
     bio:'오래된 책과 문서를 모으는 수집가. 사람의 속마음은 놀랄 만큼 잘 읽어 내지만, 그 마음에 어떤 말을 건네야 할지는 번번이 놓친다. 침묵이 길어질수록 책장을 넘기는 소리가 커진다.',
-    birth:'1989.12.24', age:36, mbti:'INFP', nationality:'대한민국', height:'182cm',
+    birth:'1989년 12월 24일', age:36, mbti:'INFP', nationality:'대한민국', height:'182cm',
     extras:[['혈액형','O형'],['직업','고서 수집가'],['취미','고서 복원, 빗소리 듣기'],['말버릇','"그게… 아니, 아닙니다."']],
     tmi:[
       { q:'우산을 자주 두고 온다', a:'비 오는 날을 좋아하면서도 정작 우산은 어디에든 두고 온다. 집에는 같은 우산이 네 개 있다.' },
@@ -267,7 +269,7 @@ const characters = {
     num:'FILE 03', name:'백이안', nameEn:'BAEK IAN',
     tags:['신입','낙천','호기심','엉뚱함'],
     bio:'기록실에 막 들어온 신입. 가만히 있으면 불안하다는 이유로 늘 무언가를 만지작거린다. 분위기를 읽지 못하는 것처럼 보이지만, 가장 먼저 눈치채고 가장 늦게 말하는 쪽에 가깝다.',
-    birth:'2001.07.07', age:25, mbti:'ENFP', nationality:'대한민국', height:'174cm',
+    birth:'2001년 7월 7일', age:25, mbti:'ENFP', nationality:'대한민국', height:'174cm',
     extras:[['혈액형','B형'],['직업','기록실 견습'],['취미','길고양이 이름 지어 주기'],['말버릇','"잠깐만요, 이거 좀 이상한데요?"']],
     tmi:[
       { q:'길고양이에게 전부 이름을 붙였다', a:'기록실 뒤뜰에만 일곱 마리. 이름은 모두 회의록에 쓰인 단어에서 따왔다.' },
@@ -332,10 +334,10 @@ const esc = t => String(t).replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', 
 $('character-grid').innerHTML = charIds.map(id => { const c = characters[id]; return `
   <button type="button" data-id="${id}" class="group text-left">
     <span class="border border-stone-300 bg-[#FBF8F1] p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-stone-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
-      <span class="font-mono text-xs text-stone-500 tracking-widest block mb-3 uppercase">${esc(c.num)}</span>
+      <span class="font-mono text-xs text-stone-600 tracking-widest block mb-3 uppercase">${esc(c.num)}</span>
       <span class="font-display title-gold text-2xl">${esc(c.name)}</span>
-      <span class="font-mono text-xs text-stone-500 tracking-[0.25em] mt-2 uppercase">${esc(c.nameEn)}</span>
-      <span class="font-text text-sm text-stone-600 mt-3">${c.tags.slice(0, 2).map(t => '#' + esc(t)).join(' ')}</span>
+      <span class="font-mono text-xs text-stone-600 tracking-[0.25em] mt-2 uppercase">${esc(c.nameEn)}</span>
+      <span class="font-text text-sm text-stone-700 mt-3">${c.tags.slice(0, 2).map(t => '#' + esc(t)).join(' ')}</span>
     </span>
   </button>`; }).join('');
 $('character-grid').addEventListener('click', e => {
@@ -349,15 +351,15 @@ const specRow = (k, v) => `<li class="flex border-b border-stone-200 pb-2"><span
 function fillModal(id) {
   const c = characters[id]; curId = id;
   $('modal-subtitle').textContent = c.num; $('modal-name').textContent = c.name; $('modal-name-en').textContent = c.nameEn;
-  $('modal-tags').innerHTML = c.tags.map(t => `<span class="border border-stone-300 text-stone-600 text-xs px-3 py-1 font-text">#${esc(t)}</span>`).join('');
+  $('modal-tags').innerHTML = c.tags.map(t => `<span class="border border-stone-400 text-stone-800 text-xs px-3 py-1 font-text">#${esc(t)}</span>`).join('');
   $('modal-desc').textContent = c.bio;
-  $('modal-specs').innerHTML = specRow('Birth', `${c.birth} (${c.age}세)`) + specRow('MBTI', c.mbti) + specRow('Nationality', c.nationality) + specRow('Height', c.height);
-  $('modal-extra').innerHTML = `<details class="acc border-y border-stone-200"><summary class="font-mono text-xs text-stone-500 tracking-[0.3em] uppercase">More Profile</summary><ul class="space-y-3 pb-5 font-mono text-xs text-stone-500">${c.extras.map(([k, v]) => specRow(esc(k), v)).join('')}</ul></details>`;
-  $('modal-tmi').innerHTML = c.tmi.map(t => `<details class="acc border-b border-stone-200"><summary class="font-text text-stone-800 text-base">${esc(t.q)}</summary><p class="font-text text-stone-600 text-base leading-[1.95] pb-5">${esc(t.a)}</p></details>`).join('');
+  $('modal-specs').innerHTML = specRow('Born', `${c.birth}생 · ${c.age}세`) + specRow('MBTI', c.mbti) + specRow('Nationality', c.nationality) + specRow('Height', c.height);
+  $('modal-extra').innerHTML = `<details class="acc border-y border-stone-200"><summary class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Notes</summary><ul class="space-y-3 pb-5 font-mono text-xs text-stone-600">${c.extras.map(([k, v]) => specRow(esc(k), v)).join('')}</ul></details>`;
+  $('modal-tmi').innerHTML = c.tmi.map(t => `<details class="acc border-b border-stone-200"><summary class="font-text text-stone-900 text-base">${esc(t.q)}</summary><p class="font-text text-stone-900 text-base leading-[1.95] pb-5">${esc(t.a)}</p></details>`).join('');
   $('modal-story').innerHTML = c.story.map(p => `<p>${esc(p)}</p>`).join('');
-  $('modal-inv-count').textContent = String(c.items.length).padStart(2, '0') + ' ITEMS';
+  $('modal-inv-count').textContent = c.items.length + ' items';
   $('modal-inv').innerHTML = c.items.map((it, i) => `<button type="button" data-item="${i}" class="border border-stone-300 bg-white/70 p-4 text-center hover:border-stone-900 transition-colors"><span class="text-3xl block mb-2" aria-hidden="true">${it.icon}</span><span class="font-text text-sm text-stone-800 block">${esc(it.title)}</span></button>`).join('');
-  $('modal-theme').textContent = c.themeTitle;
+  $('modal-theme-label').textContent = c.name + ' Theme Song'; $('modal-theme').textContent = c.themeTitle;
   const i = charIds.indexOf(id), prev = characters[charIds[(i + charIds.length - 1) % charIds.length]], next = characters[charIds[(i + 1) % charIds.length]];
   $('modal-prev-name').textContent = prev.name; $('modal-next-name').textContent = next.name;
   $('modal-scroll').scrollTop = 0;
@@ -407,9 +409,9 @@ document.addEventListener('keydown', e => {
 /* ===== 기념주화 제작소: 코난 기념뱃지 같은 앤티크 메탈 음각 (900px로 그려 선명하게 저장) ===== */
 const cv = $('coin-canvas'), ctx = cv.getContext('2d'), SCALE = cv.width / 300, TAU = Math.PI * 2, R = 88;
 const METALS = {
-  bronze: { base:'#A9622F', light:'#DC9A62', dark:'#3E1E0A', hi:'#F6CFA6' },
-  gold:   { base:'#B38B2E', light:'#E2BE68', dark:'#43300A', hi:'#F6E6A8' },
-  iron:   { base:'#7A8494', light:'#C6CDD8', dark:'#1F2733', hi:'#FFFFFF' }
+  bronze: { base:'#B5693A', light:'#EDB07E', dark:'#3A1B09', hi:'#FFE2C4' },
+  gold:   { base:'#C8A03C', light:'#F1D37E', dark:'#47330A', hi:'#FFF4C6' },
+  iron:   { base:'#8892A4', light:'#D5DBE5', dark:'#1E2632', hi:'#FFFFFF' }
 };
 let metal = 'gold', avatar = null, avatarId = 0, queued = false, relief = null, reliefKey = '';
 const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
@@ -482,16 +484,59 @@ function buildRelief(P) {
   c.putImageData(img, 0, 0);
   return o;
 }
-// 사진이 없을 때: 뱃지 속 실루엣처럼 솟아오른 흉상
-function silhouette(P) {
-  const p = new Path2D();
-  p.arc(150, 120, 27, 0, TAU); p.rect(138, 140, 24, 26);
-  p.moveTo(98, 240); p.lineTo(98, 196); p.bezierCurveTo(98, 168, 124, 160, 150, 160);
-  p.bezierCurveTo(176, 160, 202, 168, 202, 196); p.lineTo(202, 240); p.closePath();
-  ctx.save(); ctx.translate(2.5, 2.5); ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
-  const g = ctx.createLinearGradient(100, 95, 200, 240); g.addColorStop(0, P.light); g.addColorStop(1, P.base);
+// 솟아오른 부조: 어두운 그림자 → 금속 그라데이션 → 모서리 하이라이트
+function raised(p, P) {
+  ctx.save(); ctx.translate(1.5, 1.9); ctx.globalAlpha = .85; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
+  const g = ctx.createLinearGradient(95, 80, 205, 220); g.addColorStop(0, P.hi); g.addColorStop(.35, P.light); g.addColorStop(1, P.base);
   ctx.fillStyle = g; ctx.fill(p);
-  ctx.strokeStyle = P.hi; ctx.lineWidth = 1; ctx.globalAlpha = .6; ctx.stroke(p); ctx.globalAlpha = 1;
+  ctx.save(); ctx.globalAlpha = .6; ctx.lineWidth = .7; ctx.strokeStyle = P.hi; ctx.stroke(p); ctx.restore();
+}
+// 사진이 없을 때 배경: 방사형 햇살 무늬(기요셰) + 가장자리 비네트
+function field(P) {
+  disc(R, mix(P.base, P.dark, .42));
+  ctx.save(); ctx.translate(150, 150);
+  const n = 96;
+  for (let i = 0; i < n; i++) {
+    ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, R + 2, i / n * TAU, (i + .5) / n * TAU); ctx.closePath();
+    ctx.fillStyle = i % 2 ? 'rgba(255,245,200,.09)' : 'rgba(0,0,0,.12)'; ctx.fill();
+  }
+  const g = ctx.createRadialGradient(0, -14, 6, 0, 0, R);
+  g.addColorStop(0, 'rgba(255,240,190,.30)'); g.addColorStop(.55, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,.38)');
+  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, R + 2, 0, TAU); ctx.fill();
+  ctx.restore();
+}
+function star(cx, cy, r) {
+  const p = new Path2D();
+  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .42 : r; const x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a); i ? p.lineTo(x, y) : p.moveTo(x, y); }
+  p.closePath(); return p;
+}
+function emblem(P, initial) {
+  const rw = 63;
+  // 월계수 가지와 잎
+  [-1, 1].forEach(sd => {
+    ctx.save(); ctx.lineCap = 'round';
+    ctx.strokeStyle = P.dark; ctx.lineWidth = 2.2; ctx.beginPath();
+    for (let k = 0; k <= 30; k++) { const f = .22 + k / 30 * 2.55, x = 150 + sd * rw * Math.sin(f), y = 150 + rw * Math.cos(f); k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
+    ctx.stroke(); ctx.restore();
+    for (let k = 0; k < 12; k++) {
+      const f = .3 + k * .215, tx = sd * Math.cos(f), ty = -Math.sin(f), base = Math.atan2(ty, tx);
+      [[1, 5], [-1, -5]].forEach(([sgn, off]) => {
+        const len = 10.5 - k * .22, x = 150 + sd * (rw + off) * Math.sin(f), y = 150 + (rw + off) * Math.cos(f);
+        const leaf = new Path2D(); leaf.ellipse(x, y, len, 3.5, base + sgn * sd * .62, 0, TAU);
+        raised(leaf, P);
+      });
+    }
+  });
+  raised(star(150, 71, 8), P);
+  const d = new Path2D(); d.moveTo(150, 226); d.lineTo(155, 231); d.lineTo(150, 236); d.lineTo(145, 231); d.closePath(); raised(d, P);
+  // 중앙 이니셜 (이름의 첫 글자)
+  ctx.save(); ctx.font = 'bold 78px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.globalAlpha = .9; ctx.fillStyle = P.dark; ctx.fillText(initial, 152.2, 155.4);
+  ctx.globalAlpha = 1;
+  const g = ctx.createLinearGradient(0, 112, 0, 196); g.addColorStop(0, P.hi); g.addColorStop(.4, P.light); g.addColorStop(1, P.base);
+  ctx.fillStyle = g; ctx.fillText(initial, 150, 153);
+  ctx.lineWidth = .8; ctx.strokeStyle = P.hi; ctx.globalAlpha = .55; ctx.strokeText(initial, 150, 153);
+  ctx.restore();
 }
 
 let shape = 'sun';
@@ -519,12 +564,11 @@ function render() {
 
   // 1. 솟은 테두리 → 파인 바탕 → 사진을 두른 솟은 링
   const out = k => outline(shape, k);
-  ctx.save(); ctx.translate(2, 2); ctx.fillStyle = P.dark; ctx.fill(out(1)); ctx.restore();
   ctx.fillStyle = P.dark; ctx.fill(out(1));
   ctx.fillStyle = mix(P.base, P.light, .25); ctx.fill(out(.985));
   const g1 = ctx.createLinearGradient(20, 20, 280, 280); g1.addColorStop(0, P.hi); g1.addColorStop(1, P.dark);
   ctx.strokeStyle = g1; ctx.lineWidth = 4; ctx.lineJoin = 'round'; ctx.stroke(out(.97));
-  disc(127, mix(P.base, P.dark, .5)); bevel(127, 3, P.dark, P.light);
+  disc(127, mix(P.base, P.light, .12)); bevel(127, 3, P.dark, P.light);
   bevel(94, 5, P.hi, P.dark);
 
   // 2. 무광 알갱이
@@ -535,12 +579,11 @@ function render() {
 
   // 3. 사진(금속 부조) 또는 실루엣
   ctx.save(); ctx.beginPath(); ctx.arc(150, 150, R, 0, TAU); ctx.clip();
-  disc(R, mix(P.base, P.dark, .6));
-  if (avatar) {
+  if (avatar) { disc(R, mix(P.base, P.dark, .6));
     const key = metal + avatarId;
     if (key !== reliefKey) { relief = buildRelief(P); reliefKey = key; }
     ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R);
-  } else silhouette(P);
+  } else { field(P); emblem(P, [...name][0] || 'G'); }
   ctx.restore();
   bevel(R + 1.5, 3, P.dark, P.light);
 
@@ -579,6 +622,7 @@ $('btn-download').addEventListener('click', () => {
 selectMetal('gold'); selectShape('sun');
 Promise.all([
   document.fonts.load('bold 10px "Cinzel"'),
+  document.fonts.load('bold 78px "Cinzel Decorative"'),
   document.fonts.load('bold 13px "Gowun Batang"'),
   document.fonts.load('16px "Song Myung"')
 ]).then(drawCoin).catch(() => {});
@@ -597,7 +641,7 @@ function startTicker() {
 
 /* ===== 스크롤 등장 ===== */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
 </script>
 </body>
 </html>
