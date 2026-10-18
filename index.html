@@ -116,20 +116,32 @@ tailwind.config = { theme: { extend: { fontFamily: {
         <div class="space-y-8 md:w-1/2 w-full font-mono">
           <div class="space-y-3">
             <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Shape</span>
-            <div class="flex gap-2" id="shape-group">
-              <button type="button" data-shape="shield" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Shield</button>
-              <button type="button" data-shape="arch" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Arch</button>
-              <button type="button" data-shape="deco" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Deco</button>
-              <button type="button" data-shape="round" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Round</button>
+            <div class="grid grid-cols-3 gap-2" id="shape-group">
+              <button type="button" data-shape="card" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Photocard</button>
+              <button type="button" data-shape="can" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Can Badge</button>
+              <button type="button" data-shape="shield" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Shield</button>
+              <button type="button" data-shape="arch" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Arch</button>
+              <button type="button" data-shape="deco" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Deco</button>
+              <button type="button" data-shape="round" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Round</button>
+              <button type="button" data-shape="medal" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Medal</button>
+              <button type="button" data-shape="sparkle4" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Sparkle</button>
+              <button type="button" data-shape="petal" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Petal</button>
             </div>
           </div>
           <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Metal</span>
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Finish</span>
             <div class="flex gap-2" id="metal-group">
               <button type="button" data-metal="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Gold</button>
               <button type="button" data-metal="rose" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Rose</button>
               <button type="button" data-metal="silver" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Platinum</button>
               <button type="button" data-metal="aurora" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Aurora</button>
+            </div>
+          </div>
+          <div class="space-y-3" id="photo-style-row">
+            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Photo Style</span>
+            <div class="flex gap-2" id="photo-group">
+              <button type="button" data-photo="color" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Full Color</button>
+              <button type="button" data-photo="relief" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Engraved</button>
             </div>
           </div>
           <div class="space-y-3">
@@ -597,6 +609,9 @@ function emblem(P, initial) {
 /* ===== 뱃지 외형: 둥근 동전이 아니라 소장용 핀뱃지처럼 윤곽이 있는 모양 ===== */
 const MS = .74;   // 중앙 메달 크기 비율
 const SHAPES = {
+  // 풀컬러 굿즈: 홀로그램 포토카드 / 캔뱃지 (올린 그림을 색 그대로)
+  card: { custom:'card', sc:[150,150], path(p) { p.addPath(rrect(52, 6, 196, 288, 14)); } },
+  can:  { custom:'can',  sc:[150,150], path(p) { p.arc(150, 150, 140, 0, TAU); } },
   shield: { cx:150, cy:132, sc:[150,150], plaque:{ y:238, w:100 }, studs:[[62,52],[238,52]], glint:[62,50],
     path(p) { p.moveTo(50, 22); p.lineTo(250, 22); p.lineTo(264, 42); p.lineTo(264, 150); p.bezierCurveTo(264, 232, 212, 264, 150, 290); p.bezierCurveTo(88, 264, 36, 232, 36, 150); p.lineTo(36, 42); p.closePath(); } },
   arch: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:140 }, studs:[[60,262],[240,262]], glint:[66,70],
@@ -604,15 +619,30 @@ const SHAPES = {
   deco: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[56,56],[244,56],[56,244],[244,244]], glint:[58,60],
     path(p) { p.moveTo(66, 30); p.lineTo(234, 30); p.arc(268, 30, 34, Math.PI, Math.PI / 2, true); p.lineTo(270, 234); p.arc(268, 268, 34, -Math.PI / 2, Math.PI, true); p.lineTo(66, 270); p.arc(32, 268, 34, 0, -Math.PI / 2, true); p.lineTo(30, 66); p.arc(32, 32, 34, Math.PI / 2, 0, true); p.closePath(); } },
   round: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[70,70],[230,70]], glint:[68,86],
-    path(p) { p.arc(150, 150, 140, 0, TAU); } }
+    path(p) { p.arc(150, 150, 140, 0, TAU); } },
+  // 훈장: 리본이 달린 24각 별 메달
+  medal: { cx:150, cy:168, sc:[150,170], ms:.86, ribbon:true, dd:null, plaque:{ y:262, w:84 }, studs:[], glint:[98,118],
+    path(p) { for (let i = 0; i <= 48; i++) { const a = i / 48 * TAU - Math.PI / 2, r = i % 2 ? 106 : 118; const x = 150 + r * Math.cos(a), y = 170 + r * Math.sin(a); i ? p.lineTo(x, y) : p.moveTo(x, y); } p.closePath(); } },
+  // 스파클: 통통한 4각 반짝이 별 (에나멜 핀 스타일)
+  sparkle4: { pin:true, cx:150, cy:150, sc:[150,150], dd:null, plaque:{ y:262, w:84 }, studs:[], glint:[96,92], twinkles:[[238,62,9],[58,236,6],[246,224,4.5]],
+    path(p) { const c = 46; p.moveTo(150, 10); p.quadraticCurveTo(150 + c, 150 - c, 290, 150); p.quadraticCurveTo(150 + c, 150 + c, 150, 290); p.quadraticCurveTo(150 - c, 150 + c, 10, 150); p.quadraticCurveTo(150 - c, 150 - c, 150, 10); p.closePath(); } },
+  // 페탈: 둥글고 부드러운 8장 꽃잎 (에나멜 핀 스타일)
+  petal: { pin:true, cx:150, cy:148, sc:[150,148], dd:null, plaque:{ y:254, w:96 }, studs:[], glint:[84,70], twinkles:[[252,52,7],[44,248,5]],
+    path(p) { for (let i = 0; i <= 720; i++) { const a = i / 720 * TAU, r = 117 + 25 * Math.abs(Math.cos(4 * a)); const x = 150 + r * Math.cos(a), y = 148 + r * Math.sin(a); i ? p.lineTo(x, y) : p.moveTo(x, y); } p.closePath(); } }
 };
-let shape = 'shield';
+let shape = 'card', photoMode = 'color';
 function outline(t, k) {
   const S = SHAPES[t], base = new Path2D(); S.path(base);
   const q = new Path2D(); q.addPath(base, new DOMMatrix().translate(S.sc[0], S.sc[1]).scale(k).translate(-S.sc[0], -S.sc[1])); return q;
 }
+function selectPhoto(m) {
+  photoMode = m;
+  document.querySelectorAll('[data-photo]').forEach(b => b.classList.toggle('active', b.dataset.photo === m));
+  drawCoin();
+}
 function selectShape(t) {
   shape = t;
+  const row = document.getElementById('photo-style-row'); if (row) row.style.display = SHAPES[t].custom ? 'none' : '';
   document.querySelectorAll('[data-shape]').forEach(b => b.classList.toggle('active', b.dataset.shape === t));
   drawCoin();
 }
@@ -646,11 +676,199 @@ function plaque(P, text, y, w) {
   const ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + sp * (chars.length - 1);
   let x = 150 - total / 2; chars.forEach((c, i) => { carve(c, x + ws[i] / 2, y + size * .35, 0, P); x += ws[i] + sp; });
 }
+// 훈장 리본: 에나멜 색 두 가닥이 X자로 겹치고 금 고리로 메달에 매달림
+function ribbon(P) {
+  [[[96, 2], [142, 2], [176, 84], [130, 84]], [[204, 2], [158, 2], [124, 84], [170, 84]]].forEach(b => {
+    const p = new Path2D(); b.forEach(([x, y], k) => k ? p.lineTo(x, y) : p.moveTo(x, y)); p.closePath();
+    ctx.save(); ctx.translate(1.5, 2); ctx.globalAlpha = .35; ctx.fillStyle = '#000'; ctx.fill(p); ctx.restore();
+    const g = ctx.createLinearGradient(100, 0, 200, 90); g.addColorStop(0, P.enamel[0]); g.addColorStop(1, P.enamel[1]);
+    ctx.fillStyle = g; ctx.fill(p); ctx.lineJoin = 'round'; ctx.lineWidth = 1.4; ctx.strokeStyle = P.base; ctx.stroke(p);
+    ctx.strokeStyle = P.light; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo((b[0][0] + b[1][0]) / 2, 2); ctx.lineTo((b[3][0] + b[2][0]) / 2, 84); ctx.stroke();
+  });
+  const rg = ctx.createLinearGradient(138, 36, 162, 58); rg.addColorStop(0, P.hi); rg.addColorStop(1, P.dark);
+  ctx.strokeStyle = rg; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(150, 47, 10, 0, TAU); ctx.stroke();
+}
+// ===== 풀컬러 굿즈: 홀로그램 포토카드 · 캔뱃지 =====
+const HOLO = [[0, '#FFB8E0'], [.18, '#FFD9B0'], [.34, '#FFF6B8'], [.5, '#B8FFE4'], [.66, '#B0E6FF'], [.82, '#D8C2FF'], [1, '#FFB8E0']];
+function rrect(x, y, w, h, r) { const p = new Path2D(); p.moveTo(x + r, y); p.arcTo(x + w, y, x + w, y + h, r); p.arcTo(x + w, y + h, x, y + h, r); p.arcTo(x, y + h, x, y, r); p.arcTo(x, y, x + w, y, r); p.closePath(); return p; }
+// 이미지를 영역에 꽉 채우기(얼굴이 잘리지 않게 위쪽 기준)
+function cover(img, x, y, w, h, fy = .3) { const k = Math.max(w / img.width, h / img.height), iw = img.width * k, ih = img.height * k; ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) * fy, iw, ih); }
+function drawPhoto(P) {
+  if (photoMode === 'color') { cover(avatar, 150 - R, 150 - R, 2 * R, 2 * R); return; }
+  const key = metal + avatarId + '@' + SCALE;
+  if (key !== reliefKey) { relief = buildRelief(P); reliefKey = key; }
+  ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R);
+}
+// 마감별 포일: 오로라는 홀로그램 무지개, 나머지는 금속 포일
+function foil(x0, y0, x1, y1, P) {
+  const g = ctx.createLinearGradient(x0, y0, x1, y1);
+  (metal === 'aurora' ? HOLO : [[0, P.hi], [.2, P.light], [.42, P.base], [.58, P.hi], [.78, P.base], [1, P.dark]]).forEach(([t, c]) => g.addColorStop(t, c));
+  return g;
+}
+const GLIT = (() => { let q = 11; const r = () => (q = (q * 16807) % 2147483647) / 2147483647; return Array.from({ length: 520 }, () => [r() * 300, r() * 300, r() * .8 + .2, r()]); })();
+function glitter(alpha) { GLIT.forEach(([x, y, r, a]) => { ctx.globalAlpha = alpha * (.25 + .75 * a); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, r * .55, 0, TAU); ctx.fill(); }); ctx.globalAlpha = 1; }
+function spaced(text, x, y, gap, align) {
+  const ch = [...text], ws = ch.map(c => ctx.measureText(c).width), tw = ws.reduce((a, b) => a + b, 0) + gap * (ch.length - 1);
+  let cx = align === 'center' ? x - tw / 2 : align === 'right' ? x - tw : x; const ta = ctx.textAlign; ctx.textAlign = 'left';
+  ch.forEach((c, i) => { ctx.fillText(c, cx, y); cx += ws[i] + gap; }); ctx.textAlign = ta; return tw;
+}
+// 그림이 없을 때: 에나멜 색 그라데이션 + 동심원 무늬 + 포일 이니셜
+function placeholderArt(P, x, y, w, h, name, cy) {
+  const E = P.enamel, g = ctx.createLinearGradient(x, y, x + w, y + h);
+  g.addColorStop(0, mix(E[0], '#FFFFFF', .28)); g.addColorStop(.55, E[0]); g.addColorStop(1, E[1]);
+  ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+  const ccx = x + w / 2; ctx.lineWidth = .6;
+  for (let r = 14; r < 260; r += 8) { ctx.strokeStyle = `rgba(255,255,255,${.12 - r / 3200})`; ctx.beginPath(); ctx.arc(ccx, cy, r, 0, TAU); ctx.stroke(); }
+  const lg = ctx.createRadialGradient(ccx, cy - 20, 4, ccx, cy, 120); lg.addColorStop(0, 'rgba(255,255,255,.35)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = lg; ctx.fillRect(x, y, w, h);
+  ctx.font = 'bold 118px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const ch = [...name][0] || 'G';
+  ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4; ctx.fillStyle = foil(ccx - 50, cy - 60, ccx + 50, cy + 60, P); ctx.fillText(ch, ccx, cy); ctx.restore();
+  ctx.textBaseline = 'alphabetic';
+}
+function holoSheen(x, y, w, h, strong) {
+  ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = strong ? .6 : .22;
+  const hs = ctx.createLinearGradient(x, y, x + w, y + h); HOLO.forEach(([t, c]) => hs.addColorStop(t, c)); ctx.fillStyle = hs; ctx.fillRect(x, y, w, h);
+  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
+  const st = ctx.createLinearGradient(x, y + h * .05, x + w, y + h * .65);
+  st.addColorStop(.36, 'rgba(255,255,255,0)'); st.addColorStop(.46, 'rgba(255,255,255,.2)'); st.addColorStop(.5, 'rgba(255,255,255,.05)'); st.addColorStop(.56, 'rgba(255,255,255,.14)'); st.addColorStop(.64, 'rgba(255,255,255,0)');
+  ctx.fillStyle = st; ctx.fillRect(x, y, w, h);
+}
+function renderCard(P, name) {
+  const X = 52, Y = 6, W = 196, H = 288, card = rrect(X, Y, W, H, 14);
+  ctx.fillStyle = foil(X, Y, X + W, Y + H, P); ctx.fill(card);
+  ctx.save(); ctx.clip(card); glitter(metal === 'aurora' ? .7 : .5);
+  const ed = ctx.createLinearGradient(X, Y, X + W, Y + H); ed.addColorStop(0, 'rgba(255,255,255,.35)'); ed.addColorStop(.5, 'rgba(255,255,255,0)'); ed.addColorStop(1, 'rgba(0,0,0,.18)');
+  ctx.fillStyle = ed; ctx.fillRect(X, Y, W, H); ctx.restore();
+  const ax = X + 8, ay = Y + 8, aw = W - 16, ah = H - 16, art = rrect(ax, ay, aw, ah, 9);
+  ctx.save(); ctx.clip(art);
+  if (avatar) cover(avatar, ax, ay, aw, ah, .25); else placeholderArt(P, ax, ay, aw, ah, name, ay + ah * .42);
+  holoSheen(ax, ay, aw, ah, metal === 'aurora');
+  const tf = ctx.createLinearGradient(0, ay, 0, ay + 46); tf.addColorStop(0, 'rgba(12,10,24,.45)'); tf.addColorStop(1, 'rgba(12,10,24,0)'); ctx.fillStyle = tf; ctx.fillRect(ax, ay, aw, 46);
+  const bf = ctx.createLinearGradient(0, ay + ah * .56, 0, ay + ah); bf.addColorStop(0, 'rgba(12,10,24,0)'); bf.addColorStop(1, 'rgba(12,10,24,.78)'); ctx.fillStyle = bf; ctx.fillRect(ax, ay + ah * .5, aw, ah * .5);
+  ctx.restore();
+  ctx.lineWidth = .9; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.stroke(art);
+  ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(0,0,0,.35)'; ctx.stroke(card);
+  // 글자: 상단 로고·번호, 하단 이름(포일)·컬렉션 문구
+  ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(255,255,255,.92)';
+  ctx.font = 'bold 6.6px "Cinzel","Gowun Batang",serif'; spaced('PROJECT ARCHIVE', ax + 11, ay + 17, 1.6, 'left');
+  ctx.font = 'bold 6.6px "Cinzel","Gowun Batang",serif'; spaced(serialOf(name), ax + aw - 11, ay + 17, 1.2, 'right');
+  let fs = 26; ctx.font = `bold ${fs}px "Cinzel","Gowun Batang",serif`;
+  const nw = [...name].reduce((a, c) => a + ctx.measureText(c).width + 1.5, 0); if (nw > aw - 24) fs = Math.max(12, fs * (aw - 24) / nw);
+  ctx.font = `bold ${fs}px "Cinzel","Gowun Batang",serif`;
+  ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 1.5; ctx.fillStyle = foil(ax, ay + ah - 70, ax + aw, ay + ah, P);
+  spaced(name, ax + 12, ay + ah - 30, 1.5, 'left'); ctx.restore();
+  ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = .6; ctx.beginPath(); ctx.moveTo(ax + 12, ay + ah - 22); ctx.lineTo(ax + aw - 12, ay + ah - 22); ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.font = 'bold 6.2px "Cinzel","Gowun Batang",serif';
+  spaced('OFFICIAL COLLECTION', ax + 12, ay + ah - 11, 1.6, 'left'); spaced('MMXXVI', ax + aw - 12, ay + ah - 11, 1.6, 'right');
+  sparkle(X + W - 16, Y + 40, 8, .95); sparkle(X + 20, Y + H - 82, 5, .85); sparkle(X + W - 30, Y + H - 98, 4, .8);
+}
+function arcFill(text, r, bottom, font, gap) {
+  ctx.font = font; ctx.textAlign = 'center';
+  const chars = [...text], w = chars.map(c => ctx.measureText(c).width + gap), d = bottom ? -1 : 1, y = bottom ? r : -r;
+  let a = -d * (w.reduce((s, x) => s + x, 0) / r) / 2;
+  chars.forEach((ch, i) => { const st = w[i] / r; a += d * st / 2; ctx.save(); ctx.rotate(a); ctx.fillText(ch, 0, y); ctx.restore(); a += d * st / 2; });
+}
+function renderCan(P, name) {
+  const C = 150, r = 140;
+  ctx.fillStyle = foil(20, 20, 280, 280, P); ctx.beginPath(); ctx.arc(C, C, r, 0, TAU); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(C, C, r - 5, 0, TAU); ctx.clip();
+  if (avatar) cover(avatar, C - r, C - r, 2 * r, 2 * r, .3); else placeholderArt(P, C - r, C - r, 2 * r, 2 * r, name, C - 8);
+  holoSheen(C - r, C - r, 2 * r, 2 * r, metal === 'aurora');
+  const bf = ctx.createLinearGradient(0, C + 40, 0, C + r); bf.addColorStop(0, 'rgba(12,10,24,0)'); bf.addColorStop(1, 'rgba(12,10,24,.7)'); ctx.fillStyle = bf; ctx.fillRect(0, C + 40, 300, r);
+  // 캔뱃지 특유의 둥근 가장자리 그림자 + 유광 돔 반사
+  const vg = ctx.createRadialGradient(C, C, r * .72, C, C, r); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.28)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, 300, 300);
+  const gl = ctx.createLinearGradient(C - 100, C - 120, C - 10, C - 20); gl.addColorStop(0, 'rgba(255,255,255,.55)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(C - 48, C - 70, 82, 40, -.62, 0, TAU); ctx.fill();
+  ctx.restore();
+  ctx.save(); ctx.translate(C, C); ctx.textBaseline = 'alphabetic';
+  ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.shadowColor = 'rgba(0,0,0,.5)'; ctx.shadowBlur = 4;
+  arcFill('PROJECT ARCHIVE', r - 22, false, 'bold 9px "Cinzel","Gowun Batang",serif', 2.2);
+  ctx.fillStyle = foil(-80, 60, 80, 140, P); ctx.shadowBlur = 6;
+  let fs = 19; ctx.font = `bold ${fs}px "Cinzel","Gowun Batang",serif`; const nw = [...name].reduce((a, c) => a + ctx.measureText(c).width + 1.8, 0); if (nw > 170) fs = Math.max(11, fs * 170 / nw);
+  arcFill(name, r - 14, true, `bold ${fs}px "Cinzel","Gowun Batang",serif`, 1.8);
+  ctx.restore();
+  ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.beginPath(); ctx.arc(C, C, r - 5, 0, TAU); ctx.stroke();
+  ctx.strokeStyle = 'rgba(0,0,0,.4)'; ctx.beginPath(); ctx.arc(C, C, r, 0, TAU); ctx.stroke();
+  sparkle(C + 92, C - 92, 9, .95); sparkle(C + 108, C - 64, 4.5, .85);
+}
+// ===== 에나멜 핀 스타일 (스파클 / 페탈): 단색 에나멜 몸체 + 가는 금속 테두리 + 유리 광택 =====
+function pill(P, text, y, w) {
+  const h = 12, x0 = 150 - w / 2 - 6, x1 = 150 + w / 2 + 6, p = new Path2D();
+  p.moveTo(x0 + h, y - h); p.lineTo(x1 - h, y - h); p.arc(x1 - h, y, h, -Math.PI / 2, Math.PI / 2); p.lineTo(x0 + h, y + h); p.arc(x0 + h, y, h, Math.PI / 2, Math.PI * 1.5); p.closePath();
+  ctx.save(); ctx.translate(0, 2); ctx.globalAlpha = .35; ctx.fillStyle = '#000'; ctx.fill(p); ctx.restore();
+  const g = ctx.createLinearGradient(0, y - h, 0, y + h); g.addColorStop(0, P.hi); g.addColorStop(.5, P.light); g.addColorStop(1, mix(P.base, P.dark, .2));
+  ctx.fillStyle = g; ctx.fill(p); ctx.lineWidth = 1; ctx.strokeStyle = P.dark; ctx.stroke(p);
+  const chars = [...text], sp = chars.length > 7 ? .8 : 1.8;
+  ctx.font = 'bold 10px "Cinzel","Gowun Batang",serif';
+  const base = chars.reduce((a, c) => a + ctx.measureText(c).width + sp, -sp), size = Math.max(8.5, Math.min(13, 10 * (w - 10) / base));
+  ctx.font = `bold ${size}px "Cinzel","Gowun Batang",serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+  const ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + sp * (chars.length - 1);
+  ctx.fillStyle = P.dark; let x = 150 - total / 2; chars.forEach((c, i) => { ctx.fillText(c, x + ws[i] / 2, y + size * .35); x += ws[i] + sp; });
+}
+function renderPin(P, name, S) {
+  const out = k => outline(shape, k), E = P.enamel;
+  // 몸체: 대각선 에나멜 그라데이션 + 은은한 방사형 줄무늬 + 중앙 빛
+  const g = ctx.createLinearGradient(30, 10, 270, 290); g.addColorStop(0, mix(E[0], '#FFFFFF', .14)); g.addColorStop(.55, E[0]); g.addColorStop(1, E[1]);
+  ctx.fillStyle = g; ctx.fill(out(1));
+  ctx.save(); ctx.clip(out(1)); ctx.translate(S.cx, S.cy);
+  for (let i = 0; i < 48; i++) { ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 220, i / 48 * TAU, (i + .5) / 48 * TAU); ctx.closePath(); ctx.fillStyle = i % 2 ? 'rgba(255,255,255,.045)' : 'rgba(0,0,0,.07)'; ctx.fill(); }
+  ctx.restore();
+  ctx.save(); ctx.clip(out(1));
+  const glow = ctx.createRadialGradient(S.cx, S.cy - 10, 10, S.cx, S.cy, 140); glow.addColorStop(0, 'rgba(255,255,255,.20)'); glow.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = glow; ctx.fillRect(0, 0, 300, 300);
+  const pat = ctx.createPattern(grain, 'repeat'); if (pat.setTransform) pat.setTransform(new DOMMatrix().scale(1 / SCALE));
+  ctx.globalCompositeOperation = 'overlay'; ctx.globalAlpha = .6; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300); ctx.globalAlpha = 1;
+  if (metal === 'aurora') {
+    ctx.globalCompositeOperation = 'soft-light'; const ir = ctx.createLinearGradient(20, 30, 280, 270);
+    [[0, '#FF9FD6'], [.25, '#9FE8FF'], [.5, '#FFF0A6'], [.75, '#C9A8FF'], [1, '#FF9FD6']].forEach(([t, c]) => ir.addColorStop(t, c)); ctx.fillStyle = ir; ctx.fillRect(0, 0, 300, 300);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  // 금속 테두리 (안쪽으로 4.5px)
+  const gr = ctx.createLinearGradient(20, 20, 280, 280); gr.addColorStop(0, P.hi); gr.addColorStop(.45, P.light); gr.addColorStop(1, P.dark);
+  ctx.lineJoin = 'round'; ctx.strokeStyle = gr; ctx.lineWidth = 9; ctx.stroke(out(1));
+  ctx.restore();
+  ctx.lineJoin = 'round'; ctx.strokeStyle = P.dark; ctx.lineWidth = 1.3; ctx.stroke(out(1));
+  // 중앙 메달: 금속 링 + 안쪽 면
+  ctx.save(); ctx.translate(S.cx, S.cy);
+  const rg = ctx.createLinearGradient(-72, -72, 72, 72); rg.addColorStop(0, P.hi); rg.addColorStop(.5, P.base); rg.addColorStop(1, P.dark);
+  ctx.fillStyle = rg; ctx.beginPath(); ctx.arc(0, 0, 73, 0, TAU); ctx.fill();
+  ctx.fillStyle = P.dark; ctx.beginPath(); ctx.arc(0, 0, 67.5, 0, TAU); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 66.5, 0, TAU); ctx.clip();
+  if (avatar) {
+    ctx.scale(.75, .75); ctx.translate(-150, -150);
+    ctx.fillStyle = mix(P.base, P.dark, .55); ctx.fillRect(0, 0, 300, 300);
+    drawPhoto(P);
+  } else {
+    const fg = ctx.createRadialGradient(-18, -22, 6, 0, 0, 72); fg.addColorStop(0, mix(E[0], '#FFFFFF', .08)); fg.addColorStop(1, E[1]);
+    ctx.fillStyle = fg; ctx.fillRect(-80, -80, 160, 160);
+    ctx.font = 'bold 88px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    const ch = [...name][0] || 'G';
+    ctx.globalAlpha = .6; ctx.fillStyle = '#000'; ctx.fillText(ch, 1.8, 6.4); ctx.globalAlpha = 1;
+    const lg = ctx.createLinearGradient(0, -40, 0, 50); lg.addColorStop(0, P.hi); lg.addColorStop(.5, P.light); lg.addColorStop(1, P.base);
+    ctx.fillStyle = lg; ctx.fillText(ch, 0, 4);
+  }
+  ctx.restore();
+  const gl = ctx.createLinearGradient(-50, -60, 10, 0); gl.addColorStop(0, 'rgba(255,255,255,.30)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 66.5, 0, TAU); ctx.clip(); ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(-14, -34, 44, 22, -.6, 0, TAU); ctx.fill(); ctx.restore();
+  ctx.restore();
+  pill(P, name, S.plaque.y, S.plaque.w);
+  // 유리 광택(위쪽 돔) + 반짝임
+  ctx.save(); ctx.clip(out(1));
+  const dome = ctx.createLinearGradient(0, 0, 0, 300); dome.addColorStop(0, 'rgba(255,255,255,.22)'); dome.addColorStop(.42, 'rgba(255,255,255,0)'); dome.addColorStop(1, 'rgba(0,0,0,.16)');
+  ctx.fillStyle = dome; ctx.fillRect(0, 0, 300, 300); ctx.restore();
+  sparkle(S.glint[0], S.glint[1], 11, .95);
+  (S.twinkles || []).forEach(([x, y, r]) => sparkle(x, y, r * 1.4, .95));
+}
 function render() {
   const P = METALS[metal], name = ($('coin-name-input').value.trim() || 'GUEST').toUpperCase(), S = SHAPES[shape];
   ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
   ctx.clearRect(0, 0, 300, 300);
+  if (S.custom === 'card') { renderCard(P, name); return; }
+  if (S.custom === 'can') { renderCan(P, name); return; }
+  if (S.pin) { renderPin(P, name, S); return; }
   const out = k => outline(shape, k);
+  if (S.ribbon) ribbon(P);
   const conic = (a, alpha) => { if (!ctx.createConicGradient) return; const cg = ctx.createConicGradient(a, 150, 150);
     [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .32)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .32)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
     ctx.globalAlpha = alpha; ctx.fillStyle = cg; ctx.fillRect(0, 0, 300, 300); ctx.globalAlpha = 1; };
@@ -690,44 +908,49 @@ function render() {
   ctx.strokeStyle = 'rgba(255,246,215,.75)'; ctx.lineWidth = .7; ctx.stroke(out(.895));
   ctx.strokeStyle = P.dark; ctx.lineWidth = 1.5; ctx.stroke(out(1));
 
-  // 3. 중앙 메달: 눈금 베젤 → 글귀 띠 → 에나멜
-  ctx.save(); ctx.translate(S.cx, S.cy);
+  // 3. 중앙 메달: 눈금 베젤 → 글귀 띠 → 에나멜 (카메오는 별도 구성)
+  ctx.save(); ctx.translate(S.cx, S.cy); ctx.scale(S.ms || 1, S.ms || 1);
   for (let i = 0; i < 120; i++) {
     const len = i % 5 ? 2.4 : 4.6; ctx.save(); ctx.rotate(i * Math.PI / 60);
     ctx.strokeStyle = 'rgba(255,246,215,.85)'; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(.5, -85.2); ctx.lineTo(.5, -85.2 - len); ctx.stroke();
     ctx.strokeStyle = P.dark; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(0, -85); ctx.lineTo(0, -85 - len); ctx.stroke(); ctx.restore();
   }
   ctx.fillStyle = mix(P.base, P.light, .15); ctx.beginPath(); ctx.arc(0, 0, 82, 0, TAU); ctx.fill();
-  if (ctx.createConicGradient) {
+  if (!avatar && ctx.createConicGradient) {
     const cg = ctx.createConicGradient(-.6, 0, 0);
     [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .3)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .3)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
     ctx.save(); ctx.globalAlpha = .6; ctx.beginPath(); ctx.arc(0, 0, 81, 0, TAU); ctx.arc(0, 0, 63, 0, TAU, true); ctx.fillStyle = cg; ctx.fill(); ctx.restore();
   }
-  mring(82, 2.4, P.dark, P.light); mring(63.5, 3.6, P.hi, P.dark);
-  arcText('PROJECT ARCHIVE', 67.6, false, P, 'bold 8.4px "Cinzel","Gowun Batang",serif', 3);
-  arcText(serialOf(name) + ' · 2026', 73.6, true, P, 'bold 7.4px "Cinzel","Gowun Batang",serif', 2);
-  [[-1, 62], [1, 62]].forEach(([sd]) => raised2(diamond(sd * 72.5, 0, 2.2), P));
-  ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 58.6, 0, TAU); ctx.clip();
-  ctx.save(); ctx.scale(.62, .62); ctx.translate(-150, -150);
-  enamelField(P);
+  mring(82, 2.4, P.dark, P.light);
+  if (!avatar) mring(63.5, 3.6, P.hi, P.dark);
+  if (!avatar) arcText('PROJECT ARCHIVE', 67.6, false, P, 'bold 8.4px "Cinzel","Gowun Batang",serif', 3);
+  if (!avatar) arcText(serialOf(name) + ' · 2026', 73.6, true, P, 'bold 7.4px "Cinzel","Gowun Batang",serif', 2);
+  if (!avatar) [[-1, 62], [1, 62]].forEach(([sd]) => raised2(diamond(sd * 72.5, 0, 2.2), P));
   if (avatar) {
-    ctx.save(); ctx.beginPath(); ctx.arc(150, 150, R, 0, TAU); ctx.clip();
-    const key = metal + avatarId + '@' + SCALE;
-    if (key !== reliefKey) { relief = buildRelief(P); reliefKey = key; }
-    ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R); ctx.restore();
-  } else emblem(P, [...name][0] || 'G');
-  ctx.restore();
-  // 에나멜 유리 광택
-  const gl = ctx.createLinearGradient(-40, -52, 12, 6); gl.addColorStop(0, 'rgba(255,255,255,.38)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(-14, -30, 46, 22, -.6, 0, TAU); ctx.fill();
-  ctx.restore();
-  mring(59.4, 2, P.dark, P.hi);
+    // 사진: 띠를 없애고 메달 안쪽 전체(반지름 약 78)를 사용 → 기존보다 훨씬 크게
+    ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 77.6, 0, TAU); ctx.clip();
+    ctx.scale(.88, .88); ctx.translate(-150, -150);
+    ctx.fillStyle = mix(P.base, P.dark, .55); ctx.fillRect(0, 0, 300, 300);
+    drawPhoto(P);
+    ctx.restore();
+    mring(78.4, 2.6, P.dark, P.hi); mring(80.6, 1.2, P.hi, P.dark);
+  } else {
+    ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 58.6, 0, TAU); ctx.clip();
+    ctx.save(); ctx.scale(.62, .62); ctx.translate(-150, -150);
+    enamelField(P); emblem(P, [...name][0] || 'G');
+    ctx.restore();
+    // 에나멜 유리 광택
+    const gl = ctx.createLinearGradient(-40, -52, 12, 6); gl.addColorStop(0, 'rgba(255,255,255,.38)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(-14, -30, 46, 22, -.6, 0, TAU); ctx.fill();
+    ctx.restore();
+    mring(59.4, 2, P.dark, P.hi);
+  }
   ctx.restore();
 
   // 4. 모서리 장식(마름모) + 이름 명판
   S.studs.forEach(([x, y]) => raised2(diamond(x, y, 3.6), P));
   plaque(P, name, S.plaque.y, S.plaque.w);
-  [-1, 1].forEach(sd => raised2(diamond(150 + sd * (S.plaque.w / 2 + 24), S.plaque.y, 3.2), P));
+  if (S.dd !== null) [-1, 1].forEach(sd => raised2(diamond(150 + sd * (S.dd || S.plaque.w / 2 + 24), S.plaque.y, 3.2), P));
 
   // 5. 광택
   ctx.save(); ctx.clip(out(.99));
@@ -744,6 +967,7 @@ function raised2(p, P) {
   ctx.fillStyle = mix(P.light, P.hi, .5); ctx.fill(p); ctx.lineWidth = .6; ctx.strokeStyle = P.dark; ctx.stroke(p);
 }
 
+$('photo-group').addEventListener('click', e => { const b = e.target.closest('[data-photo]'); if (b) selectPhoto(b.dataset.photo); });
 $('metal-group').addEventListener('click', e => { const b = e.target.closest('[data-metal]'); if (b) selectMetal(b.dataset.metal); });
 $('coin-name-input').addEventListener('input', drawCoin);
 $('shape-group').addEventListener('click', e => { const b = e.target.closest('[data-shape]'); if (b) selectShape(b.dataset.shape); });
@@ -769,7 +993,7 @@ $('btn-download').addEventListener('click', () => {
   }, 'image/png');
 });
 
-selectMetal('gold'); selectShape('shield');
+selectMetal('gold'); selectShape('card'); selectPhoto('color');
 Promise.all([
   document.fonts.load('bold 10px "Cinzel"'),
   document.fonts.load('bold 78px "Cinzel Decorative"'),
