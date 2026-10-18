@@ -1,408 +1,402 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PROJECT ARCHIVE</title>
-  
-  <!-- 상업용 무료 폰트 로드 -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-  
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            serif: ['"Playfair Display"', '"Noto Serif KR"', 'serif'],
-            mono: ['"Space Mono"', 'monospace'],
-            sans: ['Pretendard', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body { background-color: #F8F8F6; color: #1A1A1A; }
-    .smooth-scroll { -webkit-overflow-scrolling: touch; transform: translate3d(0,0,0); }
-    .decor-line { position: relative; }
-    .decor-line::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 40px; height: 1px; background-color: #D1D5DB; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PROJECT ARCHIVE</title>
+<meta name="description" content="작품 A의 세계관과 등장인물 기록실">
+<meta property="og:title" content="PROJECT ARCHIVE">
+<meta property="og:description" content="작품 A의 세계관과 등장인물 기록실">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪙%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: { fontFamily: {
+  serif: ['"Playfair Display"', '"Noto Serif KR"', 'serif'],
+  mono: ['"Space Mono"', 'monospace'],
+  sans: ['Pretendard', 'sans-serif'] } } } }
+</script>
+<style>
+  body { background:#F8F8F6; color:#1A1A1A; }
+  .decor-line { position:relative; }
+  .decor-line::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); width:40px; height:1px; background:#D1D5DB; }
+  .metal-btn.active { border-color:#000; color:#000; background:#EFEFEC; }
+  :focus-visible { outline:2px solid #1A1A1A; outline-offset:3px; }
+  #gateway :focus-visible { outline-color:#fff; }
+  @media (prefers-reduced-motion: reduce) { *, ::before, ::after { transition:none !important; animation:none !important; } }
+</style>
 </head>
-<body class="antialiased overflow-x-hidden smooth-scroll font-sans">
+<body class="antialiased overflow-x-hidden font-sans">
 
-  <!-- 1. 게이트웨이 -->
-  <div id="gateway" class="fixed inset-0 z-50 bg-[#0A0A0A] text-white flex items-center justify-center p-6 transition-all duration-700 ease-out transform-gpu">
-    <div class="w-full max-w-md border border-white/20 p-12 space-y-12 text-center relative bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')]">
-      <div class="space-y-4">
-        <span class="font-mono text-[10px] text-neutral-400 tracking-[0.4em] uppercase">Confidential Archive</span>
-        <h1 id="gate-title" class="text-4xl font-serif tracking-widest text-neutral-100">기록실 입장</h1>
-        <p class="font-serif text-sm text-neutral-500 italic">Enter your signature to unlock the records.</p>
-      </div>
-
-      <div class="text-center">
-        <input type="text" id="username" placeholder="서명을 남겨주세요" maxlength="12" class="w-2/3 bg-transparent border-b border-neutral-600 focus:border-white outline-none py-2 text-center text-lg font-serif text-white transition-colors placeholder-neutral-700" />
-      </div>
-
-      <div class="space-y-4 pt-4 font-mono text-xs">
-        <button id="btn-bgm-on" class="w-full py-4 border border-white text-white hover:bg-white hover:text-black transition-all tracking-[0.2em] uppercase">
-          [ Enter with Audio ]
-        </button>
-        <button id="btn-bgm-off" class="w-full py-2 text-neutral-500 hover:text-white transition-all tracking-widest uppercase">
-          Silent Entry
-        </button>
-      </div>
+<!-- 1. 입장 화면 (연출용: 보안 기능이 아닙니다) -->
+<div id="gateway" class="fixed inset-0 z-50 bg-[#0A0A0A] text-white flex items-center justify-center p-6 transition-opacity duration-500">
+  <div class="w-full max-w-md border border-white/20 bg-white/[0.03] p-12 space-y-12 text-center">
+    <div class="space-y-4">
+      <span class="font-mono text-[10px] text-neutral-400 tracking-[0.4em] uppercase">Confidential Archive</span>
+      <h1 class="text-4xl font-serif tracking-widest text-neutral-100">기록실 입장</h1>
+      <p class="font-serif text-sm text-neutral-500 italic">Enter your signature to unlock the records.</p>
+    </div>
+    <input type="text" id="username" placeholder="서명을 남겨주세요" maxlength="10" aria-label="서명"
+      class="w-2/3 bg-transparent border-b border-neutral-600 focus:border-white outline-none py-2 text-center text-lg font-serif text-white transition-colors placeholder-neutral-600" />
+    <div class="space-y-4 pt-4 font-mono text-xs">
+      <button type="button" id="btn-bgm-on" class="w-full py-4 border border-white text-white hover:bg-white hover:text-black transition-colors tracking-[0.2em] uppercase">[ Enter with Audio ]</button>
+      <button type="button" id="btn-bgm-off" class="w-full py-2 text-neutral-400 hover:text-white transition-colors tracking-widest uppercase">Silent Entry</button>
     </div>
   </div>
+</div>
 
-  <audio id="main-bgm" loop preload="none">
-    <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-  </audio>
+<audio id="main-bgm" loop preload="none"></audio>
 
-  <!-- 2. 메인 페이지 -->
-  <div id="main-view" class="opacity-0 translate-y-4 transition-all duration-700 ease-out transform-gpu flex flex-col min-h-screen">
-    
-    <nav class="w-full px-8 py-5 flex justify-between items-center border-b border-neutral-200 sticky top-0 bg-[#F8F8F6]/90 backdrop-blur-md z-30">
-      <div class="font-serif text-xl tracking-widest text-neutral-900 uppercase">Project<span class="font-light italic text-neutral-400"> Archive</span></div>
-      
-      <div class="flex items-center gap-6">
-        <div class="flex items-center gap-2 font-mono text-xs">
-          <div class="w-1.5 h-1.5 bg-neutral-800 rounded-full animate-pulse"></div>
-          <span id="nav-user-label" class="text-neutral-500 tracking-wider">GUEST</span>
-        </div>
-        <button id="bgm-toggle-btn" onclick="toggleBGM()" class="font-mono text-[10px] text-neutral-400 hover:text-black transition-colors uppercase tracking-widest border border-neutral-300 px-3 py-1 hover:border-black">
-          Audio On
-        </button>
+<!-- 2. 메인 -->
+<div id="main-view" class="opacity-0 translate-y-4 transition-all duration-700 ease-out flex flex-col min-h-screen">
+  <nav class="w-full px-8 py-5 flex justify-between items-center border-b border-neutral-200 sticky top-0 bg-[#F8F8F6]/90 backdrop-blur-md z-30">
+    <div class="font-serif text-xl tracking-widest text-neutral-900 uppercase">Project<span class="font-light italic text-neutral-400"> Archive</span></div>
+    <div class="flex items-center gap-6">
+      <div class="flex items-center gap-2 font-mono text-xs">
+        <div class="w-1.5 h-1.5 bg-neutral-800 rounded-full animate-pulse"></div>
+        <span id="nav-user-label" class="text-neutral-500 tracking-wider">GUEST</span>
       </div>
-    </nav>
+      <button type="button" id="bgm-toggle-btn" class="font-mono text-[10px] text-neutral-500 hover:text-black transition-colors uppercase tracking-widest border border-neutral-300 px-3 py-1 hover:border-black">Audio Off</button>
+    </div>
+  </nav>
 
-    <main class="flex-grow max-w-5xl mx-auto px-6 py-24 w-full space-y-32">
-      
-      <section class="text-center max-w-3xl mx-auto space-y-8">
-        <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase block">Chapter I</span>
-        <h2 id="world-title" class="text-5xl font-serif text-neutral-900 decor-line pb-4">작품 A의 세계</h2>
-        <p id="world-desc" class="font-serif text-neutral-600 text-lg leading-[2.2] pt-8">
-          이곳은 작품 A의 세계관이 펼쳐지는 중심부입니다.<br>
-          아직 밝혀지지 않은 수많은 역사와 기록의 파편들이 이 공간에 잠들어 있습니다.<br>
-          각기 다른 목적을 지닌 인물들이 거대한 흐름 속에서 자신들만의 궤적을 그리며 움직입니다.<br>
-          그들이 마주할 운명과 선택, 그리고 그 이면에 숨겨진 진실은 무엇일까요.<br>
-          준비된 기록을 열람하여, 얽히고설킨 서사의 실타래를 직접 확인하십시오.
-        </p>
-      </section>
+  <main class="flex-grow max-w-5xl mx-auto px-6 py-24 w-full space-y-32">
+    <section class="text-center max-w-3xl mx-auto space-y-8">
+      <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase block">Chapter I</span>
+      <h2 class="text-5xl font-serif text-neutral-900 decor-line pb-4">작품 A의 세계</h2>
+      <p class="font-serif text-neutral-600 text-lg leading-[2.2] pt-8">
+        이곳은 작품 A의 세계관이 펼쳐지는 중심부입니다.<br>
+        아직 밝혀지지 않은 수많은 역사와 기록의 파편들이 이 공간에 잠들어 있습니다.<br>
+        각기 다른 목적을 지닌 인물들이 거대한 흐름 속에서 자신들만의 궤적을 그리며 움직입니다.<br>
+        그들이 마주할 운명과 선택, 그리고 그 이면에 숨겨진 진실은 무엇일까요.<br>
+        준비된 기록을 열람하여, 얽히고설킨 서사의 실타래를 직접 확인하십시오.
+      </p>
+    </section>
 
-      <section class="space-y-12">
-        <div class="text-center space-y-2">
-          <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase">Chapter II</span>
-          <h3 class="font-serif text-3xl text-neutral-900">등장인물 기록</h3>
-        </div>
+    <section class="space-y-12">
+      <div class="text-center space-y-2">
+        <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase">Chapter II</span>
+        <h3 class="font-serif text-3xl text-neutral-900">등장인물 기록</h3>
+      </div>
+      <!-- 카드는 아래 characters 데이터에서 자동 생성됩니다 -->
+      <div id="character-grid" class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8"></div>
+    </section>
 
-        <div id="character-grid" class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-8">
-          <div onclick="openCharacterModal('char1')" class="cursor-pointer group relative">
-            <div class="border border-neutral-300 bg-white p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-neutral-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
-              <span class="font-mono text-[10px] text-neutral-400 tracking-widest block mb-3 uppercase">File 01</span>
-              <span class="font-serif text-xl text-neutral-800 group-hover:text-black">캐릭터 1</span>
-            </div>
-          </div>
-          <div onclick="openCharacterModal('char2')" class="cursor-pointer group relative">
-            <div class="border border-neutral-300 bg-white p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-neutral-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
-              <span class="font-mono text-[10px] text-neutral-400 tracking-widest block mb-3 uppercase">File 02</span>
-              <span class="font-serif text-xl text-neutral-800 group-hover:text-black">캐릭터 2</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 기념주화 제작소 (코난 뱃지 메탈 렌더링 적용) -->
-      <section id="studio-section" class="border-t border-neutral-300 pt-24">
-        <div class="text-center space-y-2 mb-16">
-          <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase">Chapter III</span>
-          <h3 class="font-serif text-3xl text-neutral-900">기념주화 압인소</h3>
-          <p class="font-mono text-xs text-neutral-400 mt-2 tracking-wide">* Data remains strictly on your local device.</p>
-        </div>
-
-        <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center bg-white p-10 border border-neutral-200 shadow-sm">
-          
-          <div class="flex justify-center md:w-1/2">
-            <div class="p-4 border border-neutral-100 rounded-full shadow-[0_0_40px_rgba(0,0,0,0.05)] bg-[#121212]">
-              <canvas id="coin-canvas" width="300" height="300" class="w-full max-w-[280px] aspect-square rounded-full"></canvas>
-            </div>
-          </div>
-          
-          <div class="space-y-8 md:w-1/2 w-full font-mono">
-            <div class="space-y-3">
-              <label class="text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Die-Cast Metal Selection</label>
-              <div class="flex gap-3">
-                <button onclick="selectMetal('bronze')" class="flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Bronze</button>
-                <button onclick="selectMetal('gold')" class="flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Gold</button>
-                <button onclick="selectMetal('iron')" class="flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Pewter / Iron</button>
-              </div>
-            </div>
-            
-            <div class="space-y-3">
-              <label class="text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Engraving Name</label>
-              <input type="text" id="coin-name-input" placeholder="이름을 입력하세요" maxlength="10" oninput="drawCoin()" class="w-full px-0 py-2 text-sm border-b border-neutral-300 bg-transparent outline-none focus:border-black transition-colors font-serif text-lg" />
-            </div>
-
-            <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden" onchange="loadUserAvatar(event)" />
-            
-            <div class="flex gap-3 pt-4">
-              <button onclick="document.getElementById('coin-avatar-upload').click()" class="w-1/3 py-3 border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white transition-colors text-[10px] tracking-widest uppercase">
-                Upload
-              </button>
-              <button onclick="downloadCoin()" class="w-2/3 py-3 bg-neutral-900 text-white hover:bg-neutral-800 transition-colors text-[10px] tracking-widest uppercase shadow-md">
-                Mint & Download
-              </button>
-            </div>
+    <section class="border-t border-neutral-300 pt-24">
+      <div class="text-center space-y-2 mb-16">
+        <span class="font-mono text-xs text-neutral-400 tracking-[0.3em] uppercase">Chapter III</span>
+        <h3 class="font-serif text-3xl text-neutral-900">기념주화 제작소</h3>
+        <p class="font-mono text-xs text-neutral-500 mt-2 tracking-wide">* 입력한 이름과 사진은 내 기기에서만 처리됩니다.</p>
+      </div>
+      <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-12 items-center bg-white p-10 border border-neutral-200 shadow-sm">
+        <div class="flex justify-center md:w-1/2">
+          <div class="p-4 border border-neutral-100 rounded-full shadow-[0_0_40px_rgba(0,0,0,0.05)] bg-[#121212]">
+            <canvas id="coin-canvas" width="900" height="900" aria-label="기념주화 미리보기" class="w-full max-w-[280px] aspect-square rounded-full"></canvas>
           </div>
         </div>
-      </section>
-    </main>
-    
-    <footer class="border-t border-neutral-200 py-10 mt-auto text-center font-mono text-[10px] text-neutral-400 tracking-widest uppercase">
-      © ROUINK PROJECT HUB. ALL RIGHTS RESERVED.
-    </footer>
-  </div>
-
-  <!-- 3. 상세 정보 팝업창 -->
-  <div id="char-modal" class="fixed inset-0 z-50 bg-[#F8F8F6]/95 backdrop-blur-md hidden items-center justify-center p-6 transition-all opacity-0">
-    <div class="bg-white w-full max-w-4xl border border-neutral-200 shadow-2xl transform scale-95 transition-transform duration-500 max-h-[90vh] flex flex-col relative">
-      <button onclick="closeCharacterModal()" class="absolute top-6 right-6 text-neutral-400 hover:text-black font-light text-3xl z-10">✕</button>
-      
-      <div class="overflow-y-auto flex-grow flex flex-col md:flex-row">
-        <div class="w-full md:w-5/12 bg-neutral-100 relative min-h-[300px] md:min-h-full">
-          <video id="modal-video" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
-        </div>
-        
-        <div class="w-full md:w-7/12 p-10 md:p-14 space-y-10 flex flex-col justify-center">
-          <div class="space-y-4">
-            <span id="modal-subtitle" class="font-mono text-[10px] text-neutral-400 tracking-[0.3em] uppercase">File 01</span>
-            <h4 id="modal-name" class="text-4xl md:text-5xl font-serif text-neutral-900">캐릭터 이름</h4>
-            <div class="w-12 h-[1px] bg-neutral-300 mt-6"></div>
-          </div>
-          
-          <p id="modal-desc" class="font-serif text-neutral-600 text-sm md:text-base leading-[2]">
-            캐릭터에 대한 간단한 소개글이 들어갑니다. 매거진의 한 페이지처럼 우아하게 표현됩니다.
-          </p>
-          
-          <ul class="space-y-4 font-mono text-xs text-neutral-500">
-            <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Birth</span><span id="modal-birth" class="text-neutral-900 font-sans">0월 0일</span></li>
-            <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Spec</span><span id="modal-height" class="text-neutral-900 font-sans">000cm</span></li>
-            <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Hobby</span><span id="modal-hobby" class="text-neutral-900 font-sans">취미</span></li>
-          </ul>
-
-          <div class="bg-neutral-50 p-6 border border-neutral-100 flex gap-5 items-center">
-            <div class="text-3xl" id="modal-fav-icon">🎁</div>
-            <div>
-              <span class="font-mono text-[9px] text-neutral-400 tracking-widest uppercase block mb-1">Favorite Item</span>
-              <h6 id="modal-fav-title" class="font-serif text-neutral-900 font-bold mb-1">아이템 이름</h6>
-              <p id="modal-fav-desc" class="font-sans text-xs text-neutral-500">좋아하는 대상의 특징이나 이미지를 설명합니다.</p>
+        <div class="space-y-8 md:w-1/2 w-full font-mono">
+          <div class="space-y-3">
+            <span class="text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Metal</span>
+            <div class="flex gap-3" id="metal-group">
+              <button type="button" data-metal="bronze" class="metal-btn flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Bronze</button>
+              <button type="button" data-metal="gold" class="metal-btn flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Gold</button>
+              <button type="button" data-metal="iron" class="metal-btn flex-1 py-2 text-xs border border-neutral-300 text-neutral-600 hover:border-black hover:text-black transition-colors uppercase tracking-widest">Pewter / Iron</button>
             </div>
+          </div>
+          <div class="space-y-3">
+            <label for="coin-name-input" class="text-[10px] text-neutral-500 uppercase tracking-[0.2em]">Engraving Name</label>
+            <input type="text" id="coin-name-input" placeholder="이름을 입력하세요" maxlength="10" class="w-full px-0 py-2 border-b border-neutral-300 bg-transparent outline-none focus:border-black transition-colors font-serif text-lg" />
+          </div>
+          <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden" />
+          <div class="flex gap-3 pt-4">
+            <button type="button" id="btn-upload" class="w-1/3 py-3 border border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white transition-colors text-[10px] tracking-widest uppercase">Upload</button>
+            <button type="button" id="btn-download" class="w-2/3 py-3 bg-neutral-900 text-white hover:bg-neutral-800 transition-colors text-[10px] tracking-widest uppercase shadow-md">Mint &amp; Download</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-neutral-200 py-10 mt-auto text-center font-mono text-[10px] text-neutral-500 tracking-widest uppercase">
+    © ROUINK PROJECT HUB. ALL RIGHTS RESERVED.
+  </footer>
+</div>
+
+<!-- 3. 캐릭터 팝업 -->
+<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 bg-[#F8F8F6]/95 backdrop-blur-md hidden items-center justify-center p-6 transition-opacity opacity-0">
+  <div id="modal-panel" class="bg-white w-full max-w-4xl border border-neutral-200 shadow-2xl scale-95 transition-transform duration-500 max-h-[90vh] flex flex-col relative">
+    <button type="button" id="modal-close" aria-label="닫기" class="absolute top-6 right-6 text-neutral-500 hover:text-black font-light text-3xl z-10">✕</button>
+    <div class="overflow-y-auto flex-grow flex flex-col md:flex-row">
+      <div class="w-full md:w-5/12 bg-neutral-100 relative min-h-[300px] md:min-h-full">
+        <video id="modal-video" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
+        <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-[10px] text-neutral-500 tracking-[0.3em] uppercase">Video coming soon</div>
+      </div>
+      <div class="w-full md:w-7/12 p-10 md:p-14 space-y-10 flex flex-col justify-center">
+        <div class="space-y-4">
+          <span id="modal-subtitle" class="font-mono text-[10px] text-neutral-500 tracking-[0.3em] uppercase"></span>
+          <h4 id="modal-name" class="text-4xl md:text-5xl font-serif text-neutral-900"></h4>
+          <div class="w-12 h-[1px] bg-neutral-300 mt-6"></div>
+        </div>
+        <p id="modal-desc" class="font-serif text-neutral-600 text-sm md:text-base leading-[2]"></p>
+        <ul class="space-y-4 font-mono text-xs text-neutral-500">
+          <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Birth</span><span id="modal-birth" class="text-neutral-900 font-sans"></span></li>
+          <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Spec</span><span id="modal-height" class="text-neutral-900 font-sans"></span></li>
+          <li class="flex border-b border-neutral-100 pb-2"><span class="w-32 tracking-widest uppercase">Hobby</span><span id="modal-hobby" class="text-neutral-900 font-sans"></span></li>
+        </ul>
+        <div class="bg-neutral-50 p-6 border border-neutral-100 flex gap-5 items-center">
+          <div class="text-3xl" id="modal-fav-icon"></div>
+          <div>
+            <span class="font-mono text-[9px] text-neutral-500 tracking-widest uppercase block mb-1">Favorite Item</span>
+            <h6 id="modal-fav-title" class="font-serif text-neutral-900 font-bold mb-1"></h6>
+            <p id="modal-fav-desc" class="font-sans text-xs text-neutral-500"></p>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <script>
-    const charactersData = {
-      char1: { num: "FILE 01", name: "캐릭터 1", desc: "작품 A의 첫 번째 주인공이자, 특정 규칙에 얽매이지 않고 행동하는 자유로운 영혼.", birth: "03월 15일", height: "176cm", hobby: "야간 산책 및 낙서", favIcon: "🗡️", favTitle: "길들여지지 않은 단검", favDesc: "손때가 묻은 아주 낡고 정교한 무기.", video: "https://my-r2-storage.com/videos/char1_seedance.mp4" },
-      char2: { num: "FILE 02", name: "캐릭터 2", desc: "작품 A의 두 번째 등장인물로, 대단한 통찰력을 가졌으나 감정 표현이 다소 서투름.", birth: "12월 24일", height: "182cm", hobby: "오래된 고서적 수집", favIcon: "📜", favTitle: "해독 불가의 스크롤", favDesc: "가장 자주 발견되는 미스터리한 양피지.", video: "https://my-r2-storage.com/videos/char2_seedance.mp4" }
-    };
+<script>
+/* ===== 설정 · 데이터 (여기만 고치면 됩니다) ===== */
+const CONFIG = {
+  // Pixabay 핫링크는 막힐 수 있으니, 직접 올린 음원 경로(예: 'assets/bgm.mp3')로 바꾸는 것을 권장합니다.
+  bgm: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3'
+};
+// video 주소(.mp4 직접 링크)와 poster(대표 이미지, 선택)를 실제 주소로 교체하세요. 비워 두면 'Video coming soon'이 표시됩니다.
+const characters = {
+  char1: { num:'FILE 01', name:'캐릭터 1', desc:'작품 A의 첫 번째 주인공이자, 특정 규칙에 얽매이지 않고 행동하는 자유로운 영혼.', birth:'03월 15일', height:'176cm', hobby:'야간 산책 및 낙서', favIcon:'🗡️', favTitle:'길들여지지 않은 단검', favDesc:'손때가 묻은 아주 낡고 정교한 무기.', video:'https://my-r2-storage.com/videos/char1_seedance.mp4', poster:'' },
+  char2: { num:'FILE 02', name:'캐릭터 2', desc:'작품 A의 두 번째 등장인물로, 대단한 통찰력을 가졌으나 감정 표현이 다소 서투름.', birth:'12월 24일', height:'182cm', hobby:'오래된 고서적 수집', favIcon:'📜', favTitle:'해독 불가의 스크롤', favDesc:'가장 자주 발견되는 미스터리한 양피지.', video:'https://my-r2-storage.com/videos/char2_seedance.mp4', poster:'' }
+};
 
-    const gateway = document.getElementById('gateway');
-    const mainView = document.getElementById('main-view');
-    const bgm = document.getElementById('main-bgm');
-    const usernameInput = document.getElementById('username');
-    const navUserLabel = document.getElementById('nav-user-label');
-    const bgmToggleBtn = document.getElementById('bgm-toggle-btn');
-    let isBgmPlaying = false;
+const $ = id => document.getElementById(id);
 
-    document.getElementById('btn-bgm-on').addEventListener('click', () => { bgm.play().catch(()=>{}); isBgmPlaying = true; updateBgmBtnUI(); closeGateway(); });
-    document.getElementById('btn-bgm-off').addEventListener('click', () => { closeGateway(); });
+/* ===== 입장 · BGM ===== */
+const gateway = $('gateway'), mainView = $('main-view'), bgm = $('main-bgm'), bgmBtn = $('bgm-toggle-btn');
+bgm.src = CONFIG.bgm;
+let playing = false, entered = false;
 
-    function closeGateway() {
-      const userVal = usernameInput.value.trim() || "GUEST";
-      navUserLabel.textContent = userVal;
-      document.getElementById('coin-name-input').value = userVal;
-      gateway.style.opacity = '0';
-      gateway.style.pointerEvents = 'none';
-      setTimeout(() => { gateway.style.display = 'none'; mainView.classList.remove('opacity-0', 'translate-y-4'); mainView.classList.add('opacity-100', 'translate-y-0'); drawCoin(); }, 500);
-    }
+async function setBgm(on) {
+  if (on) { try { await bgm.play(); playing = true; } catch { playing = false; } }
+  else { bgm.pause(); playing = false; }
+  bgmBtn.textContent = playing ? 'Audio On' : 'Audio Off';
+}
+function enter(withAudio) {
+  if (entered) return; entered = true;
+  const user = $('username').value.trim() || 'GUEST';
+  $('nav-user-label').textContent = user;
+  $('coin-name-input').value = user;
+  setBgm(withAudio);
+  gateway.classList.add('opacity-0', 'pointer-events-none');
+  setTimeout(() => {
+    gateway.style.display = 'none';
+    mainView.classList.remove('opacity-0', 'translate-y-4');
+    drawCoin();
+  }, 500);
+}
+$('btn-bgm-on').addEventListener('click', () => enter(true));
+$('btn-bgm-off').addEventListener('click', () => enter(false));
+$('username').addEventListener('keydown', e => { if (e.key === 'Enter') enter(false); });
+bgmBtn.addEventListener('click', () => setBgm(!playing));
 
-    function toggleBGM() {
-      if (isBgmPlaying) { bgm.pause(); isBgmPlaying = false; } 
-      else { bgm.play().catch(()=>{}); isBgmPlaying = true; }
-      updateBgmBtnUI();
-    }
+/* ===== 캐릭터 카드 · 팝업 ===== */
+$('character-grid').innerHTML = Object.entries(characters).map(([id, c]) => `
+  <button type="button" data-id="${id}" class="group text-left">
+    <span class="border border-neutral-300 bg-white p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-neutral-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
+      <span class="font-mono text-[10px] text-neutral-500 tracking-widest block mb-3 uppercase">${c.num}</span>
+      <span class="font-serif text-xl text-neutral-800 group-hover:text-black">${c.name}</span>
+    </span>
+  </button>`).join('');
+$('character-grid').addEventListener('click', e => {
+  const b = e.target.closest('[data-id]'); if (b) openModal(b.dataset.id);
+});
 
-    function updateBgmBtnUI() {
-      bgmToggleBtn.textContent = isBgmPlaying ? 'Audio On' : 'Audio Off';
-    }
+const modal = $('char-modal'), panel = $('modal-panel'), video = $('modal-video'), fallback = $('modal-video-fallback');
+let lastFocus = null;
 
-    const modal = document.getElementById('char-modal');
-    const modalVideo = document.getElementById('modal-video');
+function openModal(id) {
+  const c = characters[id]; if (!c) return;
+  lastFocus = document.activeElement;
+  const map = { 'modal-subtitle':c.num, 'modal-name':c.name, 'modal-desc':c.desc, 'modal-birth':c.birth, 'modal-height':c.height, 'modal-hobby':c.hobby, 'modal-fav-icon':c.favIcon, 'modal-fav-title':c.favTitle, 'modal-fav-desc':c.favDesc };
+  for (const k in map) $(k).textContent = map[k];
+  fallback.classList.replace('flex', 'hidden');
+  if (c.video) { video.poster = c.poster || ''; video.src = c.video; video.play().catch(() => {}); }
+  else fallback.classList.replace('hidden', 'flex');
+  modal.classList.replace('hidden', 'flex');
+  document.documentElement.style.overflow = 'hidden';
+  requestAnimationFrame(() => { modal.classList.remove('opacity-0'); panel.classList.remove('scale-95'); $('modal-close').focus(); });
+}
+function closeModal() {
+  if (modal.classList.contains('hidden')) return;
+  modal.classList.add('opacity-0'); panel.classList.add('scale-95');
+  video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load();
+  document.documentElement.style.overflow = '';
+  setTimeout(() => { modal.classList.replace('flex', 'hidden'); if (lastFocus) lastFocus.focus(); }, 300);
+}
+video.addEventListener('error', () => { if (video.getAttribute('src')) fallback.classList.replace('hidden', 'flex'); });
+$('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    function openCharacterModal(id) {
-      const char = charactersData[id];
-      if (!char) return;
-      document.getElementById('modal-subtitle').textContent = char.num;
-      document.getElementById('modal-name').textContent = char.name;
-      document.getElementById('modal-desc').textContent = char.desc;
-      document.getElementById('modal-birth').textContent = char.birth;
-      document.getElementById('modal-height').textContent = char.height;
-      document.getElementById('modal-hobby').textContent = char.hobby;
-      document.getElementById('modal-fav-icon').textContent = char.favIcon;
-      document.getElementById('modal-fav-title').textContent = char.favTitle;
-      document.getElementById('modal-fav-desc').textContent = char.favDesc;
-      modalVideo.src = char.video; modalVideo.play().catch(() => {});
-      modal.classList.remove('hidden'); modal.classList.add('flex');
-      requestAnimationFrame(() => { modal.classList.remove('opacity-0'); modal.querySelector('.transform').classList.remove('scale-95'); });
-    }
+/* ===== 기념주화 제작소: 코난 기념뱃지 같은 앤티크 메탈 음각 (900px로 그려 선명하게 저장) ===== */
+const cv = $('coin-canvas'), ctx = cv.getContext('2d'), SCALE = cv.width / 300, TAU = Math.PI * 2, R = 88;
+const METALS = {
+  bronze: { base:'#A9622F', light:'#DC9A62', dark:'#3E1E0A', hi:'#F6CFA6' },
+  gold:   { base:'#B38B2E', light:'#E2BE68', dark:'#43300A', hi:'#F6E6A8' },
+  iron:   { base:'#7A8494', light:'#C6CDD8', dark:'#1F2733', hi:'#FFFFFF' }
+};
+let metal = 'gold', avatar = null, avatarId = 0, queued = false, relief = null, reliefKey = '';
+const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
+const mix = (a, b, t) => 'rgb(' + rgb(a).map((v, i) => Math.round(v + (rgb(b)[i] - v) * t)).join() + ')';
 
-    function closeCharacterModal() {
-      modal.classList.add('opacity-0'); modal.querySelector('.transform').classList.add('scale-95');
-      modalVideo.pause(); modalVideo.src = ""; 
-      setTimeout(() => { modal.classList.remove('flex'); modal.classList.add('hidden'); }, 300);
-    }
+// 무광 금속 질감용 잔 알갱이
+const grain = document.createElement('canvas'); grain.width = grain.height = 128;
+(() => {
+  const g = grain.getContext('2d'), d = g.createImageData(128, 128);
+  for (let i = 0; i < d.data.length; i += 4) { d.data[i] = d.data[i + 1] = d.data[i + 2] = Math.random() * 255; d.data[i + 3] = 46; }
+  g.putImageData(d, 0, 0);
+})();
 
-    /* =========================================
-       코난 극장판 뱃지 스타일 메탈 렌더링 로직
-       ========================================= */
-    let selectedMetal = 'iron'; // 기본을 세련된 메탈/철 느낌으로
-    let userAvatarImg = null;
-    const cCanvas = document.getElementById('coin-canvas');
-    const cCtx = cCanvas.getContext('2d');
+function selectMetal(m) {
+  metal = m;
+  document.querySelectorAll('.metal-btn').forEach(b => b.classList.toggle('active', b.dataset.metal === m));
+  drawCoin();
+}
+function drawCoin() {
+  if (queued) return; queued = true;
+  requestAnimationFrame(() => { queued = false; render(); });
+}
+function disc(r, fill) { ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(150, 150, r, 0, TAU); ctx.fill(); }
+// 경사 링: 왼쪽 위에서 빛이 올 때 c1(밝음)→c2(어두움). 솟은 면은 (밝음,어두움), 파인 면은 반대로
+function bevel(r, w, c1, c2) {
+  const g = ctx.createLinearGradient(150 - r, 150 - r, 150 + r, 150 + r);
+  g.addColorStop(0, c1); g.addColorStop(1, c2);
+  ctx.strokeStyle = g; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(150, 150, r, 0, TAU); ctx.stroke();
+}
+// 음각 글자: 어두운 파인 면 + 오른쪽 아래 모서리에 빛 반사 (회전된 좌표계에 맞춰 빛 방향 보정)
+function carve(ch, x, y, a, P) {
+  const c = Math.cos(a), s = Math.sin(a);
+  ctx.globalAlpha = .75; ctx.fillStyle = P.hi; ctx.fillText(ch, x + .7 * (c + s), y + .7 * (c - s));
+  ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.fillText(ch, x, y);
+}
+// 글자 폭을 재서 호 위에 중앙 정렬 (한글·영문 모두 겹치지 않음)
+function arcText(text, r, bottom, P, font) {
+  ctx.font = font; ctx.textAlign = 'center';
+  const chars = [...text], w = chars.map(c => ctx.measureText(c).width + 1.5);
+  const d = bottom ? -1 : 1, y = bottom ? r : -r;
+  let a = -d * (w.reduce((s, x) => s + x, 0) / r) / 2;
+  chars.forEach((ch, i) => {
+    const st = w[i] / r; a += d * st / 2;
+    ctx.save(); ctx.rotate(a); carve(ch, 0, y, a, P); ctx.restore();
+    a += d * st / 2;
+  });
+}
+// 사진 → 금속 부조: 밝기를 높이로 보고 왼쪽 위 조명을 계산해 금속 색으로 입힘
+function buildRelief(P) {
+  const N = Math.round(2 * R * SCALE), o = document.createElement('canvas'); o.width = o.height = N;
+  const c = o.getContext('2d', { willReadFrequently: true });
+  const k = Math.max(N / avatar.width, N / avatar.height), w = avatar.width * k, h = avatar.height * k;
+  c.drawImage(avatar, (N - w) / 2, (N - h) / 2, w, h);
+  const img = c.getImageData(0, 0, N, N), px = img.data, H = new Float32Array(N * N);
+  for (let i = 0; i < N * N; i++) {
+    const l = (px[4 * i] * .3 + px[4 * i + 1] * .59 + px[4 * i + 2] * .11) / 255;
+    H[i] = Math.min(1, Math.max(0, (l - .5) * 1.35 + .5));
+  }
+  const lg = document.createElement('canvas'); lg.width = 256; lg.height = 1;
+  const lc = lg.getContext('2d'), gr = lc.createLinearGradient(0, 0, 256, 0);
+  [[0, P.dark], [.45, P.base], [.8, P.light], [1, P.hi]].forEach(([t, col]) => gr.addColorStop(t, col));
+  lc.fillStyle = gr; lc.fillRect(0, 0, 256, 1);
+  const lut = lc.getImageData(0, 0, 256, 1).data, g = 3;
+  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
+    const i = y * N + x;
+    const e = H[Math.max(0, y - g) * N + Math.max(0, x - g)] - H[Math.min(N - 1, y + g) * N + Math.min(N - 1, x + g)];
+    const idx = Math.min(255, Math.max(0, Math.round((H[i] * .55 + (.5 + e * 2.4) * .45) * 255))) * 4;
+    px[4 * i] = lut[idx]; px[4 * i + 1] = lut[idx + 1]; px[4 * i + 2] = lut[idx + 2]; px[4 * i + 3] = 255;
+  }
+  c.putImageData(img, 0, 0);
+  return o;
+}
+// 사진이 없을 때: 뱃지 속 실루엣처럼 솟아오른 흉상
+function silhouette(P) {
+  const p = new Path2D();
+  p.arc(150, 120, 27, 0, TAU); p.rect(138, 140, 24, 26);
+  p.moveTo(98, 240); p.lineTo(98, 196); p.bezierCurveTo(98, 168, 124, 160, 150, 160);
+  p.bezierCurveTo(176, 160, 202, 168, 202, 196); p.lineTo(202, 240); p.closePath();
+  ctx.save(); ctx.translate(2.5, 2.5); ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
+  const g = ctx.createLinearGradient(100, 95, 200, 240); g.addColorStop(0, P.light); g.addColorStop(1, P.base);
+  ctx.fillStyle = g; ctx.fill(p);
+  ctx.strokeStyle = P.hi; ctx.lineWidth = 1; ctx.globalAlpha = .6; ctx.stroke(p); ctx.globalAlpha = 1;
+}
 
-    function selectMetal(metal) { selectedMetal = metal; drawCoin(); }
-    function loadUserAvatar(e) {
-      const file = e.target.files[0]; if (!file) return;
-      const img = new Image(); img.onload = () => { userAvatarImg = img; drawCoin(); }
-      img.src = URL.createObjectURL(file);
-    }
+function render() {
+  const P = METALS[metal], name = ($('coin-name-input').value.trim() || 'GUEST').toUpperCase();
+  ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+  ctx.clearRect(0, 0, 300, 300);
 
-    function drawCoin() {
-      requestAnimationFrame(() => {
-        const name = document.getElementById('coin-name-input').value || "GUEST";
-        cCtx.clearRect(0, 0, 300, 300);
+  // 1. 솟은 테두리 → 파인 바탕 → 사진을 두른 솟은 링
+  disc(147, P.dark);
+  disc(145, mix(P.base, P.light, .25));
+  bevel(142, 5, P.hi, P.dark);
+  disc(137, mix(P.base, P.dark, .5));
+  bevel(137, 3, P.dark, P.light);
+  bevel(94, 5, P.hi, P.dark);
 
-        let baseColor, lightColor, darkColor, highlightColor;
+  // 2. 무광 알갱이
+  ctx.save(); ctx.beginPath(); ctx.arc(150, 150, 147, 0, TAU); ctx.clip();
+  const pat = ctx.createPattern(grain, 'repeat');
+  if (pat.setTransform) pat.setTransform(new DOMMatrix().scale(1 / SCALE));
+  ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300); ctx.restore();
 
-        if (selectedMetal === 'bronze') {
-          baseColor = '#B25A2A'; lightColor = '#E69C5C'; darkColor = '#4A220B'; highlightColor = '#FFD1A9';
-        } else if (selectedMetal === 'gold') {
-          baseColor = '#C89B27'; lightColor = '#FFDF73'; darkColor = '#66490C'; highlightColor = '#FFF5B8';
-        } else { // iron / pewter (코난 극장판 뱃지 감성)
-          baseColor = '#7A8494'; lightColor = '#D2D8E2'; darkColor = '#252D3A'; highlightColor = '#FFFFFF';
-        }
+  // 3. 사진(금속 부조) 또는 실루엣
+  ctx.save(); ctx.beginPath(); ctx.arc(150, 150, R, 0, TAU); ctx.clip();
+  disc(R, mix(P.base, P.dark, .6));
+  if (avatar) {
+    const key = metal + avatarId;
+    if (key !== reliefKey) { relief = buildRelief(P); reliefKey = key; }
+    ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R);
+  } else silhouette(P);
+  ctx.restore();
+  bevel(R + 1.5, 3, P.dark, P.light);
 
-        // 1. 외곽 다이캐스트 입체 림 (3D Bevel & Shadow)
-        cCtx.fillStyle = darkColor;
-        cCtx.beginPath(); cCtx.arc(150, 150, 146, 0, Math.PI * 2); cCtx.fill();
+  // 4. 음각 글자와 장식 점
+  ctx.save(); ctx.translate(150, 150);
+  arcText('PROJECT ARCHIVE OFFICIAL MINT', 115, false, P, 'bold 10px "Space Mono",monospace');
+  arcText(`* ${name} *`, 121, true, P, 'bold 12px "Playfair Display","Noto Serif KR",serif');
+  [-1, 1].forEach(s => {
+    ctx.globalAlpha = .75; ctx.fillStyle = P.hi; ctx.beginPath(); ctx.arc(s * 123 + .7, .7, 2.4, 0, TAU); ctx.fill();
+    ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.beginPath(); ctx.arc(s * 123, 0, 2.4, 0, TAU); ctx.fill();
+  });
+  ctx.restore();
 
-        // 둥근 돔 형태의 금속 광채 그라데이션
-        let metalGrad = cCtx.createRadialGradient(115, 115, 10, 150, 150, 145);
-        metalGrad.addColorStop(0, lightColor);
-        metalGrad.addColorStop(0.55, baseColor);
-        metalGrad.addColorStop(1, darkColor);
+  // 5. 은은한 광택
+  ctx.save(); ctx.beginPath(); ctx.arc(150, 150, 145, 0, TAU); ctx.clip();
+  const sh = ctx.createLinearGradient(30, 30, 270, 270);
+  sh.addColorStop(0, 'rgba(255,255,255,.16)'); sh.addColorStop(.5, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(0,0,0,.2)');
+  ctx.fillStyle = sh; ctx.fillRect(0, 0, 300, 300); ctx.restore();
+}
 
-        cCtx.fillStyle = metalGrad;
-        cCtx.beginPath(); cCtx.arc(150, 150, 142, 0, Math.PI * 2); cCtx.fill();
+$('metal-group').addEventListener('click', e => { const b = e.target.closest('[data-metal]'); if (b) selectMetal(b.dataset.metal); });
+$('coin-name-input').addEventListener('input', drawCoin);
+$('btn-upload').addEventListener('click', () => $('coin-avatar-upload').click());
+$('coin-avatar-upload').addEventListener('change', e => {
+  const f = e.target.files[0]; if (!f || !f.type.startsWith('image/')) return;
+  const url = URL.createObjectURL(f), img = new Image();
+  img.onload = () => { avatar = img; avatarId++; URL.revokeObjectURL(url); drawCoin(); };
+  img.src = url;
+});
+$('btn-download').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.download = `project-badge-${Date.now()}.png`; a.href = cv.toDataURL('image/png'); a.click();
+});
 
-        // 좌상단 하이라이트 광원 반사 효과
-        let specGrad = cCtx.createRadialGradient(110, 110, 5, 110, 110, 95);
-        specGrad.addColorStop(0, 'rgba(255, 255, 255, 0.45)');
-        specGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        cCtx.fillStyle = specGrad;
-        cCtx.beginPath(); cCtx.arc(150, 150, 142, 0, Math.PI * 2); cCtx.fill();
-
-        // 안쪽 각인 홈 (깊이감 부여)
-        cCtx.strokeStyle = darkColor;
-        cCtx.lineWidth = 3.5;
-        cCtx.beginPath(); cCtx.arc(150, 150, 133, 0, Math.PI * 2); cCtx.stroke();
-
-        cCtx.fillStyle = baseColor;
-        cCtx.beginPath(); cCtx.arc(150, 150, 131, 0, Math.PI * 2); cCtx.fill();
-
-        // 2. 포토 영역 (금속 프레임 내장형)
-        const photoCenterX = 150, photoCenterY = 150, photoRadius = 88;
-        
-        cCtx.strokeStyle = darkColor;
-        cCtx.lineWidth = 4;
-        cCtx.beginPath(); cCtx.arc(photoCenterX, photoCenterY, photoRadius + 2, 0, Math.PI * 2); cCtx.stroke();
-
-        cCtx.save();
-        cCtx.beginPath(); cCtx.arc(photoCenterX, photoCenterY, photoRadius, 0, Math.PI * 2); cCtx.clip();
-
-        if (userAvatarImg) {
-          const imgRatio = userAvatarImg.width / userAvatarImg.height;
-          let drawWidth, drawHeight, startX, startY;
-          if (imgRatio > 1) { 
-            drawHeight = photoRadius * 2; drawWidth = drawHeight * imgRatio;
-            startX = photoCenterX - (drawWidth / 2); startY = photoCenterY - photoRadius;
-          } else { 
-            drawWidth = photoRadius * 2; drawHeight = drawWidth / imgRatio;
-            startX = photoCenterX - photoRadius; startY = photoCenterY - (drawHeight / 2);
-          }
-          cCtx.drawImage(userAvatarImg, startX, startY, drawWidth, drawHeight);
-          
-          // 사진을 메탈 질감과 융합하는 고품질 오버레이
-          cCtx.fillStyle = 'rgba(20, 25, 35, 0.35)';
-          cCtx.globalCompositeOperation = 'overlay';
-          cCtx.beginPath(); cCtx.arc(photoCenterX, photoCenterY, photoRadius, 0, Math.PI * 2); cCtx.fill();
-          cCtx.globalCompositeOperation = 'normal'; 
-        } else {
-          cCtx.fillStyle = 'rgba(0,0,0,0.25)'; cCtx.textAlign = 'center'; 
-          cCtx.font = 'bold 11px monospace'; cCtx.fillText('PORTRAIT', 150, 154);
-        }
-        cCtx.restore();
-
-        // 사진 테두리 림 하이라이트
-        cCtx.strokeStyle = highlightColor;
-        cCtx.lineWidth = 1.5;
-        cCtx.beginPath(); cCtx.arc(photoCenterX, photoCenterY, photoRadius, 0, Math.PI * 2); cCtx.stroke();
-
-        // 3. 입체 양각 글자 (Embossed 3D Stamped Text - 그림자와 밝은 글자를 겹쳐 조각된 느낌 연출)
-        cCtx.save();
-        cCtx.translate(150, 150);
-        
-        const textTop = "PROJECT ARCHIVE OFFICIAL MINT";
-        for (let i = 0; i < textTop.length; i++) {
-          let angle = -Math.PI / 2.1 + (i * 0.07);
-          cCtx.save(); cCtx.rotate(angle);
-          
-          // 그림자 (입체감)
-          cCtx.fillStyle = darkColor;
-          cCtx.font = 'bold 10px monospace'; cCtx.textAlign = 'center';
-          cCtx.fillText(textTop[i], 1, -114);
-          // 양각 밝은 글자
-          cCtx.fillStyle = highlightColor;
-          cCtx.fillText(textTop[i], 0, -115);
-          cCtx.restore();
-        }
-
-        const textBottom = `* ${name.toUpperCase()} *`;
-        for (let i = 0; i < textBottom.length; i++) {
-          let angle = Math.PI / 2.1 - (i * 0.08);
-          cCtx.save(); cCtx.rotate(angle);
-          
-          cCtx.fillStyle = darkColor;
-          cCtx.font = 'bold 10px monospace'; cCtx.textAlign = 'center';
-          cCtx.fillText(textBottom[i], 1, 121);
-          
-          cCtx.fillStyle = highlightColor;
-          cCtx.fillText(textBottom[i], 0, 120);
-          cCtx.restore();
-        }
-        cCtx.restore();
-      });
-    }
-
-    function downloadCoin() {
-      const link = document.createElement('a'); link.download = `project-badge-${Date.now()}.png`; link.href = cCanvas.toDataURL(); link.click();
-    }
-  </script>
+selectMetal('gold');
+Promise.all([
+  document.fonts.load('bold 10px "Space Mono"'),
+  document.fonts.load('bold 12px "Playfair Display"'),
+  document.fonts.load('bold 12px "Noto Serif KR"')
+]).then(drawCoin).catch(() => {});
+</script>
 </body>
 </html>
