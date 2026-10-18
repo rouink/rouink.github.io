@@ -159,7 +159,7 @@ tailwind.config = { theme: { extend: { fontFamily: {
       </div>
       <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-white p-6 md:p-10 border border-stone-200 shadow-sm">
         <div class="flex justify-center md:w-1/2">
-          <canvas id="booth-canvas" width="600" height="1500" aria-label="인생 2컷 미리보기" class="w-full max-w-[230px] shadow-[0_12px_40px_rgba(40,30,10,0.22)]"></canvas>
+          <canvas id="booth-canvas" width="600" height="1500" aria-label="인생 2컷 미리보기" class="w-full max-w-[230px] shadow-[0_12px_40px_rgba(40,30,10,0.22)] cursor-grab" style="touch-action:none"></canvas>
         </div>
         <div class="space-y-8 md:w-1/2 w-full font-mono">
           <div class="space-y-3">
@@ -194,6 +194,11 @@ tailwind.config = { theme: { extend: { fontFamily: {
               <button type="button" data-bside="left" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Left</button>
               <button type="button" data-bside="right" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Right</button>
             </div>
+          </div>
+          <div class="space-y-3">
+            <label for="booth-zoom" class="text-xs text-stone-600 uppercase tracking-[0.2em]">Photo Size · <span id="booth-sel">CUT 01</span></label>
+            <input type="range" id="booth-zoom" min="50" max="180" value="100" class="w-full accent-stone-700">
+            <p class="font-text text-sm text-stone-700">사진을 끌어서 위치를 옮길 수 있어요. 옮기려는 컷을 누르면 그 컷이 선택돼요.</p>
           </div>
           <p id="booth-step" class="font-text text-base text-stone-800" aria-live="polite"></p>
           <input type="file" id="booth-upload" accept="image/*" class="hidden" />
@@ -965,7 +970,7 @@ Promise.all([
    캐릭터 PNG는 characters[id].booth 경로에 넣으면 자동으로 쓰입니다(없으면 자리표시 실루엣). */
 const bcv = $('booth-canvas');
 const BW = 600, BH = 1500, CUTS = [{ x:36, y:104, w:528, h:612 }, { x:36, y:744, w:528, h:612 }];
-const booth = { char: charIds[0], frame: 'gold', side: 'right', bg: 'original', photos: [null, null], cutouts: [null, null] };
+const booth = { char: charIds[0], frame: 'gold', side: 'right', bg: 'original', photos: [null, null], cutouts: [null, null], tf: [{ zoom: 1, dx: 0, dy: 0 }, { zoom: 1, dx: 0, dy: 0 }], sel: 0 };
 
 /* --- 배경 교체: 사람만 오려내기 (Google MediaPipe 인물 분리 모델, Apache-2.0 · 무료 · 상업용 가능)
        모델과 실행 파일은 처음 배경을 바꿀 때 한 번만 불러옵니다. 사진은 기기 밖으로 나가지 않습니다. --- */
@@ -1074,12 +1079,11 @@ function bSparkle(g, x, y, r, a) {
 }
 // 캐릭터 PNG가 아직 없을 때: 반투명 실루엣 + 안내
 function charPlaceholder(g, x, y, w, h, path) {
-  g.save(); g.globalAlpha = .55; g.fillStyle = '#FFFFFF';
-  const cx = x + w / 2; g.beginPath(); g.arc(cx, y + h * .2, w * .2, 0, TAU); g.fill();
-  g.beginPath(); g.moveTo(x + w * .08, y + h); g.bezierCurveTo(x + w * .08, y + h * .48, x + w * .92, y + h * .48, x + w * .92, y + h); g.closePath(); g.fill();
-  g.globalAlpha = 1; g.setLineDash([8, 6]); g.lineWidth = 2; g.strokeStyle = 'rgba(80,60,40,.55)'; g.strokeRect(x + 4, y + 4, w - 8, h - 8); g.setLineDash([]);
-  g.fillStyle = 'rgba(60,45,30,.85)'; g.font = 'bold 15px "Cinzel","Gowun Batang",serif'; g.textAlign = 'center';
-  g.fillText('CHARACTER PNG', cx, y + h * .62); g.font = '12px Pretendard, sans-serif'; g.fillText(path.split('/').pop(), cx, y + h * .62 + 20);
+  g.save(); g.setLineDash([7, 6]); g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.75)'; g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 3;
+  const cx = x + w / 2; g.beginPath(); g.arc(cx, y + h * .2, w * .17, 0, TAU); g.stroke();
+  g.beginPath(); g.moveTo(x + w * .12, y + h); g.bezierCurveTo(x + w * .12, y + h * .5, x + w * .88, y + h * .5, x + w * .88, y + h); g.stroke(); g.setLineDash([]);
+  g.fillStyle = 'rgba(255,255,255,.9)'; g.font = 'bold 13px "Cinzel","Gowun Batang",serif'; g.textAlign = 'center'; g.fillText('CHARACTER', cx, y + h - 34);
+  g.font = '11px Pretendard, sans-serif'; g.fillText(path.split('/').pop(), cx, y + h - 16);
   g.restore();
 }
 function renderBooth(g, scale) {
@@ -1097,9 +1101,13 @@ function renderBooth(g, scale) {
   CUTS.forEach((k, i) => {
     g.save(); bRR(g, k.x, k.y, k.w, k.h, 10); g.clip();
     const ph = booth.photos[i], cut = booth.cutouts[i];
-    const place = im => { const s = Math.max(k.w / im.width, k.h / im.height), iw = im.width * s, ih = im.height * s; g.drawImage(im, k.x + (k.w - iw) / 2, k.y + (k.h - ih) * .35, iw, ih); };
+    const t = booth.tf[i], auto = booth.bg !== 'original' ? { z: .9, dx: booth.side === 'right' ? -.17 : .17 } : { z: 1, dx: 0 };
+    const place = (im, plain) => { const s = Math.max(k.w / im.width, k.h / im.height) * (plain ? 1 : t.zoom * auto.z), iw = im.width * s, ih = im.height * s;
+      const ox = plain ? 0 : (t.dx + auto.dx) * k.w, oy = plain ? 0 : t.dy * k.h, bottom = !plain && booth.bg !== 'original';
+      g.drawImage(im, k.x + (k.w - iw) / 2 + ox, bottom ? k.y + k.h - ih + Math.max(0, oy) + Math.min(0, oy) : k.y + (k.h - ih) * .35 + oy, iw, ih); };
     if (ph && booth.bg !== 'original' && cut instanceof HTMLCanvasElement) { drawBg(g, booth.bg, k.x, k.y, k.w, k.h, i + 1); place(cut); }
     else if (ph) {
+      if (t.zoom < 1 || t.dx || t.dy) { g.save(); g.filter = 'blur(18px)'; place(ph, true); g.restore(); g.fillStyle = 'rgba(255,248,235,.18)'; g.fillRect(k.x, k.y, k.w, k.h); }
       place(ph);
       if (booth.bg !== 'original' && cut === 'pending') { g.fillStyle = 'rgba(30,25,40,.45)'; g.fillRect(k.x, k.y, k.w, k.h); g.fillStyle = '#fff'; g.textAlign = 'center'; g.font = '20px "Gowun Batang", serif'; g.fillText('배경을 바꾸는 중…', k.x + k.w / 2, k.y + k.h / 2); }
     }
@@ -1132,7 +1140,7 @@ function renderBooth(g, scale) {
 function drawBooth() { renderBooth(bcv.getContext('2d'), bcv.width / BW); updateBoothUI(); }
 function updateBoothUI() {
   const n = booth.photos.filter(Boolean).length;
-  $('booth-upload-btn').textContent = n === 0 ? 'Upload Photo 1' : n === 1 ? 'Upload Photo 2' : 'Change Photo 2';
+  $('booth-upload-btn').textContent = n === 0 ? 'Upload Photo 1' : n === 1 ? 'Upload Photo 2' : `Change Photo ${booth.sel + 1}`;
   $('booth-step').textContent = n === 0 ? `① 첫 번째 사진을 올려 주세요. 캐릭터가 설 ${booth.side === 'right' ? '오른쪽' : '왼쪽'} 자리를 비워 두고 찍은 사진이 잘 어울려요.` : n === 1 ? '② 두 번째 사진을 올려 주세요.' : '완성! 마음에 들면 저장하세요. (Reset으로 처음부터)';
   $('booth-download').disabled = n < 2;
 }
@@ -1142,14 +1150,26 @@ $('booth-char-group').addEventListener('click', e => { const b = e.target.closes
 $('booth-frame-group').addEventListener('click', e => { const b = e.target.closest('[data-bframe]'); if (b) { booth.frame = b.dataset.bframe; markActive('bframe', booth.frame); drawBooth(); } });
 $('booth-bg-group').addEventListener('click', e => { const b = e.target.closest('[data-bbg]'); if (!b) return; booth.bg = b.dataset.bbg; markActive('bbg', booth.bg); if (booth.bg === 'original') bgStatus(''); booth.cutouts = booth.cutouts.map(c => c === 'failed' ? null : c); ensureCutouts(); drawBooth(); });
 $('booth-side-group').addEventListener('click', e => { const b = e.target.closest('[data-bside]'); if (b) { booth.side = b.dataset.bside; markActive('bside', booth.side); drawBooth(); } });
+function selectCut(i) { booth.sel = i; $('booth-sel').textContent = `CUT 0${i + 1}`; $('booth-zoom').value = Math.round(booth.tf[i].zoom * 100); }
+$('booth-zoom').addEventListener('input', e => { booth.tf[booth.sel].zoom = e.target.value / 100; drawBooth(); });
+{ let drag = null;
+  const pt = e => { const r = bcv.getBoundingClientRect(); return [(e.clientX - r.left) * BW / r.width, (e.clientY - r.top) * BH / r.height]; };
+  bcv.addEventListener('pointerdown', e => {
+    const [x, y] = pt(e), i = CUTS.findIndex(k => x >= k.x && x <= k.x + k.w && y >= k.y && y <= k.y + k.h); if (i < 0) return;
+    selectCut(i); if (!booth.photos[i]) return;
+    drag = { i, x, y, dx: booth.tf[i].dx, dy: booth.tf[i].dy }; bcv.setPointerCapture(e.pointerId); bcv.style.cursor = 'grabbing';
+  });
+  bcv.addEventListener('pointermove', e => { if (!drag) return; const [x, y] = pt(e), k = CUTS[drag.i]; booth.tf[drag.i].dx = drag.dx + (x - drag.x) / k.w; booth.tf[drag.i].dy = drag.dy + (y - drag.y) / k.h; drawBooth(); });
+  const end = () => { drag = null; bcv.style.cursor = ''; }; bcv.addEventListener('pointerup', end); bcv.addEventListener('pointercancel', end);
+}
 $('booth-upload-btn').addEventListener('click', () => $('booth-upload').click());
 $('booth-upload').addEventListener('change', e => {
   const f = e.target.files[0]; e.target.value = ''; if (!f || !f.type.startsWith('image/')) return;
   const url = URL.createObjectURL(f), img = new Image();
-  img.onload = () => { const i = booth.photos[0] ? 1 : 0; booth.photos[i] = img; booth.cutouts[i] = null; URL.revokeObjectURL(url); ensureCutouts(); drawBooth(); };
+  img.onload = () => { const i = !booth.photos[0] ? 0 : !booth.photos[1] ? 1 : booth.sel; booth.photos[i] = img; booth.cutouts[i] = null; booth.tf[i] = { zoom: 1, dx: 0, dy: 0 }; selectCut(i); URL.revokeObjectURL(url); ensureCutouts(); drawBooth(); };
   img.src = url;
 });
-$('booth-reset').addEventListener('click', () => { booth.photos = [null, null]; booth.cutouts = [null, null]; bgStatus(''); drawBooth(); });
+$('booth-reset').addEventListener('click', () => { booth.photos = [null, null]; booth.cutouts = [null, null]; booth.tf = [{ zoom: 1, dx: 0, dy: 0 }, { zoom: 1, dx: 0, dy: 0 }]; selectCut(0); bgStatus(''); drawBooth(); });
 $('booth-download').addEventListener('click', () => {
   const off = document.createElement('canvas'); off.width = BW * 2; off.height = BH * 2; renderBooth(off.getContext('2d'), 2);
   off.toBlob(b => { const a = document.createElement('a'); a.download = `life-2cut-${Date.now()}.png`; a.href = URL.createObjectURL(b); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }, 'image/png');
