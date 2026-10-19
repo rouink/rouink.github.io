@@ -1,0 +1,23 @@
+/* PROJECT ARCHIVE 공통 디자인 — 모든 작품 페이지가 같이 씁니다 */
+  body { background:radial-gradient(1100px 520px at 50% -8%,#FBF8F1,transparent),#F3EFE8; color:#2B2622; }
+  .fade-up { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
+  .fade-up.in { opacity:1; transform:none; }
+  .hero-aura { position:relative; isolation:isolate; }
+  .hero-aura::before { content:''; position:absolute; inset:-50px -12%; z-index:-1; background:radial-gradient(closest-side,rgba(184,140,60,.17),transparent); animation:drift 16s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform:translate(4%,6%) scale(1.1); } }
+  .decor-line { position:relative; }
+  .decor-line::after { content:''; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); width:132px; height:16px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='16' viewBox='0 0 132 16'%3E%3Cpath d='M0 8H54M78 8H132' stroke='%23B8914A' stroke-width='1'/%3E%3Cpath d='M66 1.5 72.5 8 66 14.5 59.5 8z' fill='none' stroke='%23B8914A' stroke-width='1.2'/%3E%3Ccircle cx='66' cy='8' r='1.8' fill='%23B8914A'/%3E%3Ccircle cx='48' cy='8' r='1.2' fill='%23B8914A'/%3E%3Ccircle cx='84' cy='8' r='1.2' fill='%23B8914A'/%3E%3C/svg%3E") center/contain no-repeat; }
+  /* 화려한 제목: 금빛 그라데이션 (밝은 종이 배경용 / 어두운 배경용). 송명은 굵기가 없어 faux-bold 방지 */
+  .title-gold, .title-gold-light { font-weight:700; font-synthesis:none; letter-spacing:.06em; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:#7a5a22; }
+  .title-gold { background-image:linear-gradient(175deg,#5a3d12 0%,#a67c2e 48%,#6e4b17 100%); }
+  .title-gold-light { background-image:linear-gradient(175deg,#fbefc8 0%,#d4ad57 52%,#f6e3a8 100%); }
+  .opt-btn.active { border-color:#000; color:#000; background:#EFEFEC; }
+  :focus-visible { outline:2px solid #1A1A1A; outline-offset:3px; }
+  #gateway :focus-visible { outline-color:#fff; }
+  .acc summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 0; }
+  .acc summary::-webkit-details-marker { display:none; }
+  .acc summary::after { content:'+'; font-family:Pretendard,sans-serif; font-size:20px; color:#8a6a2f; line-height:1; }
+  .acc[open] summary::after { content:'\2212'; }
+  .inv { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding-bottom:10px; }
+  .inv > button { flex:0 0 42%; max-width:180px; scroll-snap-align:start; }
+  @media (prefers-reduced-motion: reduce) { *, ::before, ::after { transition:none !important; animation:none !important; } }
