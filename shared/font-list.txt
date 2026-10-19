@@ -1,0 +1,20 @@
+글꼴 목록 — data.js 의 fonts 에 이름을 그대로 적으면 적용돼요.
+  예) fonts: { display: '학교안심 붓펜', title: 'Cinzel', text: '학교안심 산뜻바탕', intro: '학교안심 별빛하늘' }
+  display = 큰 제목 · title = 소제목/영문 라벨 · text = 본문 · intro = 시작화면 제목 (안 적으면 기본 글꼴)
+  적용 전 미리보기: 눈누(noonnu.cc)나 Google Fonts 에서 이름으로 검색
+
+허용 기준: 상업적 이용 가능 + 출처 표기 의무 없음
+
+[학교안심 글꼴 66종]  KERIS · OFL
+  가을소풍 · 곧은제목 · 공룡알 · 구름 · 그림일기 · 꼬꼬마 · 꽈배기 · 꾸러기 · 나들이 · 나무 · 날개 · 돋보기 · 돌담 · 둥근미소 · 떡볶이 · 뜀틀 · 리코더 · 마니또 · 마법사 · 맑은날 · 모험가 · 몽글몽글 · 몽당분필 · 물결 · 민들레홀씨 · 바른돋움 · 바른바탕 · 반달 · 받아쓰기 · 별빛하늘 · 별자리 · 보드마카 · 봄방학 · 분필 · 붓펜 · 사물함 · 산뜻돋움 · 산뜻바탕 · 상장 · 색연필 · 소나기 · 수수깡 · 스케치북 · 시간표 · 알림장 · 어항꾸미기 · 여행 · 오카리나 · 우산 · 우주 · 운동장 · 은하수 · 이어달리기 · 자연 · 자유시간 · 점심시간 · 지우개 · 책갈피 · 출석부 · 칠판지우개 · 콧수염 · 키다리풍선 · 투호 · 퍼즐 블랙 · 퍼즐 아웃라인 · 포스터
+
+[케리스 글꼴 3종]  KERIS · OFL
+  케리스 배움체 · 케리스 케듀체 · 케리스 케듀체 Line
+
+[Google Fonts]  영문 이름 그대로 적으면 자동으로 불러와요 (OFL/Apache)
+  한글: Song Myung · Gowun Batang · Gowun Dodum · Hahmlet · Nanum Myeongjo · Nanum Gothic · Nanum Pen Script · Nanum Brush Script
+        Gaegu · Gamja Flower · Hi Melody · Poor Story · Single Day · Yeon Sung · Black Han Sans · Do Hyeon · Gugi · Gasoek One
+        Diphylleia · Grandiflora One · Moirai One · Dokdo · East Sea Dokdo · Kirang Haerang · Jua · Dongle · Bagel Fat One · Sunflower
+  영문: Cinzel · Cinzel Decorative · Cormorant Garamond · Playfair Display · EB Garamond · Marcellus · Italiana · Bodoni Moda
+        Great Vibes · Pinyon Script · Parisienne · Allura · Tangerine · Dancing Script · UnifrakturMaguntia · Pirata One
+        Uncial Antiqua · MedievalSharp · IM Fell English · Courier Prime · Special Elite · Abril Fatface · Monoton · DM Serif Display

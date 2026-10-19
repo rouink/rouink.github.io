@@ -2,1197 +2,287 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>PROJECT ARCHIVE</title>
-<meta name="description" content="작품 A의 세계관과 등장인물 기록실">
-<meta property="og:title" content="PROJECT ARCHIVE">
-<meta property="og:description" content="작품 A의 세계관과 등장인물 기록실">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🪙%3C/text%3E%3C/svg%3E">
+<meta name="description" content="세계관과 등장인물 기록실">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='30' y='30' width='40' height='40' transform='rotate(45 50 50)' fill='none' stroke='%23B89A6A' stroke-width='6'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cinzel+Decorative:wght@400;700;900&family=Gowun+Batang:wght@400;700&family=Song+Myung&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = { theme: { extend: { fontFamily: {
-  display: ['"Cinzel Decorative"', '"Song Myung"', 'serif'], // 화려한 큰 제목: 영문 Cinzel Decorative + 한글 송명
-  serif: ['"Cinzel"', '"Song Myung"', 'serif'],      // 작은 제목: 영문 Cinzel + 한글 송명
-  text: ['"Gowun Batang"', 'serif'],                 // 본문: 한글·영문 고운바탕
-  mono: ['"Cinzel"', '"Gowun Batang"', 'serif'],     // 작은 라벨
-  sans: ['Pretendard', 'sans-serif'] } } } }
-</script>
-<style>
-  body { background:radial-gradient(1100px 520px at 50% -8%,#FBF8F1,transparent),#F3EFE8; color:#2B2622; }
-  .fade-up { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }
-  .fade-up.in { opacity:1; transform:none; }
-  .hero-aura { position:relative; isolation:isolate; }
-  .hero-aura::before { content:''; position:absolute; inset:-50px -12%; z-index:-1; background:radial-gradient(closest-side,rgba(184,140,60,.17),transparent); animation:drift 16s ease-in-out infinite alternate; }
-  @keyframes drift { to { transform:translate(4%,6%) scale(1.1); } }
-  .decor-line { position:relative; }
-  .decor-line::after { content:''; position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); width:132px; height:16px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='16' viewBox='0 0 132 16'%3E%3Cpath d='M0 8H54M78 8H132' stroke='%23B8914A' stroke-width='1'/%3E%3Cpath d='M66 1.5 72.5 8 66 14.5 59.5 8z' fill='none' stroke='%23B8914A' stroke-width='1.2'/%3E%3Ccircle cx='66' cy='8' r='1.8' fill='%23B8914A'/%3E%3Ccircle cx='48' cy='8' r='1.2' fill='%23B8914A'/%3E%3Ccircle cx='84' cy='8' r='1.2' fill='%23B8914A'/%3E%3C/svg%3E") center/contain no-repeat; }
-  /* 화려한 제목: 금빛 그라데이션 (밝은 종이 배경용 / 어두운 배경용). 송명은 굵기가 없어 faux-bold 방지 */
-  .title-gold, .title-gold-light { font-weight:700; font-synthesis:none; letter-spacing:.06em; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:#7a5a22; }
-  .title-gold { background-image:linear-gradient(175deg,#5a3d12 0%,#a67c2e 48%,#6e4b17 100%); }
-  .title-gold-light { background-image:linear-gradient(175deg,#fbefc8 0%,#d4ad57 52%,#f6e3a8 100%); }
-  .opt-btn.active { border-color:#000; color:#000; background:#EFEFEC; }
-  :focus-visible { outline:2px solid #1A1A1A; outline-offset:3px; }
-  #gateway :focus-visible { outline-color:#fff; }
-  .acc summary { cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; padding:14px 0; }
-  .acc summary::-webkit-details-marker { display:none; }
-  .acc summary::after { content:'+'; font-family:Pretendard,sans-serif; font-size:20px; color:#8a6a2f; line-height:1; }
-  .acc[open] summary::after { content:'\2212'; }
-  .inv { display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; padding-bottom:10px; }
-  .inv > button { flex:0 0 42%; max-width:180px; scroll-snap-align:start; }
-  @media (prefers-reduced-motion: reduce) { *, ::before, ::after { transition:none !important; animation:none !important; } }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@200;300;400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Gowun+Batang:wght@400;700&family=Song+Myung&family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Courier+Prime:wght@400;700&family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
+<script src="data.js"></script>
+<script src="shared/fonts.js"></script>
+<link rel="stylesheet" href="shared/fonts-school.css">
+<script>(function(){var t=(window.ARCHIVE&&ARCHIVE.page&&ARCHIVE.page.theme)||'cream';document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="shared/archive.css">
 </head>
-<body class="antialiased overflow-x-hidden font-sans">
+<body>
 
-<!-- 1. 입장 화면 (연출용: 보안 기능이 아닙니다) -->
-<div id="gateway" class="fixed inset-0 z-50 bg-[#0A0A0A] text-white flex items-center justify-center p-6 transition-opacity duration-500">
-  <div class="w-full max-w-md border border-white/20 bg-white/[0.03] p-12 space-y-12 text-center">
-    <div class="space-y-4">
-      <span class="font-mono text-xs text-stone-400 tracking-[0.4em] uppercase">Confidential Archive</span>
-      <h1 class="text-4xl font-display title-gold-light">기록실 입장</h1>
-      <p class="font-text text-sm text-stone-400">Enter your signature to unlock the records.</p>
-    </div>
-    <input type="text" id="username" placeholder="서명을 남겨주세요" maxlength="10" aria-label="서명"
-      class="w-2/3 bg-transparent border-b border-stone-600 focus:border-white outline-none py-2 text-center text-lg font-text text-white transition-colors placeholder-stone-600" />
-    <div class="space-y-4 pt-4 font-mono text-xs">
-      <button type="button" id="btn-bgm-on" class="w-full py-4 border border-white text-white hover:bg-white hover:text-black transition-colors tracking-[0.2em] uppercase">[ Enter with Audio ]</button>
-      <button type="button" id="btn-bgm-off" class="w-full py-2 text-stone-400 hover:text-white transition-colors tracking-widest uppercase">Silent Entry</button>
+<!-- 1. 입장 화면 (기본 classic · 다른 효과는 shared/intro.js 가 이 자리를 바꿔 그림) -->
+<div id="gateway">
+  <div class="gate">
+    <p class="label">Confidential Archive</p>
+    <h1 class="hero-title" id="gate-title">기록실 입장</h1>
+    <div class="orn" aria-hidden="true"><i></i></div>
+    <p class="sub">이름을 남기고 기록실로 들어오세요.</p>
+    <input type="text" id="username" class="line-input" placeholder="이름을 입력하세요" maxlength="10" aria-label="이름" autocomplete="off">
+    <div class="acts">
+      <button type="button" id="btn-bgm-on" class="btn solid">음악과 함께 입장</button>
+      <button type="button" id="btn-bgm-off" class="quiet">조용히 입장</button>
     </div>
   </div>
 </div>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink-edge"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter></svg>
 <audio id="main-bgm" loop preload="none"></audio>
 
 <!-- 2. 메인 -->
-<div id="main-view" class="opacity-0 translate-y-4 transition-all duration-700 ease-out flex flex-col min-h-screen">
-  <nav class="w-full px-4 md:px-8 py-3 md:py-5 flex justify-between items-center border-b border-stone-200 sticky top-0 bg-[#F3EFE8]/90 backdrop-blur-md z-30">
-    <div class="font-display text-lg md:text-xl tracking-widest text-stone-900 font-bold" style="font-synthesis:none">Project<span class="text-amber-800"> Archive</span></div>
-    <div class="flex items-center gap-3 md:gap-6">
-      <div class="flex items-center gap-2 font-mono text-xs">
-        <div class="w-1.5 h-1.5 bg-amber-700 rounded-full animate-pulse"></div>
-        <span id="nav-user-label" class="text-stone-600 tracking-wider">GUEST</span>
-      </div>
-    </div>
-  </nav>
+<div id="main-view" class="opacity-0 translate-y-4">
+  <header class="topbar">
+    <span id="nav-brand" class="brand">Project Archive</span>
+    <span class="user"><i aria-hidden="true"></i><span id="nav-user-label">GUEST</span></span>
+  </header>
 
-  <main class="flex-grow max-w-5xl mx-auto px-5 md:px-6 py-16 md:py-24 w-full space-y-24 md:space-y-32">
-    <section class="text-center max-w-3xl mx-auto space-y-8 fade-up hero-aura">
-      <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase block">Chapter I</span>
-      <h2 class="text-4xl md:text-5xl font-display title-gold decor-line pb-6">작품 A의 세계</h2>
-      <p class="font-text text-stone-800 text-base md:text-lg leading-[2.1] pt-8">
-        이곳은 작품 A의 세계관이 펼쳐지는 중심부입니다.<br>
-        아직 밝혀지지 않은 수많은 역사와 기록의 파편들이 이 공간에 잠들어 있습니다.<br>
-        각기 다른 목적을 지닌 인물들이 거대한 흐름 속에서 자신들만의 궤적을 그리며 움직입니다.<br>
-        그들이 마주할 운명과 선택, 그리고 그 이면에 숨겨진 진실은 무엇일까요.<br>
-        준비된 기록을 열람하여, 얽히고설킨 서사의 실타래를 직접 확인하십시오.
-      </p>
+  <main>
+    <!-- 페이지 I · 표지 -->
+    <section data-page="1" class="hero" id="hero">
+      <div class="hero-media hidden" id="hero-media">
+        <img id="hero-img" alt="">
+        <p class="hero-caption hidden" id="hero-caption"></p>
+      </div>
+      <div class="hero-text">
+        <p id="hero-label" class="label">Chapter I</p>
+        <h1 id="hero-title" class="hero-title">작품 A</h1>
+        <p id="hero-sub" class="hero-sub hidden"></p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
     </section>
 
-    <section class="space-y-12 fade-up">
-      <div class="text-center space-y-2">
-        <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Chapter II</span>
-        <h3 class="font-display title-gold text-3xl">등장인물 기록</h3>
-      </div>
-      <!-- 카드는 아래 characters 데이터에서 자동 생성됩니다 -->
-      <div id="character-grid" class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 max-w-3xl mx-auto"></div>
+    <section data-page="1" class="sec fade-up">
+      <div class="sec-head"><p class="label" id="world-label">Ⅰ · The World</p></div>
+      <p id="hero-text" class="prose"></p>
     </section>
 
-    <section class="border-t border-stone-300 pt-16 md:pt-24 fade-up">
-      <div class="text-center space-y-2 mb-16">
-        <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Chapter III</span>
-        <h3 class="font-display title-gold text-3xl">기념주화 제작소</h3>
-        <p class="font-mono text-xs text-stone-600 mt-2 tracking-wide">* 입력한 이름과 사진은 내 기기에서만 처리됩니다.</p>
+    <section data-page="1" class="fade-up" style="padding-top:56px">
+      <div class="sec-head center" style="padding:0 30px" id="cast-head">
+        <p class="label">Ⅱ · The Characters</p>
+        <h2 class="sec-title">등장인물 기록</h2>
       </div>
-      <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-white p-6 md:p-10 border border-stone-200 shadow-sm">
-        <div class="flex justify-center md:w-1/2">
-          <div class="p-4 rounded-3xl bg-[#1C1915] shadow-[0_12px_40px_rgba(40,30,10,0.2)]">
-            <canvas id="coin-canvas" width="900" height="900" aria-label="기념주화 미리보기" class="w-full max-w-[280px] aspect-square"></canvas>
-          </div>
-        </div>
-        <div class="space-y-8 md:w-1/2 w-full font-mono">
-          <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Shape</span>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="shape-group">
-              <button type="button" data-shape="card" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Photocard</button>
-              <button type="button" data-shape="can" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Can Badge</button>
-              <button type="button" data-shape="shield" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Shield</button>
-              <button type="button" data-shape="deco" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Deco</button>
+      <!-- 카드는 data.js 의 characters 에서 자동 생성 (한 명이면 큰 기록 카드) -->
+      <div id="character-grid"></div>
+      <div id="page-song"></div>
+    </section>
+
+    <section data-page="1" class="quote fade-up hidden" id="page-quote"><p id="page-quote-text"></p><small id="page-quote-by"></small></section>
+
+    <!-- 페이지 II · 갤러리 -->
+    <section data-page="2" class="sec fade-up" style="padding-top:40px">
+      <div class="sec-head center">
+        <p class="label">Page Ⅱ · Gallery</p>
+        <h2 id="gallery-title" class="sec-title">표정 갤러리</h2>
+        <p id="gallery-sub" class="sec-sub">크랙에서는 잠겨 있는 이미지를 여기서 먼저 만나 보세요.</p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <section data-page="2" class="fade-up" style="padding-top:28px"><div id="gallery" class="gal"></div></section>
+
+    <!-- 페이지 III · 기념주화 제작소 -->
+    <section data-page="3" class="sec fade-up" style="padding-top:40px">
+      <div class="sec-head center">
+        <p class="label">Page Ⅲ · Atelier</p>
+        <h2 class="sec-title">기념주화 제작소</h2>
+        <p class="sec-sub">입력한 이름과 사진은 내 기기에서만 처리돼요.</p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <section data-page="3" class="fade-up" style="padding-top:28px">
+      <div class="studio">
+        <div class="stage-wrap"><div class="coin-stage"><canvas id="coin-canvas" width="900" height="900" aria-label="기념주화 미리보기"></canvas></div></div>
+        <div class="ctrl">
+          <div class="field">
+            <span class="label">Shape</span>
+            <div class="seg" id="shape-group" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <button type="button" data-shape="card" class="opt-btn">Photocard</button>
+              <button type="button" data-shape="can" class="opt-btn">Can Badge</button>
+              <button type="button" data-shape="shield" class="opt-btn">Shield</button>
+              <button type="button" data-shape="deco" class="opt-btn">Deco</button>
             </div>
           </div>
-          <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Finish</span>
-            <div class="flex gap-2" id="metal-group">
-              <button type="button" data-metal="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Gold</button>
-              <button type="button" data-metal="rose" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Rose</button>
-              <button type="button" data-metal="silver" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Platinum</button>
-              <button type="button" data-metal="aurora" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Aurora</button>
+          <div class="field">
+            <span class="label">Finish</span>
+            <div class="seg" id="metal-group" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+              <button type="button" data-metal="gold" class="opt-btn">Gold</button>
+              <button type="button" data-metal="rose" class="opt-btn">Rose</button>
+              <button type="button" data-metal="silver" class="opt-btn">Platinum</button>
+              <button type="button" data-metal="aurora" class="opt-btn">Aurora</button>
             </div>
           </div>
-          <div class="space-y-3" id="photo-style-row">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Photo Style</span>
-            <div class="flex gap-2" id="photo-group">
-              <button type="button" data-photo="color" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Full Color</button>
-              <button type="button" data-photo="relief" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Engraved</button>
+          <div class="field" id="photo-style-row">
+            <span class="label">Photo Style</span>
+            <div class="seg" id="photo-group" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <button type="button" data-photo="color" class="opt-btn">Full Color</button>
+              <button type="button" data-photo="relief" class="opt-btn">Engraved</button>
             </div>
           </div>
-          <div class="space-y-3">
-            <label for="coin-name-input" class="text-xs text-stone-600 uppercase tracking-[0.2em]">Engraving Name</label>
-            <input type="text" id="coin-name-input" placeholder="이름을 입력하세요" maxlength="10" class="w-full px-0 py-2 border-b border-stone-300 bg-transparent outline-none focus:border-black transition-colors font-text text-lg" />
+          <div class="field">
+            <label for="coin-name-input" class="label">Engraving Name</label>
+            <input type="text" id="coin-name-input" class="line-input" placeholder="새길 이름을 입력하세요" maxlength="10">
           </div>
-          <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden" />
-          <div class="flex gap-3 pt-4">
-            <button type="button" id="btn-upload" class="w-1/3 py-3 border border-stone-900 text-stone-900 hover:bg-stone-900 hover:text-white transition-colors text-xs tracking-widest uppercase">Upload</button>
-            <button type="button" id="btn-download" class="w-2/3 py-3 bg-stone-900 text-white hover:bg-stone-800 transition-colors text-xs tracking-widest uppercase shadow-md">Mint &amp; Download</button>
+          <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden">
+          <div class="row">
+            <button type="button" id="btn-upload" class="btn" style="flex:0 0 36%">사진 올리기</button>
+            <button type="button" id="btn-download" class="btn solid">만들어 저장하기</button>
           </div>
         </div>
       </div>
     </section>
-    <section class="border-t border-stone-300 pt-16 md:pt-24 fade-up">
-      <div class="text-center space-y-2 mb-16">
-        <span class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Chapter IV</span>
-        <h3 class="font-display title-gold text-3xl">인생 2컷</h3>
-        <p class="font-mono text-xs text-stone-600 mt-2 tracking-wide">* 올린 사진은 내 기기에서만 처리됩니다.</p>
+
+    <!-- 페이지 III · 인생 두컷 -->
+    <section data-page="3" class="sec fade-up" style="padding-top:72px">
+      <div class="sec-head center">
+        <p class="label">Photo Booth</p>
+        <h2 class="sec-title">인생 두컷</h2>
+        <p class="sec-sub">올린 사진은 내 기기에서만 처리돼요.</p>
+        <div class="orn" aria-hidden="true"><i></i></div>
       </div>
-      <div class="max-w-4xl mx-auto flex flex-col md:flex-row gap-8 md:gap-12 items-center bg-white p-6 md:p-10 border border-stone-200 shadow-sm">
-        <div class="flex justify-center md:w-1/2">
-          <canvas id="booth-canvas" width="600" height="1500" aria-label="인생 2컷 미리보기" class="w-full max-w-[230px] shadow-[0_12px_40px_rgba(40,30,10,0.22)] cursor-grab" style="touch-action:none"></canvas>
-        </div>
-        <div class="space-y-8 md:w-1/2 w-full font-mono">
-          <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Character</span>
-            <div class="grid grid-cols-3 gap-2" id="booth-char-group"></div>
+    </section>
+    <section data-page="3" class="fade-up" style="padding-top:28px">
+      <div class="studio">
+        <div class="stage-wrap"><canvas id="booth-canvas" width="600" height="1500" aria-label="인생 두컷 미리보기" style="height:min(560px,62vh);width:auto;aspect-ratio:600/1500;touch-action:pan-y"></canvas></div>
+        <div class="ctrl">
+          <div class="field" id="booth-char-row">
+            <span class="label">Character</span>
+            <div class="seg" id="booth-char-group"></div>
           </div>
-          <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Frame</span>
-            <div class="flex gap-2" id="booth-frame-group">
-              <button type="button" data-bframe="gold" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Gold</button>
-              <button type="button" data-bframe="rose" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Rose</button>
-              <button type="button" data-bframe="silver" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Platinum</button>
-              <button type="button" data-bframe="aurora" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Aurora</button>
+          <div class="field">
+            <span class="label">Frame</span>
+            <div class="seg" id="booth-frame-group" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+              <button type="button" data-bframe="gold" class="opt-btn">Gold</button>
+              <button type="button" data-bframe="rose" class="opt-btn">Rose</button>
+              <button type="button" data-bframe="silver" class="opt-btn">Platinum</button>
+              <button type="button" data-bframe="aurora" class="opt-btn">Aurora</button>
             </div>
           </div>
-          <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Background</span>
-            <div class="grid grid-cols-4 gap-2" id="booth-bg-group">
-              <button type="button" data-bbg="original" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Original</button>
-              <button type="button" data-bbg="sunset" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Sunset</button>
-              <button type="button" data-bbg="night" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Night</button>
-              <button type="button" data-bbg="sakura" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Sakura</button>
-              <button type="button" data-bbg="sky" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Sky</button>
-              <button type="button" data-bbg="studio" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Studio</button>
-              <button type="button" data-bbg="holo" class="opt-btn py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Holo</button>
+          <div class="field">
+            <span class="label">Background</span>
+            <div class="seg" id="booth-bg-group" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+              <button type="button" data-bbg="sunset" class="opt-btn">Sunset</button>
+              <button type="button" data-bbg="night" class="opt-btn">Night</button>
+              <button type="button" data-bbg="sakura" class="opt-btn">Sakura</button>
+              <button type="button" data-bbg="sky" class="opt-btn">Sky</button>
+              <button type="button" data-bbg="studio" class="opt-btn">Studio</button>
+              <button type="button" data-bbg="holo" class="opt-btn">Holo</button>
             </div>
-            <p id="booth-bg-status" class="font-text text-sm text-stone-700" aria-live="polite"></p>
+            <p id="booth-bg-status" class="note" aria-live="polite"></p>
           </div>
-          <div class="space-y-3">
-            <span class="text-xs text-stone-600 uppercase tracking-[0.2em]">Character Side</span>
-            <div class="flex gap-2" id="booth-side-group">
-              <button type="button" data-bside="left" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Left</button>
-              <button type="button" data-bside="right" class="opt-btn flex-1 py-3 text-xs border border-stone-300 text-stone-600 hover:border-black hover:text-black transition-colors uppercase tracking-wider">Right</button>
+          <div class="field">
+            <span class="label">Character Side</span>
+            <div class="seg" id="booth-side-group" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <button type="button" data-bside="left" class="opt-btn">Left</button>
+              <button type="button" data-bside="right" class="opt-btn">Right</button>
             </div>
           </div>
-          <div class="space-y-3">
-            <label for="booth-zoom" class="text-xs text-stone-600 uppercase tracking-[0.2em]">Photo Size · <span id="booth-sel">CUT 01</span></label>
-            <input type="range" id="booth-zoom" min="50" max="180" value="100" class="w-full accent-stone-700">
-            <p class="font-text text-sm text-stone-700">사진을 끌어서 위치를 옮길 수 있어요. 옮기려는 컷을 누르면 그 컷이 선택돼요.</p>
+          <div class="field">
+            <label for="booth-zoom" class="label">Photo Size · <span id="booth-sel">CUT 01</span></label>
+            <input type="range" id="booth-zoom" min="50" max="180" value="100">
+            <button type="button" id="booth-move" aria-pressed="false" class="opt-btn kr">사진 옮기기 · 꺼짐</button>
+            <p class="note">사진 옮기기를 켜면 미리보기에서 사진을 끌어 옮길 수 있어요. 다 옮겼으면 꺼 주세요. 켜져 있는 동안은 미리보기 위에서 스크롤이 멈춰요.</p>
           </div>
-          <p id="booth-step" class="font-text text-base text-stone-800" aria-live="polite"></p>
-          <input type="file" id="booth-upload" accept="image/*" class="hidden" />
-          <div class="space-y-3">
-            <div class="flex gap-3">
-              <button type="button" id="booth-upload-btn" class="w-2/3 py-3 border border-stone-900 text-stone-900 hover:bg-stone-900 hover:text-white transition-colors text-xs tracking-widest uppercase"></button>
-              <button type="button" id="booth-reset" class="w-1/3 py-3 border border-stone-300 text-stone-700 hover:border-black transition-colors text-xs tracking-widest uppercase">Reset</button>
-            </div>
-            <button type="button" id="booth-download" class="w-full py-3 bg-stone-900 text-white hover:bg-stone-800 transition-colors text-xs tracking-widest uppercase shadow-md disabled:opacity-40 disabled:cursor-not-allowed" disabled>Print &amp; Download</button>
+          <p id="booth-step" class="note" style="color:var(--ink2)" aria-live="polite"></p>
+          <input type="file" id="booth-upload" accept="image/*" class="hidden">
+          <div class="row">
+            <button type="button" id="booth-upload-btn" class="btn"></button>
+            <button type="button" id="booth-reset" class="btn ghost" style="flex:0 0 30%">다시</button>
           </div>
+          <button type="button" id="booth-download" class="btn solid block" disabled>인화해서 저장하기</button>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-stone-200 pt-10 pb-24 mt-auto text-center font-mono text-xs text-stone-600 tracking-widest uppercase">
-    © ROUINK PROJECT HUB. ALL RIGHTS RESERVED.
-  </footer>
+  <footer id="site-footer">© ROUINK PROJECT HUB. ALL RIGHTS RESERVED.</footer>
 </div>
 
-<div id="player" class="hidden fixed bottom-0 inset-x-0 z-[60] border-t border-stone-300/70 bg-[#F3EFE8]/95 backdrop-blur-md" style="padding-bottom:env(safe-area-inset-bottom)">
-  <div class="max-w-5xl mx-auto flex items-center gap-1 md:gap-3 px-2 md:px-4">
-    <button type="button" id="audio-btn" aria-pressed="false" aria-label="음악 켜기/끄기" class="shrink-0 h-12 min-w-[64px] px-2 flex items-center justify-center gap-1.5 text-stone-800 hover:text-black">
-      <span class="text-lg leading-none" aria-hidden="true">♪</span><span id="audio-state" class="font-mono text-xs tracking-widest">OFF</span>
-    </button>
-    <div class="flex-1 min-w-0 text-center">
-      <p id="ticker-text" class="py-3 font-mono text-xs tracking-widest text-stone-800 transition-opacity duration-500 truncate"></p>
-      <p id="audio-notice" class="hidden py-3 font-sans text-xs text-amber-900 truncate"></p>
-    </div>
-    <label class="shrink-0 flex items-center gap-2 pr-1">
-      <span class="sr-only">볼륨</span>
-      <input type="range" id="vol" min="0" max="100" step="1" class="w-16 md:w-28 accent-stone-700">
-    </label>
-  </div>
+<!-- 하단 메뉴 바 -->
+<div id="player" class="hidden">
+  <p id="audio-notice" class="hidden"></p>
+  <button type="button" id="audio-btn" aria-pressed="false" aria-label="음악 켜기/끄기">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+    <span id="audio-state">OFF</span>
+  </button>
+  <nav id="page-nav" aria-label="페이지 이동">
+    <button type="button" data-goto="1" class="page-tab"><span class="num">Ⅰ</span><span class="page-label">기록</span></button>
+    <button type="button" data-goto="2" class="page-tab"><span class="num">Ⅱ</span><span class="page-label">갤러리</span></button>
+    <button type="button" data-goto="3" class="page-tab"><span class="num">Ⅲ</span><span class="page-label">제작소</span></button>
+  </nav>
+  <label class="vol"><span class="sr-only">볼륨</span><input type="range" id="vol" min="0" max="100" step="1"></label>
+  <span id="ticker-text" class="sr-only"></span>
   <span id="audio-track" class="sr-only" aria-live="polite"></span>
 </div>
 
-<!-- 3. 캐릭터 상세 팝업 -->
-<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="fixed inset-0 z-50 bg-[#F3EFE8]/95 backdrop-blur-md hidden items-center justify-center p-3 pb-[76px] md:p-6 md:pb-[84px] transition-opacity opacity-0">
-  <div id="modal-panel" class="bg-[#FBF8F1] w-full max-w-4xl border border-stone-200 shadow-2xl scale-95 transition-transform duration-500 max-h-full flex flex-col relative">
-    <button type="button" id="modal-close" aria-label="닫기" class="absolute top-3 right-3 md:top-5 md:right-5 w-10 h-10 flex items-center justify-center bg-[#FBF8F1]/90 text-stone-600 hover:text-black font-light text-2xl z-20">✕</button>
-    <div id="modal-scroll" class="overflow-y-auto flex-grow flex flex-col md:flex-row">
-      <div class="w-full md:w-5/12 bg-stone-100 relative min-h-[240px] md:min-h-0 md:sticky md:top-0 md:self-start md:h-[calc(100vh-120px)] shrink-0">
-        <video id="modal-video" loop muted playsinline class="absolute inset-0 w-full h-full object-cover"></video>
-        <div id="modal-video-fallback" class="hidden absolute inset-0 items-center justify-center font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Video coming soon</div>
+<!-- 갤러리 크게 보기 -->
+<div id="gviewer" class="hidden" role="dialog" aria-modal="true" aria-label="이미지 크게 보기">
+  <button type="button" id="gv-close" class="iconbtn" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button type="button" id="gv-prev" class="iconbtn" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" id="gv-next" class="iconbtn" aria-label="다음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  <figure>
+    <div class="fr"><img id="gv-img" alt=""></div>
+    <figcaption><p id="gv-count"></p><p id="gv-label"></p><p id="gv-desc"></p></figcaption>
+  </figure>
+</div>
+
+<!-- 3. 캐릭터 기록 (팝업) -->
+<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="hidden opacity-0">
+  <div id="modal-panel" class="scale-95">
+    <button type="button" id="modal-close" class="iconbtn" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div id="modal-scroll">
+      <div class="m-media">
+        <img id="modal-portrait" alt="" class="hidden">
+        <video id="modal-video" loop muted playsinline></video>
+        <div id="modal-video-fallback" class="hidden">Video coming soon</div>
       </div>
-      <div class="w-full md:w-7/12 p-6 md:p-10 space-y-8">
-        <div class="space-y-3">
-          <span id="modal-subtitle" class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase"></span>
-          <h4 id="modal-name" class="text-4xl md:text-5xl font-display title-gold leading-tight"></h4>
-          <p id="modal-name-en" class="font-mono text-xs text-stone-600 tracking-[0.35em] uppercase"></p>
-          <div id="modal-tags" class="flex flex-wrap gap-2 pt-2"></div>
+      <div class="m-body">
+        <div class="m-head">
+          <p id="modal-subtitle" class="label"></p>
+          <h2 id="modal-name"></h2>
+          <p id="modal-name-en"></p>
+          <div id="modal-tags" class="tags"></div>
+          <div class="orn" aria-hidden="true"><i></i></div>
         </div>
-        <p id="modal-desc" class="font-text text-stone-900 text-base leading-[2]"></p>
-        <ul id="modal-specs" class="space-y-3 font-mono text-xs text-stone-600"></ul>
-        <div id="modal-extra"></div>
-        <div>
-          <h5 class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase mb-1">TMI</h5>
-          <div id="modal-tmi" class="border-t border-stone-200"></div>
+        <p id="modal-desc"></p>
+        <div class="m-sec"><span class="label">Profile</span><ul id="modal-specs" class="spec"></ul></div>
+        <div class="m-sec" id="modal-extra"></div>
+        <div class="m-sec"><span class="label">TMI</span><div id="modal-tmi" class="acc-wrap"></div></div>
+        <div class="m-sec"><span class="label">History</span>
+          <div class="acc-wrap"><details class="acc"><summary>지나온 이야기 펼쳐 보기</summary><div id="modal-story" class="ans"></div></details></div>
         </div>
-        <div>
-          <h5 class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase mb-1">History</h5>
-          <details class="acc border-y border-stone-200">
-            <summary class="font-text text-stone-900 text-base">지나온 이야기 펼쳐 보기</summary>
-            <div id="modal-story" class="font-text text-stone-900 text-base leading-[2.05] space-y-4 pb-6"></div>
-          </details>
-        </div>
-        <div>
-          <div class="flex justify-between items-baseline mb-3">
-            <h5 class="font-mono text-xs text-stone-600 tracking-[0.3em] ">What's in My Bag</h5>
-            <span id="modal-inv-count" class="font-mono text-xs text-stone-600 tracking-widest"></span>
-          </div>
+        <div class="m-sec">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="label">What's in My Bag</span><span id="modal-inv-count" class="label" style="color:var(--muted);letter-spacing:.2em"></span></div>
           <div id="modal-inv" class="inv"></div>
         </div>
-        <div class="border border-stone-200 bg-white/60 p-5 flex gap-4 items-center">
-          <span class="text-2xl" aria-hidden="true">♪</span>
-          <div>
-            <span id="modal-theme-label" class="font-mono text-xs text-stone-600 tracking-[0.2em] block mb-1"></span>
-            <p id="modal-theme" class="font-text text-stone-900 text-base"></p>
-          </div>
+        <div class="m-sec m-song">
+          <span class="disc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></span>
+          <div><span id="modal-theme-label" class="label" style="font-size:11px"></span><p id="modal-theme"></p></div>
         </div>
-        <nav class="flex justify-between gap-3 border-t border-stone-200 pt-6" aria-label="캐릭터 이동">
-          <button type="button" id="modal-prev" class="flex-1 text-left py-3 pr-3 hover:text-black text-stone-600"><span class="font-mono text-xs tracking-widest block">← PREV</span><span id="modal-prev-name" class="font-text text-base"></span></button>
-          <button type="button" id="modal-next" class="flex-1 text-right py-3 pl-3 hover:text-black text-stone-600"><span class="font-mono text-xs tracking-widest block">NEXT →</span><span id="modal-next-name" class="font-text text-base"></span></button>
+        <a id="modal-crack" href="#" target="_blank" rel="noopener" class="btn solid block hidden">크랙에서 대화하기</a>
+        <nav id="modal-nav" aria-label="캐릭터 이동">
+          <button type="button" id="modal-prev" style="text-align:left"><span class="label">← Prev</span><span id="modal-prev-name"></span></button>
+          <button type="button" id="modal-next" style="text-align:right"><span class="label">Next →</span><span id="modal-next-name"></span></button>
         </nav>
       </div>
     </div>
-    <div id="lightbox" class="hidden absolute inset-0 z-30 items-center justify-center p-6" style="background:rgba(43,38,34,.32)" role="dialog" aria-label="아이템 상세">
-      <div class="relative w-full max-w-xs border border-stone-300 shadow-xl text-center px-6 py-7 space-y-3" style="background:#FBF8F1">
-        <button type="button" id="lightbox-close" aria-label="닫기" class="absolute top-1 right-1 w-10 h-10 text-xl text-stone-600 hover:text-black">✕</button>
-        <div id="lightbox-icon" class="text-5xl" aria-hidden="true"></div>
-        <h6 id="lightbox-title" class="font-display title-gold text-xl"></h6>
-        <p id="lightbox-desc" class="font-text text-stone-900 text-base leading-[1.9]"></p>
+    <div id="lightbox" class="hidden" role="dialog" aria-label="아이템 상세">
+      <div class="lb-card">
+        <button type="button" id="lightbox-close" class="iconbtn" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div id="lightbox-icon" aria-hidden="true"></div>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-/* ===== 설정 · 데이터 (여기만 고치면 됩니다) ===== */
-const CONFIG = {
-  // 직접 내려받아 레포에 올린 음원 경로 (저작권 확인한 파일만 사용)
-  bgm: 'assets/music/main.mp3'   // 메인 음악: 첫 화면~스크롤 구간
-};
-// ※ 아래는 전부 샘플입니다. 이름은 name / nameEn 한 곳에만 적으면 카드·팝업·이동 버튼에 자동으로 같이 쓰입니다(오타 방지).
-// ※ 나이(age)는 작품 속 기준 시점에 맞춰 직접 적습니다. video(.mp4 직접 링크)·poster는 비워 두면 'Video coming soon'이 표시됩니다.
-const characters = {
-  char1: {
-    num:'FILE 01', name:'한서린', nameEn:'HAN SEORIN',
-    tags:['기록관','냉정','야간근무','미련'],
-    bio:'작품 A의 기록관. 모든 사건을 한 줄도 빠짐없이 적어 두지만, 정작 자신의 이야기는 한 번도 기록하지 않았다. 말수가 적고 판단이 빠르며, 규칙을 어기는 사람 앞에서도 목소리를 높이지 않는다.',
-    birth:'1994년 3월 15일', age:32, mbti:'ISTJ', nationality:'대한민국', height:'168cm',
-    extras:[['혈액형','A형'],['직업','기록관'],['취미','야간 산책, 낡은 장부 정리'],['말버릇','"기록해 둘게요."']],
-    tmi:[
-      { q:'잠버릇이 있다', a:'기록하다 잠들면 펜을 쥔 채로 잔다. 아침마다 손등에 잉크 자국이 남아 있다.' },
-      { q:'의외로 단 음식을 좋아한다', a:'서랍 세 번째 칸에는 언제나 꿀사탕이 들어 있다. 들키면 업무용이라고 말한다.' },
-      { q:'길을 외우는 데 오래 걸린다', a:'기록은 정확하지만 길눈은 어둡다. 같은 골목을 두 번 돌아 나온 적이 있다.' }
-    ],
-    story:['어린 시절의 서린은 집 안의 모든 물건에 이름표를 붙이던 아이였다. 사라지는 것이 무서웠고, 적어 두면 사라지지 않는다고 믿었다.','그 믿음이 처음 깨진 건 열두 살의 겨울이었다. 가장 아끼던 노트가 한밤중에 사라졌고, 끝내 찾지 못했다. 그날 이후 그는 같은 내용을 두 권에 나누어 적는다.','지금의 그는 남의 기록을 지키는 일을 한다. 자신의 빈 페이지가 어디서부터 비어 있는지는 아직 아무에게도 말하지 않았다.'],
-    items:[
-      { icon:'🖋️', title:'잉크가 마른 만년필', desc:'뚜껑에 작은 이름표가 붙어 있다. 오래 쓰지 않았지만 버리지도 못한다.' },
-      { icon:'📒', title:'두 권의 같은 노트', desc:'표지의 흠집까지 똑같이 맞춘 한 쌍. 한 권은 늘 몸에 지니고 다닌다.' },
-      { icon:'🍬', title:'꿀사탕', desc:'서랍 속 상비품. 개수가 줄어드는 속도로 그날의 피로를 알 수 있다.' },
-      { icon:'🕯️', title:'반쯤 탄 양초', desc:'야간 기록 때 켜 두는 초. 불꽃이 흔들리면 하던 말을 멈춘다.' }
-    ],
-    themeTitle:'조용한 밤의 기록 (Sample Theme 01)',
-    video:'', poster:'', music:'assets/music/char1.mp3',
-    booth:['assets/booth/char1_1.png', 'assets/booth/char1_2.png']   // 인생 2컷용 배경 투명 PNG (1컷, 2컷)
-  },
-  char2: {
-    num:'FILE 02', name:'윤도겸', nameEn:'YUN DOGYEOM',
-    tags:['수집가','통찰','서투름','고서적'],
-    bio:'오래된 책과 문서를 모으는 수집가. 사람의 속마음은 놀랄 만큼 잘 읽어 내지만, 그 마음에 어떤 말을 건네야 할지는 번번이 놓친다. 침묵이 길어질수록 책장을 넘기는 소리가 커진다.',
-    birth:'1989년 12월 24일', age:36, mbti:'INFP', nationality:'대한민국', height:'182cm',
-    extras:[['혈액형','O형'],['직업','고서 수집가'],['취미','고서 복원, 빗소리 듣기'],['말버릇','"그게… 아니, 아닙니다."']],
-    tmi:[
-      { q:'우산을 자주 두고 온다', a:'비 오는 날을 좋아하면서도 정작 우산은 어디에든 두고 온다. 집에는 같은 우산이 네 개 있다.' },
-      { q:'책 냄새로 연도를 맞힌다', a:'정확도는 절반쯤. 틀렸을 때는 조용히 책을 덮고 못 들은 척한다.' },
-      { q:'선물을 고르는 데 일주일이 걸린다', a:'받는 사람이 쓰지 않을까 봐 고민하다가, 결국 책을 고른다.' }
-    ],
-    story:['도겸은 외할아버지의 고서점에서 자랐다. 손님이 없는 오후마다 먼지 쌓인 서가 사이에서 혼자 책의 마지막 장부터 읽는 버릇이 생겼다.','어른이 되어 서점이 문을 닫던 날, 그는 서가 맨 아래 칸에서 해독할 수 없는 두루마리 한 점을 발견한다. 그것이 지금껏 이어진 수집의 시작이다.','그는 아직도 그 두루마리를 읽지 못한다. 다만 읽을 수 없다는 사실이 이상하게도 위로가 된다고 말한다.'],
-    items:[
-      { icon:'📜', title:'해독 불가의 두루마리', desc:'서점 서가 맨 아래에서 나온 양피지. 어느 나라 글자인지조차 알 수 없다.' },
-      { icon:'🔍', title:'황동 돋보기', desc:'손잡이의 도금이 닳아 맨 금속이 드러났다. 복원 작업에는 이것만 쓴다.' },
-      { icon:'☂️', title:'네 번째 우산', desc:'오늘도 어딘가에 두고 왔을지 모르는 검은 우산.' }
-    ],
-    themeTitle:'비 오는 서가 (Sample Theme 02)',
-    video:'', poster:'', music:'assets/music/char2.mp3',
-    booth:['assets/booth/char2_1.png', 'assets/booth/char2_2.png']   // 인생 2컷용 배경 투명 PNG (1컷, 2컷)
-  },
-  char3: {
-    num:'FILE 03', name:'백이안', nameEn:'BAEK IAN',
-    tags:['신입','낙천','호기심','엉뚱함'],
-    bio:'기록실에 막 들어온 신입. 가만히 있으면 불안하다는 이유로 늘 무언가를 만지작거린다. 분위기를 읽지 못하는 것처럼 보이지만, 가장 먼저 눈치채고 가장 늦게 말하는 쪽에 가깝다.',
-    birth:'2001년 7월 7일', age:25, mbti:'ENFP', nationality:'대한민국', height:'174cm',
-    extras:[['혈액형','B형'],['직업','기록실 견습'],['취미','길고양이 이름 지어 주기'],['말버릇','"잠깐만요, 이거 좀 이상한데요?"']],
-    tmi:[
-      { q:'길고양이에게 전부 이름을 붙였다', a:'기록실 뒤뜰에만 일곱 마리. 이름은 모두 회의록에 쓰인 단어에서 따왔다.' },
-      { q:'지각은 하지 않지만 항상 뛰어서 온다', a:'출근 시간 5분 전에 도착하기 위해 7분 전에 출발하는 법을 아직 모른다.' },
-      { q:'비밀을 지키는 건 의외로 잘한다', a:'수다스러워 보여도, 부탁받은 말은 끝까지 입 밖에 내지 않는다.' }
-    ],
-    story:['이안은 작은 항구 마을에서 자랐다. 배가 들어올 때마다 부두에 나가 낯선 물건의 이름을 하나씩 물어보던 아이였다.','기록실의 모집 공고를 본 건 우연이었다. "모든 것을 적어 두는 곳"이라는 한 줄이 이상하게 오래 남아, 그는 다음 날 첫 기차를 탔다.','아직은 서툴지만, 그는 이곳에서 처음으로 누군가가 자신의 질문을 끝까지 들어 준다는 걸 알게 됐다.'],
-    items:[
-      { icon:'🧭', title:'바늘이 떨리는 나침반', desc:'항구 마을 시절부터 지니던 것. 북쪽을 가리키지만 가끔 이안 쪽으로 기운다.' },
-      { icon:'🐟', title:'간식용 멸치 봉지', desc:'뒤뜰 일곱 마리를 위한 상비품. 주머니마다 조금씩 들어 있다.' },
-      { icon:'📎', title:'구부러진 클립', desc:'생각이 많을 때마다 손에서 모양이 바뀐다. 오늘은 별 모양.' }
-    ],
-    themeTitle:'첫 기차 (Sample Theme 03)',
-    video:'', poster:'', music:'assets/music/char3.mp3',
-    booth:['assets/booth/char3_1.png', 'assets/booth/char3_2.png']   // 인생 2컷용 배경 투명 PNG (1컷, 2컷)
-  }
-};
-const charIds = Object.keys(characters);
-
-const $ = id => document.getElementById(id);
-
-/* ===== 입장 · 음악 =====
-   · Web Audio 게인으로 볼륨/페이드를 처리 → iOS Safari에서도 볼륨이 먹습니다. (file:// 로 직접 열면 브라우저가 막아서 일반 volume으로 대체)
-   · 볼륨은 localStorage에 기억하되, 저장소가 막혀 있어도(시크릿 모드 등) 오류 없이 동작합니다.
-   · 자동재생이 막히면 하단 바에 "TAP FOR SOUND" 안내가 뜹니다. */
-const tk = $('ticker-text');
-const gateway = $('gateway'), mainView = $('main-view'), bgm = $('main-bgm');
-const audioBtn = $('audio-btn'), audioState = $('audio-state'), notice = $('audio-notice'), volEl = $('vol');
-const VOL_KEY = 'pa_volume';
-const store = { get(k) { try { return localStorage.getItem(k); } catch { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch {} } };
-let vol = .7; { const v = parseFloat(store.get(VOL_KEY)); if (v >= 0 && v <= 1) vol = v; }
-volEl.value = Math.round(vol * 100);
-
-let actx = null, gainNode = null, useGain = false, env = 0, playing = false, entered = false, seq = 0;
-let curSrc = CONFIG.bgm, curLabel = 'Main Theme'; const resumeAt = {};
-bgm.src = curSrc;
-function initGraph() {
-  if (gainNode || location.protocol === 'file:') return;
-  try {
-    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
-    actx = new AC(); const src = actx.createMediaElementSource(bgm);
-    gainNode = actx.createGain(); gainNode.gain.value = 0; src.connect(gainNode); gainNode.connect(actx.destination);
-    bgm.volume = 1; useGain = true;
-  } catch { useGain = false; }
-}
-const clamp01 = x => Math.max(0, Math.min(1, x));
-function applyOut() { const v = clamp01(env * vol); if (useGain) gainNode.gain.value = v; else bgm.volume = v; }
-const fade = (to, ms) => new Promise(res => {
-  const from = env, t0 = performance.now();
-  (function step(t) { const k = clamp01((t - t0) / ms); env = from + (to - from) * k; applyOut(); k < 1 ? requestAnimationFrame(step) : res(); })(t0);
-});
-function showNotice(msg) { notice.textContent = msg || ''; notice.classList.toggle('hidden', !msg); tk.classList.toggle('hidden', !!msg); }
-function renderAudioUI() {
-  audioState.textContent = playing ? 'ON' : 'OFF'; audioBtn.setAttribute('aria-pressed', playing);
-  $('audio-track').textContent = playing ? curLabel : '';
-  audioBtn.title = playing ? `${curLabel} 재생 중` : '음악 켜기';
-}
-// 재생 시도: 성공/차단/파일없음을 구분해서 안내
-async function tryPlay() {
-  try { if (actx && actx.state === 'suspended') await actx.resume(); await bgm.play(); playing = true; showNotice(''); return true; }
-  catch (e) {
-    playing = false;
-    showNotice(e && e.name === 'NotAllowedError' ? '♪ 소리를 켜려면 왼쪽 ♪ 를 눌러 주세요 · TAP FOR SOUND' : '음원 파일을 찾을 수 없어요 (assets/music 확인)');
-    return false;
-  }
-}
-async function setBgm(on) {
-  if (on) {
-    initGraph(); env = 0; applyOut();
-    if (await tryPlay()) fade(1, 1200);
-  } else { playing = false; showNotice(''); await fade(0, 400); bgm.pause(); }
-  renderAudioUI();
-}
-async function switchTrack(src, label) {
-  const url = new URL(src, location.href).href;
-  if (bgm.src === url) return;
-  const id = ++seq;
-  resumeAt[bgm.src] = bgm.currentTime;                       // 떠나는 곡의 위치 기억
-  if (playing) { await fade(0, 450); if (id !== seq) return; }
-  curSrc = src; curLabel = label || curLabel; bgm.src = src;
-  const start = resumeAt[url] || 0;
-  if (start) bgm.addEventListener('loadedmetadata', () => { try { bgm.currentTime = start; } catch {} }, { once: true });
-  if (!playing) { renderAudioUI(); return; }                  // 꺼 둔 상태면 곡만 바꿔 둠
-  if (await tryPlay()) { fade(1, 800); } renderAudioUI();
-}
-function enter(withAudio) {
-  if (entered) return; entered = true;
-  const user = $('username').value.trim() || 'GUEST';
-  $('nav-user-label').textContent = user;
-  $('coin-name-input').value = user;
-  setBgm(withAudio);
-  gateway.classList.add('opacity-0', 'pointer-events-none');
-  setTimeout(() => {
-    gateway.style.display = 'none';
-    mainView.classList.remove('opacity-0', 'translate-y-4'); startTicker();
-    drawCoin();
-  }, 500);
-}
-$('btn-bgm-on').addEventListener('click', () => enter(true));
-$('btn-bgm-off').addEventListener('click', () => enter(false));
-$('username').addEventListener('keydown', e => { if (e.key === 'Enter') enter(false); });
-audioBtn.addEventListener('click', () => setBgm(!playing));
-volEl.addEventListener('input', () => { vol = volEl.value / 100; store.set(VOL_KEY, vol); applyOut(); });
-bgm.addEventListener('error', () => { if (bgm.getAttribute('src')) { playing = false; showNotice('음원 파일을 찾을 수 없어요 (assets/music 확인)'); renderAudioUI(); } });
-
-/* ===== 캐릭터 카드 · 상세 팝업 ===== */
-const esc = t => String(t).replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
-$('character-grid').innerHTML = charIds.map(id => { const c = characters[id]; return `
-  <button type="button" data-id="${id}" class="group text-left">
-    <span class="border border-stone-300 bg-[#FBF8F1] p-6 h-full flex flex-col justify-center items-center text-center transition-all duration-300 group-hover:border-stone-900 group-hover:shadow-[4px_4px_0px_#1a1a1a]">
-      <span class="font-mono text-xs text-stone-600 tracking-widest block mb-3 uppercase">${esc(c.num)}</span>
-      <span class="font-display title-gold text-2xl">${esc(c.name)}</span>
-      <span class="font-mono text-xs text-stone-600 tracking-[0.25em] mt-2 uppercase">${esc(c.nameEn)}</span>
-      <span class="font-text text-sm text-stone-700 mt-3">${c.tags.slice(0, 2).map(t => '#' + esc(t)).join(' ')}</span>
-    </span>
-  </button>`; }).join('');
-$('character-grid').addEventListener('click', e => {
-  const b = e.target.closest('[data-id]'); if (b) openModal(b.dataset.id);
-});
-
-const modal = $('char-modal'), panel = $('modal-panel'), video = $('modal-video'), fallback = $('modal-video-fallback'), lightbox = $('lightbox');
-let lastFocus = null, curId = null;
-const specRow = (k, v) => `<li class="flex border-b border-stone-200 pb-2"><span class="w-24 md:w-28 shrink-0 tracking-widest uppercase">${k}</span><span class="text-stone-900 font-sans text-sm">${esc(v)}</span></li>`;
-
-function fillModal(id) {
-  const c = characters[id]; curId = id;
-  $('modal-subtitle').textContent = c.num; $('modal-name').textContent = c.name; $('modal-name-en').textContent = c.nameEn;
-  $('modal-tags').innerHTML = c.tags.map(t => `<span class="border border-stone-400 text-stone-800 text-xs px-3 py-1 font-text">#${esc(t)}</span>`).join('');
-  $('modal-desc').textContent = c.bio;
-  $('modal-specs').innerHTML = specRow('Born', `${c.birth}생 · ${c.age}세`) + specRow('MBTI', c.mbti) + specRow('Nationality', c.nationality) + specRow('Height', c.height);
-  $('modal-extra').innerHTML = `<details class="acc border-y border-stone-200"><summary class="font-mono text-xs text-stone-600 tracking-[0.3em] uppercase">Notes</summary><ul class="space-y-3 pb-5 font-mono text-xs text-stone-600">${c.extras.map(([k, v]) => specRow(esc(k), v)).join('')}</ul></details>`;
-  $('modal-tmi').innerHTML = c.tmi.map(t => `<details class="acc border-b border-stone-200"><summary class="font-text text-stone-900 text-base">${esc(t.q)}</summary><p class="font-text text-stone-900 text-base leading-[1.95] pb-5">${esc(t.a)}</p></details>`).join('');
-  $('modal-story').innerHTML = c.story.map(p => `<p>${esc(p)}</p>`).join('');
-  $('modal-inv-count').textContent = c.items.length + ' items';
-  $('modal-inv').innerHTML = c.items.map((it, i) => `<button type="button" data-item="${i}" class="border border-stone-300 bg-white/70 p-4 text-center hover:border-stone-900 transition-colors"><span class="text-3xl block mb-2" aria-hidden="true">${it.icon}</span><span class="font-text text-sm text-stone-800 block">${esc(it.title)}</span></button>`).join('');
-  $('modal-theme-label').textContent = c.name + ' Theme Song'; $('modal-theme').textContent = c.themeTitle;
-  const i = charIds.indexOf(id), prev = characters[charIds[(i + charIds.length - 1) % charIds.length]], next = characters[charIds[(i + 1) % charIds.length]];
-  $('modal-prev-name').textContent = prev.name; $('modal-next-name').textContent = next.name;
-  $('modal-scroll').scrollTop = 0;
-  fallback.classList.replace('flex', 'hidden');
-  if (c.video) { video.poster = c.poster || ''; video.src = c.video; video.play().catch(() => {}); }
-  else { video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load(); fallback.classList.replace('hidden', 'flex'); }
-  switchTrack(c.music || CONFIG.bgm, c.name + ' Theme Song');
-}
-function openModal(id) {
-  if (!characters[id]) return;
-  lastFocus = document.activeElement; fillModal(id);
-  modal.classList.replace('hidden', 'flex');
-  document.documentElement.style.overflow = 'hidden';
-  requestAnimationFrame(() => { modal.classList.remove('opacity-0'); panel.classList.remove('scale-95'); $('modal-close').focus(); });
-}
-function step(d) { fillModal(charIds[(charIds.indexOf(curId) + d + charIds.length) % charIds.length]); }
-function closeLightbox() { lightbox.classList.replace('flex', 'hidden'); }
-function closeModal() {
-  if (modal.classList.contains('hidden')) return;
-  closeLightbox();
-  modal.classList.add('opacity-0'); panel.classList.add('scale-95');
-  video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load();
-  document.documentElement.style.overflow = ''; switchTrack(CONFIG.bgm, 'Main Theme');
-  setTimeout(() => { modal.classList.replace('flex', 'hidden'); if (lastFocus) lastFocus.focus(); }, 300);
-}
-video.addEventListener('error', () => { if (video.getAttribute('src')) fallback.classList.replace('hidden', 'flex'); });
-$('modal-inv').addEventListener('click', e => {
-  const b = e.target.closest('[data-item]'); if (!b) return;
-  const it = characters[curId].items[+b.dataset.item];
-  $('lightbox-icon').textContent = it.icon; $('lightbox-title').textContent = it.title; $('lightbox-desc').textContent = it.desc;
-  lightbox.classList.replace('hidden', 'flex'); $('lightbox-close').focus();
-});
-$('lightbox-close').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-$('modal-prev').addEventListener('click', () => step(-1));
-$('modal-next').addEventListener('click', () => step(1));
-$('modal-close').addEventListener('click', closeModal);
-modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-document.addEventListener('keydown', e => {
-  if (modal.classList.contains('hidden')) return;
-  if (e.key === 'Escape') { lightbox.classList.contains('hidden') ? closeModal() : closeLightbox(); }
-  else if (lightbox.classList.contains('hidden') && !/INPUT|TEXTAREA/.test(document.activeElement.tagName)) {
-    if (e.key === 'ArrowLeft') step(-1); else if (e.key === 'ArrowRight') step(1);
-  }
-});
-
-/* ===== 기념주화 제작소: 코난 기념뱃지 같은 앤티크 메탈 음각 (900px로 그려 선명하게 저장) ===== */
-const cv = $('coin-canvas'), TAU = Math.PI * 2, R = 88; let ctx = cv.getContext('2d'), SCALE = cv.width / 300;
-const METALS = {
-  gold:   { base:'#C9A55C', light:'#EFD9A0', dark:'#4E3A18', hi:'#FFF8E1', enamel:['#2B407A','#0F1A38'] },
-  rose:   { base:'#C98F7F', light:'#F2CBBD', dark:'#5C2E27', hi:'#FFF1EB', enamel:['#8A3347','#3A111D'] },
-  silver: { base:'#A9B3C2', light:'#E6EBF3', dark:'#2B3342', hi:'#FFFFFF', enamel:['#2F6479','#12303E'] },
-  aurora: { base:'#B9A4E6', light:'#EFE6FF', dark:'#3A2F66', hi:'#FFFFFF', enamel:['#5642AE','#1C1450'] }
-};
-let metal = 'gold', avatar = null, avatarId = 0, queued = false, relief = null, reliefKey = '';
-const rgb = h => [1, 3, 5].map(i => parseInt(h.substr(i, 2), 16));
-const mix = (a, b, t) => 'rgb(' + rgb(a).map((v, i) => Math.round(v + (rgb(b)[i] - v) * t)).join() + ')';
-
-// 무광 금속 질감용 잔 알갱이
-const grain = document.createElement('canvas'); grain.width = grain.height = 128;
-(() => {
-  const g = grain.getContext('2d'), d = g.createImageData(128, 128);
-  for (let i = 0; i < d.data.length; i += 4) { d.data[i] = d.data[i + 1] = d.data[i + 2] = Math.random() * 255; d.data[i + 3] = 46; }
-  g.putImageData(d, 0, 0);
-})();
-
-function selectMetal(m) {
-  metal = m;
-  document.querySelectorAll('[data-metal]').forEach(b => b.classList.toggle('active', b.dataset.metal === m));
-  drawCoin();
-}
-function drawCoin() {
-  if (queued) return; queued = true;
-  requestAnimationFrame(() => { queued = false; render(); });
-}
-function disc(r, fill) { ctx.fillStyle = fill; ctx.beginPath(); ctx.arc(150, 150, r, 0, TAU); ctx.fill(); }
-// 경사 링: 왼쪽 위에서 빛이 올 때 c1(밝음)→c2(어두움). 솟은 면은 (밝음,어두움), 파인 면은 반대로
-function bevel(r, w, c1, c2) {
-  const g = ctx.createLinearGradient(150 - r, 150 - r, 150 + r, 150 + r);
-  g.addColorStop(0, c1); g.addColorStop(1, c2);
-  ctx.strokeStyle = g; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(150, 150, r, 0, TAU); ctx.stroke();
-}
-// 음각 글자: 어두운 파인 면 + 오른쪽 아래 모서리에 빛 반사 (회전된 좌표계에 맞춰 빛 방향 보정)
-function carve(ch, x, y, a, P) {
-  const c = Math.cos(a), s = Math.sin(a);
-  ctx.globalAlpha = .75; ctx.fillStyle = P.hi; ctx.fillText(ch, x + .7 * (c + s), y + .7 * (c - s));
-  ctx.globalAlpha = 1; ctx.fillStyle = P.dark; ctx.fillText(ch, x, y);
-}
-// 글자 폭을 재서 호 위에 중앙 정렬 (한글·영문 모두 겹치지 않음)
-function arcText(text, r, bottom, P, font, gap = 1.5) {
-  ctx.font = font; ctx.textAlign = 'center';
-  const chars = [...text], w = chars.map(c => ctx.measureText(c).width + gap);
-  const d = bottom ? -1 : 1, y = bottom ? r : -r;
-  let a = -d * (w.reduce((s, x) => s + x, 0) / r) / 2;
-  chars.forEach((ch, i) => {
-    const st = w[i] / r; a += d * st / 2;
-    ctx.save(); ctx.rotate(a); carve(ch, 0, y, a, P); ctx.restore();
-    a += d * st / 2;
-  });
-}
-// 사진 → 금속 부조: 밝기를 높이로 보고 왼쪽 위 조명을 계산해 금속 색으로 입힘
-function buildRelief(P) {
-  const N = Math.round(2 * R * SCALE), o = document.createElement('canvas'); o.width = o.height = N;
-  const c = o.getContext('2d', { willReadFrequently: true });
-  const k = Math.max(N / avatar.width, N / avatar.height), w = avatar.width * k, h = avatar.height * k;
-  c.drawImage(avatar, (N - w) / 2, (N - h) / 2, w, h);
-  const img = c.getImageData(0, 0, N, N), px = img.data, H = new Float32Array(N * N);
-  for (let i = 0; i < N * N; i++) {
-    const l = (px[4 * i] * .3 + px[4 * i + 1] * .59 + px[4 * i + 2] * .11) / 255;
-    H[i] = Math.min(1, Math.max(0, (l - .5) * 1.35 + .5));
-  }
-  const lg = document.createElement('canvas'); lg.width = 256; lg.height = 1;
-  const lc = lg.getContext('2d'), gr = lc.createLinearGradient(0, 0, 256, 0);
-  [[0, P.dark], [.45, P.base], [.8, P.light], [1, P.hi]].forEach(([t, col]) => gr.addColorStop(t, col));
-  lc.fillStyle = gr; lc.fillRect(0, 0, 256, 1);
-  const lut = lc.getImageData(0, 0, 256, 1).data, g = 3;
-  for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-    const i = y * N + x;
-    const e = H[Math.max(0, y - g) * N + Math.max(0, x - g)] - H[Math.min(N - 1, y + g) * N + Math.min(N - 1, x + g)];
-    const idx = Math.min(255, Math.max(0, Math.round((H[i] * .55 + (.5 + e * 2.4) * .45) * 255))) * 4;
-    px[4 * i] = lut[idx]; px[4 * i + 1] = lut[idx + 1]; px[4 * i + 2] = lut[idx + 2]; px[4 * i + 3] = 255;
-  }
-  c.putImageData(img, 0, 0);
-  return o;
-}
-// 솟아오른 부조: 어두운 그림자 → 금속 그라데이션 → 모서리 하이라이트
-function raised(p, P) {
-  ctx.save(); ctx.translate(1.5, 1.9); ctx.globalAlpha = .85; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
-  const g = ctx.createLinearGradient(95, 80, 205, 220); g.addColorStop(0, P.hi); g.addColorStop(.35, P.light); g.addColorStop(1, P.base);
-  ctx.fillStyle = g; ctx.fill(p);
-  ctx.save(); ctx.globalAlpha = .6; ctx.lineWidth = .7; ctx.strokeStyle = P.hi; ctx.stroke(p); ctx.restore();
-}
-// 에나멜 면: 깊은 색 + 은은한 금빛 햇살 (디자인 좌표계 150,150 중심)
-function enamelField(P) {
-  const g = ctx.createRadialGradient(125, 105, 8, 150, 150, 118); g.addColorStop(0, P.enamel[0]); g.addColorStop(1, P.enamel[1]);
-  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(150, 150, 100, 0, TAU); ctx.fill();
-  ctx.save(); ctx.translate(150, 150);
-  for (let i = 0; i < 60; i++) { ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 100, i / 60 * TAU, (i + .5) / 60 * TAU); ctx.closePath(); ctx.fillStyle = i % 2 ? 'rgba(255,235,170,.07)' : 'rgba(0,0,0,.10)'; ctx.fill(); }
-  ctx.strokeStyle = 'rgba(240,215,150,.55)'; ctx.lineWidth = .9; ctx.beginPath(); ctx.arc(0, 0, 84, 0, TAU); ctx.stroke();
-  ctx.restore();
-}
-function star(cx, cy, r) {
-  const p = new Path2D();
-  for (let i = 0; i < 10; i++) { const a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .42 : r; const x = cx + rr * Math.cos(a), y = cy + rr * Math.sin(a); i ? p.lineTo(x, y) : p.moveTo(x, y); }
-  p.closePath(); return p;
-}
-function emblem(P, initial) {
-  const rw = 63;
-  // 월계수 가지와 잎
-  [-1, 1].forEach(sd => {
-    ctx.save(); ctx.lineCap = 'round';
-    ctx.strokeStyle = P.dark; ctx.lineWidth = 2.2; ctx.beginPath();
-    for (let k = 0; k <= 30; k++) { const f = .22 + k / 30 * 2.55, x = 150 + sd * rw * Math.sin(f), y = 150 + rw * Math.cos(f); k ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }
-    ctx.stroke(); ctx.restore();
-    for (let k = 0; k < 12; k++) {
-      const f = .3 + k * .215, tx = sd * Math.cos(f), ty = -Math.sin(f), base = Math.atan2(ty, tx);
-      [[1, 5], [-1, -5]].forEach(([sgn, off]) => {
-        const len = 10.5 - k * .22, x = 150 + sd * (rw + off) * Math.sin(f), y = 150 + (rw + off) * Math.cos(f);
-        const leaf = new Path2D(); leaf.ellipse(x, y, len, 3.5, base + sgn * sd * .62, 0, TAU);
-        raised(leaf, P);
-      });
-    }
-  });
-  raised(star(150, 68, 8.5), P); raised(star(127, 76, 4.6), P); raised(star(173, 76, 4.6), P);
-  const d = new Path2D(); d.moveTo(150, 226); d.lineTo(155, 231); d.lineTo(150, 236); d.lineTo(145, 231); d.closePath(); raised(d, P);
-  // 중앙 이니셜 (이름의 첫 글자)
-  ctx.save(); ctx.font = 'bold 78px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  ctx.globalAlpha = .9; ctx.fillStyle = P.dark; ctx.fillText(initial, 152.2, 155.4);
-  ctx.globalAlpha = 1;
-  const g = ctx.createLinearGradient(0, 112, 0, 196); g.addColorStop(0, P.hi); g.addColorStop(.4, P.light); g.addColorStop(1, P.base);
-  ctx.fillStyle = g; ctx.fillText(initial, 150, 153);
-  ctx.lineWidth = .8; ctx.strokeStyle = P.hi; ctx.globalAlpha = .55; ctx.strokeText(initial, 150, 153);
-  ctx.restore();
-}
-
-/* ===== 뱃지 외형: 둥근 동전이 아니라 소장용 핀뱃지처럼 윤곽이 있는 모양 ===== */
-const MS = .74;   // 중앙 메달 크기 비율
-const SHAPES = {
-  // 풀컬러 굿즈: 홀로그램 포토카드 / 캔뱃지 (올린 그림을 색 그대로)
-  card: { custom:'card', sc:[150,150], path(p) { p.addPath(rrect(52, 6, 196, 288, 14)); } },
-  can:  { custom:'can',  sc:[150,150], path(p) { p.arc(150, 150, 140, 0, TAU); } },
-  shield: { cx:150, cy:132, sc:[150,150], plaque:{ y:238, w:100 }, studs:[[62,52],[238,52]], glint:[62,50],
-    path(p) { p.moveTo(50, 22); p.lineTo(250, 22); p.lineTo(264, 42); p.lineTo(264, 150); p.bezierCurveTo(264, 232, 212, 264, 150, 290); p.bezierCurveTo(88, 264, 36, 232, 36, 150); p.lineTo(36, 42); p.closePath(); } },
-  deco: { cx:150, cy:134, sc:[150,150], plaque:{ y:242, w:150 }, studs:[[56,56],[244,56],[56,244],[244,244]], glint:[58,60],
-    path(p) { p.moveTo(66, 30); p.lineTo(234, 30); p.arc(268, 30, 34, Math.PI, Math.PI / 2, true); p.lineTo(270, 234); p.arc(268, 268, 34, -Math.PI / 2, Math.PI, true); p.lineTo(66, 270); p.arc(32, 268, 34, 0, -Math.PI / 2, true); p.lineTo(30, 66); p.arc(32, 32, 34, Math.PI / 2, 0, true); p.closePath(); } },
-
-};
-let shape = 'card', photoMode = 'color';
-function outline(t, k) {
-  const S = SHAPES[t], base = new Path2D(); S.path(base);
-  const q = new Path2D(); q.addPath(base, new DOMMatrix().translate(S.sc[0], S.sc[1]).scale(k).translate(-S.sc[0], -S.sc[1])); return q;
-}
-function selectPhoto(m) {
-  photoMode = m;
-  document.querySelectorAll('[data-photo]').forEach(b => b.classList.toggle('active', b.dataset.photo === m));
-  drawCoin();
-}
-function selectShape(t) {
-  shape = t;
-  const row = document.getElementById('photo-style-row'); if (row) row.style.display = SHAPES[t].custom ? 'none' : '';
-  document.querySelectorAll('[data-shape]').forEach(b => b.classList.toggle('active', b.dataset.shape === t));
-  drawCoin();
-}
-function sparkle(x, y, r, a) {
-  ctx.save(); ctx.globalAlpha = a; ctx.fillStyle = '#fff';
-  ctx.beginPath(); ctx.moveTo(x, y - r); ctx.quadraticCurveTo(x, y, x + r, y); ctx.quadraticCurveTo(x, y, x, y + r); ctx.quadraticCurveTo(x, y, x - r, y); ctx.quadraticCurveTo(x, y, x, y - r); ctx.fill();
-  const g = ctx.createRadialGradient(x, y, 0, x, y, r * .9); g.addColorStop(0, 'rgba(255,255,255,.6)'); g.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = g; ctx.beginPath(); ctx.arc(x, y, r * .9, 0, TAU); ctx.fill(); ctx.restore();
-}
-function diamond(x, y, r) { const p = new Path2D(); p.moveTo(x, y - r * 1.3); p.lineTo(x + r, y); p.lineTo(x, y + r * 1.3); p.lineTo(x - r, y); p.closePath(); return p; }
-function mring(r, w, c1, c2) {
-  const g = ctx.createLinearGradient(-r, -r, r, r); g.addColorStop(0, c1); g.addColorStop(1, c2);
-  ctx.strokeStyle = g; ctx.lineWidth = w; ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU); ctx.stroke();
-}
-const serialOf = n => { let h = 0; for (const c of n) h = (h * 31 + c.codePointAt(0)) % 9000; return 'NO. ' + String(1000 + h); };
-// 이름 명판: 가는 이중선 프레임 + 자간을 넓힌 음각 이름
-function plaque(P, text, y, w) {
-  const x0 = 150 - w / 2, x1 = 150 + w / 2, h = 13, p = new Path2D();
-  p.moveTo(x0, y - h); p.lineTo(x1, y - h); p.lineTo(x1 + 8, y); p.lineTo(x1, y + h); p.lineTo(x0, y + h); p.lineTo(x0 - 8, y); p.closePath();
-  ctx.save(); ctx.translate(1.2, 1.8); ctx.globalAlpha = .5; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
-  const g = ctx.createLinearGradient(x0, y - h, x1, y + h); g.addColorStop(0, P.hi); g.addColorStop(.35, P.light); g.addColorStop(1, mix(P.base, P.dark, .25));
-  ctx.fillStyle = g; ctx.fill(p);
-  ctx.lineJoin = 'round'; ctx.lineWidth = 1.1; ctx.strokeStyle = P.dark; ctx.stroke(p);
-  const inner = new Path2D(); inner.addPath(p, new DOMMatrix().translate(150, y).scale(.9, .72).translate(-150, -y));
-  ctx.lineWidth = .6; ctx.strokeStyle = 'rgba(70,45,10,.55)'; ctx.stroke(inner);
-  const chars = [...text], sp = chars.length > 7 ? 1 : 2.2;
-  ctx.font = 'bold 10px "Cinzel","Gowun Batang",serif';
-  const base = chars.reduce((a, c) => a + ctx.measureText(c).width + sp, -sp);
-  const size = Math.max(8.5, Math.min(14, 10 * (w - 10) / base));
-  ctx.font = `bold ${size}px "Cinzel","Gowun Batang",serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
-  const ws = chars.map(c => ctx.measureText(c).width), total = ws.reduce((a, b) => a + b, 0) + sp * (chars.length - 1);
-  let x = 150 - total / 2; chars.forEach((c, i) => { carve(c, x + ws[i] / 2, y + size * .35, 0, P); x += ws[i] + sp; });
-}
-// ===== 풀컬러 굿즈: 홀로그램 포토카드 · 캔뱃지 =====
-const HOLO = [[0, '#FFB8E0'], [.18, '#FFD9B0'], [.34, '#FFF6B8'], [.5, '#B8FFE4'], [.66, '#B0E6FF'], [.82, '#D8C2FF'], [1, '#FFB8E0']];
-function rrect(x, y, w, h, r) { const p = new Path2D(); p.moveTo(x + r, y); p.arcTo(x + w, y, x + w, y + h, r); p.arcTo(x + w, y + h, x, y + h, r); p.arcTo(x, y + h, x, y, r); p.arcTo(x, y, x + w, y, r); p.closePath(); return p; }
-// 이미지를 영역에 꽉 채우기(얼굴이 잘리지 않게 위쪽 기준)
-function cover(img, x, y, w, h, fy = .3) { const k = Math.max(w / img.width, h / img.height), iw = img.width * k, ih = img.height * k; ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) * fy, iw, ih); }
-function drawPhoto(P) {
-  if (photoMode === 'color') { cover(avatar, 150 - R, 150 - R, 2 * R, 2 * R); return; }
-  const key = metal + avatarId + '@' + SCALE;
-  if (key !== reliefKey) { relief = buildRelief(P); reliefKey = key; }
-  ctx.drawImage(relief, 150 - R, 150 - R, 2 * R, 2 * R);
-}
-// 마감별 포일: 오로라는 홀로그램 무지개, 나머지는 금속 포일
-function foil(x0, y0, x1, y1, P) {
-  const g = ctx.createLinearGradient(x0, y0, x1, y1);
-  (metal === 'aurora' ? HOLO : [[0, P.hi], [.2, P.light], [.42, P.base], [.58, P.hi], [.78, P.base], [1, P.dark]]).forEach(([t, c]) => g.addColorStop(t, c));
-  return g;
-}
-const GLIT = (() => { let q = 11; const r = () => (q = (q * 16807) % 2147483647) / 2147483647; return Array.from({ length: 520 }, () => [r() * 300, r() * 300, r() * .8 + .2, r()]); })();
-function glitter(alpha) { GLIT.forEach(([x, y, r, a]) => { ctx.globalAlpha = alpha * (.25 + .75 * a); ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(x, y, r * .55, 0, TAU); ctx.fill(); }); ctx.globalAlpha = 1; }
-function spaced(text, x, y, gap, align) {
-  const ch = [...text], ws = ch.map(c => ctx.measureText(c).width), tw = ws.reduce((a, b) => a + b, 0) + gap * (ch.length - 1);
-  let cx = align === 'center' ? x - tw / 2 : align === 'right' ? x - tw : x; const ta = ctx.textAlign; ctx.textAlign = 'left';
-  ch.forEach((c, i) => { ctx.fillText(c, cx, y); cx += ws[i] + gap; }); ctx.textAlign = ta; return tw;
-}
-// 그림이 없을 때: 에나멜 색 그라데이션 + 동심원 무늬 + 포일 이니셜
-function placeholderArt(P, x, y, w, h, name, cy) {
-  const E = P.enamel, g = ctx.createLinearGradient(x, y, x + w, y + h);
-  g.addColorStop(0, mix(E[0], '#FFFFFF', .28)); g.addColorStop(.55, E[0]); g.addColorStop(1, E[1]);
-  ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
-  const ccx = x + w / 2; ctx.lineWidth = .6;
-  for (let r = 14; r < 260; r += 8) { ctx.strokeStyle = `rgba(255,255,255,${.12 - r / 3200})`; ctx.beginPath(); ctx.arc(ccx, cy, r, 0, TAU); ctx.stroke(); }
-  const lg = ctx.createRadialGradient(ccx, cy - 20, 4, ccx, cy, 120); lg.addColorStop(0, 'rgba(255,255,255,.35)'); lg.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = lg; ctx.fillRect(x, y, w, h);
-  ctx.font = 'bold 118px "Cinzel Decorative","Song Myung",serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-  const ch = [...name][0] || 'G';
-  ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.35)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 4; ctx.fillStyle = foil(ccx - 50, cy - 60, ccx + 50, cy + 60, P); ctx.fillText(ch, ccx, cy); ctx.restore();
-  ctx.textBaseline = 'alphabetic';
-}
-function holoSheen(x, y, w, h, strong) {
-  ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = strong ? .6 : .22;
-  const hs = ctx.createLinearGradient(x, y, x + w, y + h); HOLO.forEach(([t, c]) => hs.addColorStop(t, c)); ctx.fillStyle = hs; ctx.fillRect(x, y, w, h);
-  ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
-  const st = ctx.createLinearGradient(x, y + h * .05, x + w, y + h * .65);
-  st.addColorStop(.36, 'rgba(255,255,255,0)'); st.addColorStop(.46, 'rgba(255,255,255,.2)'); st.addColorStop(.5, 'rgba(255,255,255,.05)'); st.addColorStop(.56, 'rgba(255,255,255,.14)'); st.addColorStop(.64, 'rgba(255,255,255,0)');
-  ctx.fillStyle = st; ctx.fillRect(x, y, w, h);
-}
-function renderCard(P, name) {
-  const X = 52, Y = 6, W = 196, H = 288, card = rrect(X, Y, W, H, 14);
-  ctx.fillStyle = foil(X, Y, X + W, Y + H, P); ctx.fill(card);
-  ctx.save(); ctx.clip(card); glitter(metal === 'aurora' ? .7 : .5);
-  const ed = ctx.createLinearGradient(X, Y, X + W, Y + H); ed.addColorStop(0, 'rgba(255,255,255,.35)'); ed.addColorStop(.5, 'rgba(255,255,255,0)'); ed.addColorStop(1, 'rgba(0,0,0,.18)');
-  ctx.fillStyle = ed; ctx.fillRect(X, Y, W, H); ctx.restore();
-  const ax = X + 8, ay = Y + 8, aw = W - 16, ah = H - 16, art = rrect(ax, ay, aw, ah, 9);
-  ctx.save(); ctx.clip(art);
-  if (avatar) cover(avatar, ax, ay, aw, ah, .25); else placeholderArt(P, ax, ay, aw, ah, name, ay + ah * .42);
-  holoSheen(ax, ay, aw, ah, metal === 'aurora');
-  const tf = ctx.createLinearGradient(0, ay, 0, ay + 46); tf.addColorStop(0, 'rgba(12,10,24,.45)'); tf.addColorStop(1, 'rgba(12,10,24,0)'); ctx.fillStyle = tf; ctx.fillRect(ax, ay, aw, 46);
-  const bf = ctx.createLinearGradient(0, ay + ah * .56, 0, ay + ah); bf.addColorStop(0, 'rgba(12,10,24,0)'); bf.addColorStop(1, 'rgba(12,10,24,.78)'); ctx.fillStyle = bf; ctx.fillRect(ax, ay + ah * .5, aw, ah * .5);
-  ctx.restore();
-  ctx.lineWidth = .9; ctx.strokeStyle = 'rgba(255,255,255,.9)'; ctx.stroke(art);
-  ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(0,0,0,.35)'; ctx.stroke(card);
-  // 글자: 상단 로고·번호, 하단 이름(포일)·컬렉션 문구
-  ctx.textBaseline = 'alphabetic'; ctx.fillStyle = 'rgba(255,255,255,.92)';
-  ctx.font = 'bold 6.6px "Cinzel","Gowun Batang",serif'; spaced('PROJECT ARCHIVE', ax + 11, ay + 17, 1.6, 'left');
-  ctx.font = 'bold 6.6px "Cinzel","Gowun Batang",serif'; spaced(serialOf(name), ax + aw - 11, ay + 17, 1.2, 'right');
-  let fs = 26; ctx.font = `bold ${fs}px "Cinzel","Gowun Batang",serif`;
-  const nw = [...name].reduce((a, c) => a + ctx.measureText(c).width + 1.5, 0); if (nw > aw - 24) fs = Math.max(12, fs * (aw - 24) / nw);
-  ctx.font = `bold ${fs}px "Cinzel","Gowun Batang",serif`;
-  ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 6; ctx.shadowOffsetY = 1.5; ctx.fillStyle = foil(ax, ay + ah - 70, ax + aw, ay + ah, P);
-  spaced(name, ax + 12, ay + ah - 30, 1.5, 'left'); ctx.restore();
-  ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = .6; ctx.beginPath(); ctx.moveTo(ax + 12, ay + ah - 22); ctx.lineTo(ax + aw - 12, ay + ah - 22); ctx.stroke();
-  ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.font = 'bold 6.2px "Cinzel","Gowun Batang",serif';
-  spaced('OFFICIAL COLLECTION', ax + 12, ay + ah - 11, 1.6, 'left'); spaced('MMXXVI', ax + aw - 12, ay + ah - 11, 1.6, 'right');
-  sparkle(X + W - 16, Y + 40, 8, .95); sparkle(X + 20, Y + H - 82, 5, .85); sparkle(X + W - 30, Y + H - 98, 4, .8);
-}
-function arcFill(text, r, bottom, font, gap) {
-  ctx.font = font; ctx.textAlign = 'center';
-  const chars = [...text], w = chars.map(c => ctx.measureText(c).width + gap), d = bottom ? -1 : 1, y = bottom ? r : -r;
-  let a = -d * (w.reduce((s, x) => s + x, 0) / r) / 2;
-  chars.forEach((ch, i) => { const st = w[i] / r; a += d * st / 2; ctx.save(); ctx.rotate(a); ctx.fillText(ch, 0, y); ctx.restore(); a += d * st / 2; });
-}
-function renderCan(P, name) {
-  const C = 150, r = 140;
-  ctx.fillStyle = foil(20, 20, 280, 280, P); ctx.beginPath(); ctx.arc(C, C, r, 0, TAU); ctx.fill();
-  ctx.save(); ctx.beginPath(); ctx.arc(C, C, r - 5, 0, TAU); ctx.clip();
-  if (avatar) cover(avatar, C - r, C - r, 2 * r, 2 * r, .3); else placeholderArt(P, C - r, C - r, 2 * r, 2 * r, name, C - 8);
-  holoSheen(C - r, C - r, 2 * r, 2 * r, metal === 'aurora');
-  const bf = ctx.createLinearGradient(0, C + 40, 0, C + r); bf.addColorStop(0, 'rgba(12,10,24,0)'); bf.addColorStop(1, 'rgba(12,10,24,.7)'); ctx.fillStyle = bf; ctx.fillRect(0, C + 40, 300, r);
-  // 캔뱃지 특유의 둥근 가장자리 그림자 + 유광 돔 반사
-  const vg = ctx.createRadialGradient(C, C, r * .72, C, C, r); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.28)'); ctx.fillStyle = vg; ctx.fillRect(0, 0, 300, 300);
-  const gl = ctx.createLinearGradient(C - 100, C - 120, C - 10, C - 20); gl.addColorStop(0, 'rgba(255,255,255,.55)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
-  ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(C - 48, C - 70, 82, 40, -.62, 0, TAU); ctx.fill();
-  ctx.restore();
-  ctx.save(); ctx.translate(C, C); ctx.textBaseline = 'alphabetic';
-  ctx.fillStyle = 'rgba(255,255,255,.95)'; ctx.shadowColor = 'rgba(0,0,0,.5)'; ctx.shadowBlur = 4;
-  arcFill('PROJECT ARCHIVE', r - 22, false, 'bold 9px "Cinzel","Gowun Batang",serif', 2.2);
-  ctx.fillStyle = foil(-80, 60, 80, 140, P); ctx.shadowBlur = 6;
-  let fs = 19; ctx.font = `bold ${fs}px "Cinzel","Gowun Batang",serif`; const nw = [...name].reduce((a, c) => a + ctx.measureText(c).width + 1.8, 0); if (nw > 170) fs = Math.max(11, fs * 170 / nw);
-  arcFill(name, r - 14, true, `bold ${fs}px "Cinzel","Gowun Batang",serif`, 1.8);
-  ctx.restore();
-  ctx.lineWidth = 1; ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.beginPath(); ctx.arc(C, C, r - 5, 0, TAU); ctx.stroke();
-  ctx.strokeStyle = 'rgba(0,0,0,.4)'; ctx.beginPath(); ctx.arc(C, C, r, 0, TAU); ctx.stroke();
-  sparkle(C + 92, C - 92, 9, .95); sparkle(C + 108, C - 64, 4.5, .85);
-}
-function render() {
-  const P = METALS[metal], name = ($('coin-name-input').value.trim() || 'GUEST').toUpperCase(), S = SHAPES[shape];
-  ctx.setTransform(SCALE, 0, 0, SCALE, 0, 0);
-  ctx.clearRect(0, 0, 300, 300);
-  if (S.custom === 'card') { renderCard(P, name); return; }
-  if (S.custom === 'can') { renderCan(P, name); return; }
-  const out = k => outline(shape, k);
-  const conic = (a, alpha) => { if (!ctx.createConicGradient) return; const cg = ctx.createConicGradient(a, 150, 150);
-    [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .32)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .32)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
-    ctx.globalAlpha = alpha; ctx.fillStyle = cg; ctx.fillRect(0, 0, 300, 300); ctx.globalAlpha = 1; };
-
-  // 1. 판 → 솟은 테두리 → 한 단 파인 안쪽 면
-  const g0 = ctx.createLinearGradient(30, 20, 270, 290); g0.addColorStop(0, P.light); g0.addColorStop(.5, P.base); g0.addColorStop(1, mix(P.base, P.dark, .4));
-  ctx.fillStyle = g0; ctx.fill(out(1));
-  ctx.save(); ctx.clip(out(1)); ctx.lineJoin = 'round';
-  const gr = ctx.createLinearGradient(20, 20, 280, 280); gr.addColorStop(0, P.hi); gr.addColorStop(.45, P.light); gr.addColorStop(1, P.dark);
-  ctx.strokeStyle = gr; ctx.lineWidth = 19; ctx.stroke(out(1)); ctx.restore();
-  ctx.fillStyle = mix(P.base, P.dark, .1); ctx.fill(out(.925));
-
-  // 2. 안쪽 면: 금속 광택 + 방사형 가는 선(아르데코) + 알갱이
-  ctx.save(); ctx.clip(out(.925));
-  conic(-.35, .42);
-  ctx.translate(S.cx, S.cy); ctx.lineWidth = .55;
-  for (let i = 0; i < 90; i++) {
-    const a = i / 90 * TAU, c = Math.cos(a), sn = Math.sin(a);
-    ctx.strokeStyle = 'rgba(255,248,220,.30)'; ctx.beginPath(); ctx.moveTo(c * 92, sn * 92); ctx.lineTo(c * 260, sn * 260); ctx.stroke();
-    ctx.strokeStyle = 'rgba(60,40,10,.20)'; ctx.beginPath(); ctx.moveTo(c * 92 + .6, sn * 92 + .6); ctx.lineTo(c * 260 + .6, sn * 260 + .6); ctx.stroke();
-  }
-  ctx.restore();
-  ctx.save(); ctx.clip(out(1));
-  const pat = ctx.createPattern(grain, 'repeat');
-  if (pat.setTransform) pat.setTransform(new DOMMatrix().scale(1 / SCALE));
-  ctx.globalCompositeOperation = 'overlay'; ctx.fillStyle = pat; ctx.fillRect(0, 0, 300, 300);
-  if (metal === 'aurora') {   // 오로라: 진주빛 무지개 홀로그램 광택
-    ctx.globalCompositeOperation = 'soft-light'; ctx.globalAlpha = .85;
-    const ir = ctx.createLinearGradient(20, 30, 280, 270);
-    [[0, '#FF9FD6'], [.25, '#9FE8FF'], [.5, '#FFF0A6'], [.75, '#C9A8FF'], [1, '#FF9FD6']].forEach(([t, c]) => ir.addColorStop(t, c));
-    ctx.fillStyle = ir; ctx.fillRect(0, 0, 300, 300);
-  }
-  ctx.restore();
-  // 테두리 선: 홈 + 가는 이중선 + 바깥 윤곽
-  const gi = ctx.createLinearGradient(20, 20, 280, 280); gi.addColorStop(0, P.dark); gi.addColorStop(1, P.hi);
-  ctx.lineJoin = 'round'; ctx.strokeStyle = gi; ctx.lineWidth = 1.6; ctx.stroke(out(.925));
-  ctx.strokeStyle = 'rgba(255,246,215,.75)'; ctx.lineWidth = .7; ctx.stroke(out(.895));
-  ctx.strokeStyle = P.dark; ctx.lineWidth = 1.5; ctx.stroke(out(1));
-
-  // 3. 중앙 메달: 눈금 베젤 → 글귀 띠 → 에나멜 (카메오는 별도 구성)
-  ctx.save(); ctx.translate(S.cx, S.cy); ctx.scale(S.ms || 1, S.ms || 1);
-  for (let i = 0; i < 120; i++) {
-    const len = i % 5 ? 2.4 : 4.6; ctx.save(); ctx.rotate(i * Math.PI / 60);
-    ctx.strokeStyle = 'rgba(255,246,215,.85)'; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(.5, -85.2); ctx.lineTo(.5, -85.2 - len); ctx.stroke();
-    ctx.strokeStyle = P.dark; ctx.lineWidth = .8; ctx.beginPath(); ctx.moveTo(0, -85); ctx.lineTo(0, -85 - len); ctx.stroke(); ctx.restore();
-  }
-  ctx.fillStyle = mix(P.base, P.light, .15); ctx.beginPath(); ctx.arc(0, 0, 82, 0, TAU); ctx.fill();
-  if (!avatar && ctx.createConicGradient) {
-    const cg = ctx.createConicGradient(-.6, 0, 0);
-    [[0, P.light], [.12, P.hi], [.26, P.base], [.4, mix(P.base, P.dark, .3)], [.52, P.light], [.64, P.hi], [.78, P.base], [.9, mix(P.base, P.dark, .3)], [1, P.light]].forEach(([t, c]) => cg.addColorStop(t, c));
-    ctx.save(); ctx.globalAlpha = .6; ctx.beginPath(); ctx.arc(0, 0, 81, 0, TAU); ctx.arc(0, 0, 63, 0, TAU, true); ctx.fillStyle = cg; ctx.fill(); ctx.restore();
-  }
-  mring(82, 2.4, P.dark, P.light);
-  if (!avatar) mring(63.5, 3.6, P.hi, P.dark);
-  if (!avatar) arcText('PROJECT ARCHIVE', 67.6, false, P, 'bold 8.4px "Cinzel","Gowun Batang",serif', 3);
-  if (!avatar) arcText(serialOf(name) + ' · 2026', 73.6, true, P, 'bold 7.4px "Cinzel","Gowun Batang",serif', 2);
-  if (!avatar) [[-1, 62], [1, 62]].forEach(([sd]) => raised2(diamond(sd * 72.5, 0, 2.2), P));
-  if (avatar) {
-    // 사진: 띠를 없애고 메달 안쪽 전체(반지름 약 78)를 사용 → 기존보다 훨씬 크게
-    ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 77.6, 0, TAU); ctx.clip();
-    ctx.scale(.88, .88); ctx.translate(-150, -150);
-    ctx.fillStyle = mix(P.base, P.dark, .55); ctx.fillRect(0, 0, 300, 300);
-    drawPhoto(P);
-    ctx.restore();
-    mring(78.4, 2.6, P.dark, P.hi); mring(80.6, 1.2, P.hi, P.dark);
-  } else {
-    ctx.save(); ctx.beginPath(); ctx.arc(0, 0, 58.6, 0, TAU); ctx.clip();
-    ctx.save(); ctx.scale(.62, .62); ctx.translate(-150, -150);
-    enamelField(P); emblem(P, [...name][0] || 'G');
-    ctx.restore();
-    // 에나멜 유리 광택
-    const gl = ctx.createLinearGradient(-40, -52, 12, 6); gl.addColorStop(0, 'rgba(255,255,255,.38)'); gl.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = gl; ctx.beginPath(); ctx.ellipse(-14, -30, 46, 22, -.6, 0, TAU); ctx.fill();
-    ctx.restore();
-    mring(59.4, 2, P.dark, P.hi);
-  }
-  ctx.restore();
-
-  // 4. 모서리 장식(마름모) + 이름 명판
-  S.studs.forEach(([x, y]) => raised2(diamond(x, y, 3.6), P));
-  plaque(P, name, S.plaque.y, S.plaque.w);
-  if (S.dd !== null) [-1, 1].forEach(sd => raised2(diamond(150 + sd * (S.dd || S.plaque.w / 2 + 24), S.plaque.y, 3.2), P));
-
-  // 5. 광택
-  ctx.save(); ctx.clip(out(.99));
-  const sh = ctx.createLinearGradient(30, 30, 270, 270);
-  sh.addColorStop(0, 'rgba(255,255,255,.18)'); sh.addColorStop(.5, 'rgba(255,255,255,0)'); sh.addColorStop(1, 'rgba(0,0,0,.2)');
-  ctx.fillStyle = sh; ctx.fillRect(0, 0, 300, 300);
-  const bd = ctx.createLinearGradient(40, 30, 200, 190); bd.addColorStop(.3, 'rgba(255,255,255,0)'); bd.addColorStop(.4, 'rgba(255,255,255,.17)'); bd.addColorStop(.5, 'rgba(255,255,255,0)');
-  ctx.fillStyle = bd; ctx.fillRect(0, 0, 300, 300); ctx.restore();
-  sparkle(S.glint[0], S.glint[1], 11, .9); sparkle(S.glint[0] - 9, S.glint[1] + 11, 5, .75);
-}
-// 현재 좌표계 기준의 작은 부조 (그라데이션을 도형 위치에 맞춰 생성)
-function raised2(p, P) {
-  ctx.save(); ctx.translate(.9, 1.2); ctx.globalAlpha = .6; ctx.fillStyle = P.dark; ctx.fill(p); ctx.restore();
-  ctx.fillStyle = mix(P.light, P.hi, .5); ctx.fill(p); ctx.lineWidth = .6; ctx.strokeStyle = P.dark; ctx.stroke(p);
-}
-
-$('photo-group').addEventListener('click', e => { const b = e.target.closest('[data-photo]'); if (b) selectPhoto(b.dataset.photo); });
-$('metal-group').addEventListener('click', e => { const b = e.target.closest('[data-metal]'); if (b) selectMetal(b.dataset.metal); });
-$('coin-name-input').addEventListener('input', drawCoin);
-$('shape-group').addEventListener('click', e => { const b = e.target.closest('[data-shape]'); if (b) selectShape(b.dataset.shape); });
-$('btn-upload').addEventListener('click', () => $('coin-avatar-upload').click());
-$('coin-avatar-upload').addEventListener('change', e => {
-  const f = e.target.files[0]; if (!f || !f.type.startsWith('image/')) return;
-  const url = URL.createObjectURL(f), img = new Image();
-  img.onload = () => { avatar = img; avatarId++; URL.revokeObjectURL(url); drawCoin(); };
-  img.src = url;
-});
-
-/* ===== 저장: 고해상도(1800px) 투명 PNG ===== */
-function badgeCanvas(size) {           // 화면 캔버스를 건드리지 않고 원하는 크기로 다시 그림
-  const off = document.createElement('canvas'); off.width = off.height = size;
-  const saved = [ctx, SCALE]; ctx = off.getContext('2d'); SCALE = size / 300;
-  try { render(); } finally { [ctx, SCALE] = saved; }
-  return off;
-}
-$('btn-download').addEventListener('click', () => {
-  badgeCanvas(1800).toBlob(b => {
-    const a = document.createElement('a'); a.download = `project-badge-${Date.now()}.png`; a.href = URL.createObjectURL(b); a.click();
-    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  }, 'image/png');
-});
-
-selectMetal('gold'); selectShape('card'); selectPhoto('color');
-Promise.all([
-  document.fonts.load('bold 10px "Cinzel"'),
-  document.fonts.load('bold 78px "Cinzel Decorative"'),
-  document.fonts.load('bold 13px "Gowun Batang"'),
-  document.fonts.load('16px "Song Myung"')
-]).then(drawCoin).catch(() => {});
-
-/* ===== 인생 2컷: 사진 2장을 순서대로 올리면 프레임에 합성 + 캐릭터 PNG 겹치기 =====
-   캐릭터 PNG는 characters[id].booth 경로에 넣으면 자동으로 쓰입니다(없으면 자리표시 실루엣). */
-const bcv = $('booth-canvas');
-const BW = 600, BH = 1500, CUTS = [{ x:36, y:104, w:528, h:612 }, { x:36, y:744, w:528, h:612 }];
-const booth = { char: charIds[0], frame: 'gold', side: 'right', bg: 'original', photos: [null, null], cutouts: [null, null], tf: [{ zoom: 1, dx: 0, dy: 0 }, { zoom: 1, dx: 0, dy: 0 }], sel: 0 };
-
-/* --- 배경 교체: 사람만 오려내기 (Google MediaPipe 인물 분리 모델, Apache-2.0 · 무료 · 상업용 가능)
-       모델과 실행 파일은 처음 배경을 바꿀 때 한 번만 불러옵니다. 사진은 기기 밖으로 나가지 않습니다. --- */
-const MP_VER = '0.10.14';
-const MP_BASE = `https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@${MP_VER}`;
-const MP_MODEL = 'https://storage.googleapis.com/mediapipe-models/image_segmenter/selfie_segmenter/float16/latest/selfie_segmenter.tflite';
-let segPromise = null, segFailed = false;
-async function loadSegmenter() {
-  let mod;
-  try { mod = await import(`${MP_BASE}/vision_bundle.mjs`); } catch { mod = await import(MP_BASE); }
-  const files = await mod.FilesetResolver.forVisionTasks(`${MP_BASE}/wasm`);
-  return mod.ImageSegmenter.createFromOptions(files, { baseOptions: { modelAssetPath: MP_MODEL, delegate: 'CPU' }, runningMode: 'IMAGE', outputCategoryMask: false, outputConfidenceMasks: true });
-}
-function bgStatus(t) { $('booth-bg-status').textContent = t || ''; }
-async function makeCutout(i) {
-  const img = booth.photos[i]; if (!img || booth.cutouts[i]) return;
-  booth.cutouts[i] = 'pending'; drawBooth();
-  try {
-    if (!segPromise) { bgStatus('배경 분리 기능을 불러오는 중이에요… (처음 한 번만)'); segPromise = loadSegmenter(); }
-    const seg = await segPromise;
-    bgStatus('사진에서 사람을 오려내는 중이에요…');
-    const k = Math.min(1, 1024 / Math.max(img.width, img.height)), w = Math.round(img.width * k), h = Math.round(img.height * k);
-    const src = document.createElement('canvas'); src.width = w; src.height = h; src.getContext('2d').drawImage(img, 0, 0, w, h);
-    const res = seg.segment(src), m = res.confidenceMasks[0], conf = m.getAsFloat32Array(), mw = m.width, mh = m.height;
-    // 모델에 따라 사람/배경 값이 반대일 수 있어, 가장자리와 가운데를 비교해 자동으로 맞춤
-    let edge = 0, mid = 0, ne = 0, nm = 0;
-    for (let y = 0; y < mh; y += 4) for (let x = 0; x < mw; x += 4) { const v = conf[y * mw + x]; if (x < mw * .08 || x > mw * .92 || y < mh * .05) { edge += v; ne++; } else if (Math.abs(x - mw / 2) < mw * .15 && Math.abs(y - mh * .5) < mh * .2) { mid += v; nm++; } }
-    const invert = ne && nm && edge / ne > mid / nm;
-    const mc = document.createElement('canvas'); mc.width = mw; mc.height = mh;
-    const mctx = mc.getContext('2d'), md = mctx.createImageData(mw, mh);
-    for (let j = 0; j < conf.length; j++) { const v = invert ? 1 - conf[j] : conf[j]; md.data[j * 4 + 3] = Math.max(0, Math.min(255, (v - .25) / .5 * 255)); }
-    mctx.putImageData(md, 0, 0);
-    if (res.close) res.close();
-    const out = document.createElement('canvas'); out.width = w; out.height = h; const o = out.getContext('2d');
-    o.drawImage(src, 0, 0); o.globalCompositeOperation = 'destination-in'; o.filter = 'blur(1.5px)'; o.drawImage(mc, 0, 0, w, h);
-    booth.cutouts[i] = out; bgStatus('');
-  } catch (err) {
-    booth.cutouts[i] = 'failed'; segFailed = true; segPromise = null;
-    bgStatus('배경 분리를 불러오지 못했어요. 인터넷 연결을 확인하거나, 원본 배경으로 저장할 수 있어요.');
-  }
-  drawBooth();
-}
-function ensureCutouts() { if (booth.bg === 'original') return; booth.photos.forEach((p, i) => { if (p && !booth.cutouts[i]) makeCutout(i); }); }
-
-/* --- 테마 배경: 외부 이미지 없이 코드로 직접 그림 (저작권·출처 표기 걱정 없음) --- */
-function rng(seed) { let q = seed; return () => (q = (q * 16807) % 2147483647) / 2147483647; }
-function drawBg(g, kind, x, y, w, h, seed) {
-  const r = rng(seed * 97 + 13);
-  g.save(); g.beginPath(); g.rect(x, y, w, h); g.clip();
-  const lin = (stops, x0 = x, y0 = y, x1 = x, y1 = y + h) => { const gr = g.createLinearGradient(x0, y0, x1, y1); stops.forEach(([t, c]) => gr.addColorStop(t, c)); g.fillStyle = gr; g.fillRect(x, y, w, h); };
-  const glow = (cx, cy, rad, col) => { const gr = g.createRadialGradient(cx, cy, 0, cx, cy, rad); gr.addColorStop(0, col); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(x, y, w, h); };
-  const bokeh = (n, cols, rmin, rmax, a) => { for (let i = 0; i < n; i++) { const cx = x + r() * w, cy = y + r() * h, rr = rmin + r() * (rmax - rmin); g.globalAlpha = a * (.4 + .6 * r()); g.fillStyle = cols[i % cols.length]; g.beginPath(); g.arc(cx, cy, rr, 0, TAU); g.fill(); } g.globalAlpha = 1; };
-  if (kind === 'sunset') {
-    lin([[0, '#3E3A8C'], [.45, '#C76B98'], [.75, '#F2A37C'], [1, '#FCD9A4']]);
-    glow(x + w * .5, y + h * .62, w * .55, 'rgba(255,225,170,.75)');
-    g.fillStyle = '#FFE9B8'; g.beginPath(); g.arc(x + w * .5, y + h * .62, w * .13, 0, TAU); g.fill();
-    g.fillStyle = 'rgba(110,60,110,.85)'; g.beginPath(); g.moveTo(x, y + h * .78); g.quadraticCurveTo(x + w * .3, y + h * .64, x + w * .55, y + h * .76); g.quadraticCurveTo(x + w * .8, y + h * .68, x + w, y + h * .74); g.lineTo(x + w, y + h); g.lineTo(x, y + h); g.fill();
-    g.fillStyle = 'rgba(70,40,90,.95)'; g.beginPath(); g.moveTo(x, y + h * .88); g.quadraticCurveTo(x + w * .4, y + h * .8, x + w, y + h * .9); g.lineTo(x + w, y + h); g.lineTo(x, y + h); g.fill();
-  } else if (kind === 'night') {
-    lin([[0, '#0E1638'], [.6, '#24306A'], [1, '#4B4F8F']]);
-    for (let i = 0; i < 160; i++) { const cx = x + r() * w, cy = y + r() * h * .85, rr = r() < .9 ? .8 + r() * 1.2 : 2 + r() * 1.5; g.globalAlpha = .5 + .5 * r(); g.fillStyle = '#FFF8E6'; g.beginPath(); g.arc(cx, cy, rr, 0, TAU); g.fill(); }
-    g.globalAlpha = 1; glow(x + w * .78, y + h * .2, w * .3, 'rgba(255,240,200,.35)');
-    g.fillStyle = '#FFF3D0'; g.beginPath(); g.arc(x + w * .78, y + h * .2, w * .09, 0, TAU); g.fill();
-    g.fillStyle = '#24306A'; g.beginPath(); g.arc(x + w * .81, y + h * .185, w * .08, 0, TAU); g.fill();
-  } else if (kind === 'sakura') {
-    lin([[0, '#FFE4EC'], [.6, '#FFD3DF'], [1, '#F9C2D0']]);
-    glow(x + w * .3, y + h * .25, w * .6, 'rgba(255,255,255,.7)');
-    g.save(); g.filter = 'blur(6px)'; bokeh(26, ['#FFFFFF', '#FFC1D4', '#FFB0C8'], 14, 40, .55); g.restore();
-    for (let i = 0; i < 60; i++) { const cx = x + r() * w, cy = y + r() * h, s = 5 + r() * 7; g.save(); g.translate(cx, cy); g.rotate(r() * TAU); g.globalAlpha = .65 + .35 * r(); g.fillStyle = r() < .5 ? '#FF9EBB' : '#FFC3D5'; g.beginPath(); g.ellipse(0, 0, s, s * .6, 0, 0, TAU); g.fill(); g.restore(); }
-  } else if (kind === 'sky') {
-    lin([[0, '#6FB6F2'], [.65, '#A9D6F7'], [1, '#E4F2FC']]);
-    glow(x + w * .2, y + h * .15, w * .5, 'rgba(255,255,240,.6)');
-    g.save(); g.filter = 'blur(3px)'; g.fillStyle = 'rgba(255,255,255,.92)';
-    for (let c = 0; c < 5; c++) { const cx = x + r() * w, cy = y + h * (.15 + r() * .6), sz = w * (.07 + r() * .06); for (let k = 0; k < 7; k++) { g.beginPath(); g.arc(cx + (k - 3) * sz * .7, cy + Math.sin(k) * sz * .25 - (k % 2) * sz * .35, sz * (.75 + r() * .4), 0, TAU); g.fill(); } }
-    g.restore();
-  } else if (kind === 'studio') {
-    lin([[0, '#F6EFE3'], [1, '#E2D3BC']]);
-    glow(x + w * .5, y + h * .38, w * .75, 'rgba(255,255,255,.85)');
-    const fl = g.createLinearGradient(x, y + h * .78, x, y + h); fl.addColorStop(0, 'rgba(150,120,90,0)'); fl.addColorStop(1, 'rgba(150,120,90,.25)'); g.fillStyle = fl; g.fillRect(x, y, w, h);
-  } else if (kind === 'holo') {
-    lin(HOLO, x, y, x + w, y + h);
-    glow(x + w * .5, y + h * .4, w * .7, 'rgba(255,255,255,.55)');
-    g.save(); g.filter = 'blur(5px)'; bokeh(22, ['#FFFFFF', '#FFE3F4', '#DFF6FF'], 10, 34, .6); g.restore();
-    for (let i = 0; i < 24; i++) bSparkle(g, x + r() * w, y + r() * h, 4 + r() * 9, .85);
-  }
-  g.restore();
-}
-const boothImgs = {};   // 경로 → { img, ok }
-function boothImg(src) {
-  if (!src) return null;
-  if (!boothImgs[src]) { const img = new Image(); boothImgs[src] = { img, ok: false }; img.onload = () => { boothImgs[src].ok = true; drawBooth(); }; img.onerror = () => {}; img.src = src; }
-  return boothImgs[src].ok ? boothImgs[src].img : null;
-}
-function bRR(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
-function bFoil(g, x0, y0, x1, y1, key) {
-  const P = METALS[key], gr = g.createLinearGradient(x0, y0, x1, y1);
-  (key === 'aurora' ? HOLO : [[0, P.hi], [.2, P.light], [.42, P.base], [.58, P.hi], [.78, P.base], [1, P.dark]]).forEach(([t, c]) => gr.addColorStop(t, c));
-  return gr;
-}
-function bSpaced(g, text, x, y, gap) {
-  const ch = [...text], ws = ch.map(c => g.measureText(c).width), tw = ws.reduce((a, b) => a + b, 0) + gap * (ch.length - 1);
-  let cx = x - tw / 2; g.textAlign = 'left'; ch.forEach((c, i) => { g.fillText(c, cx, y); cx += ws[i] + gap; });
-}
-function bSparkle(g, x, y, r, a) {
-  g.save(); g.globalAlpha = a; g.fillStyle = '#fff'; g.beginPath(); g.moveTo(x, y - r); g.quadraticCurveTo(x, y, x + r, y); g.quadraticCurveTo(x, y, x, y + r); g.quadraticCurveTo(x, y, x - r, y); g.quadraticCurveTo(x, y, x, y - r); g.fill(); g.restore();
-}
-// 캐릭터 PNG가 아직 없을 때: 반투명 실루엣 + 안내
-function charPlaceholder(g, x, y, w, h, path) {
-  g.save(); g.setLineDash([7, 6]); g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.75)'; g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 3;
-  const cx = x + w / 2; g.beginPath(); g.arc(cx, y + h * .2, w * .17, 0, TAU); g.stroke();
-  g.beginPath(); g.moveTo(x + w * .12, y + h); g.bezierCurveTo(x + w * .12, y + h * .5, x + w * .88, y + h * .5, x + w * .88, y + h); g.stroke(); g.setLineDash([]);
-  g.fillStyle = 'rgba(255,255,255,.9)'; g.font = 'bold 13px "Cinzel","Gowun Batang",serif'; g.textAlign = 'center'; g.fillText('CHARACTER', cx, y + h - 34);
-  g.font = '11px Pretendard, sans-serif'; g.fillText(path.split('/').pop(), cx, y + h - 16);
-  g.restore();
-}
-function renderBooth(g, scale) {
-  const c = characters[booth.char], P = METALS[booth.frame];
-  g.setTransform(scale, 0, 0, scale, 0, 0); g.clearRect(0, 0, BW, BH);
-  // 종이 바탕 + 포일 테두리
-  const bg = g.createLinearGradient(0, 0, BW, BH); bg.addColorStop(0, '#FCF9F2'); bg.addColorStop(1, '#EFE6D4');
-  g.fillStyle = bg; g.fillRect(0, 0, BW, BH);
-  g.strokeStyle = bFoil(g, 0, 0, BW, BH, booth.frame); g.lineWidth = 14; g.strokeRect(7, 7, BW - 14, BH - 14);
-  g.strokeStyle = 'rgba(120,90,50,.35)'; g.lineWidth = 1; g.strokeRect(20, 20, BW - 40, BH - 40);
-  // 머리글
-  g.textBaseline = 'alphabetic'; g.fillStyle = '#3B2F22'; g.font = 'bold 24px "Cinzel","Gowun Batang",serif'; bSpaced(g, 'PROJECT ARCHIVE', BW / 2, 62, 5);
-  g.fillStyle = mix(P.base, P.dark, .45); g.font = 'bold 12px "Cinzel","Gowun Batang",serif'; bSpaced(g, 'LIFE  ·  TWO  CUTS', BW / 2, 86, 3);
-  // 두 컷
-  CUTS.forEach((k, i) => {
-    g.save(); bRR(g, k.x, k.y, k.w, k.h, 10); g.clip();
-    const ph = booth.photos[i], cut = booth.cutouts[i];
-    const t = booth.tf[i], auto = booth.bg !== 'original' ? { z: .9, dx: booth.side === 'right' ? -.17 : .17 } : { z: 1, dx: 0 };
-    const place = (im, plain) => { const s = Math.max(k.w / im.width, k.h / im.height) * (plain ? 1 : t.zoom * auto.z), iw = im.width * s, ih = im.height * s;
-      const ox = plain ? 0 : (t.dx + auto.dx) * k.w, oy = plain ? 0 : t.dy * k.h, bottom = !plain && booth.bg !== 'original';
-      g.drawImage(im, k.x + (k.w - iw) / 2 + ox, bottom ? k.y + k.h - ih + Math.max(0, oy) + Math.min(0, oy) : k.y + (k.h - ih) * .35 + oy, iw, ih); };
-    if (ph && booth.bg !== 'original' && cut instanceof HTMLCanvasElement) { drawBg(g, booth.bg, k.x, k.y, k.w, k.h, i + 1); place(cut); }
-    else if (ph) {
-      if (t.zoom < 1 || t.dx || t.dy) { g.save(); g.filter = 'blur(18px)'; place(ph, true); g.restore(); g.fillStyle = 'rgba(255,248,235,.18)'; g.fillRect(k.x, k.y, k.w, k.h); }
-      place(ph);
-      if (booth.bg !== 'original' && cut === 'pending') { g.fillStyle = 'rgba(30,25,40,.45)'; g.fillRect(k.x, k.y, k.w, k.h); g.fillStyle = '#fff'; g.textAlign = 'center'; g.font = '20px "Gowun Batang", serif'; g.fillText('배경을 바꾸는 중…', k.x + k.w / 2, k.y + k.h / 2); }
-    }
-    else {
-      if (booth.bg !== 'original') drawBg(g, booth.bg, k.x, k.y, k.w, k.h, i + 1);
-      else { const eg = g.createLinearGradient(k.x, k.y, k.x + k.w, k.y + k.h); eg.addColorStop(0, '#E9E2D4'); eg.addColorStop(1, '#D8CDB8'); g.fillStyle = eg; g.fillRect(k.x, k.y, k.w, k.h); }
-      g.fillStyle = 'rgba(70,55,35,.75)'; g.textAlign = 'center'; g.font = 'bold 54px "Cinzel","Gowun Batang",serif'; g.fillText(String(i + 1).padStart(2, '0'), k.x + (booth.side === 'right' ? k.w * .3 : k.w * .7), k.y + k.h * .45);
-      g.font = '18px "Gowun Batang", serif'; g.fillText(`${i + 1}번째 사진을 올려 주세요`, k.x + (booth.side === 'right' ? k.w * .3 : k.w * .7), k.y + k.h * .45 + 36);
-    }
-    // 캐릭터 (아래쪽 기준, 좌/우)
-    const src = c.booth && c.booth[i], ci = boothImg(src), chH = k.h * .9;
-    if (ci) { const chW = ci.width * chH / ci.height, x = booth.side === 'right' ? k.x + k.w - chW * .96 : k.x - chW * .04; g.drawImage(ci, x, k.y + k.h - chH, chW, chH); }
-    else if (src) { const chW = k.w * .44, x = booth.side === 'right' ? k.x + k.w - chW - 10 : k.x + 10; charPlaceholder(g, x, k.y + k.h - chH, chW, chH, src); }
-    // 사진 톤: 은은한 따뜻함 + 가장자리
-    g.fillStyle = 'rgba(255,236,210,.06)'; g.fillRect(k.x, k.y, k.w, k.h);
-    const vg = g.createRadialGradient(k.x + k.w / 2, k.y + k.h / 2, k.h * .35, k.x + k.w / 2, k.y + k.h / 2, k.h * .8); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.16)'); g.fillStyle = vg; g.fillRect(k.x, k.y, k.w, k.h);
-    g.restore();
-    bRR(g, k.x, k.y, k.w, k.h, 10); g.lineWidth = 2; g.strokeStyle = 'rgba(255,255,255,.9)'; g.stroke();
-    g.fillStyle = 'rgba(255,255,255,.95)'; g.font = 'bold 14px "Cinzel","Gowun Batang",serif'; g.textAlign = 'left'; g.shadowColor = 'rgba(0,0,0,.45)'; g.shadowBlur = 4;
-    g.fillText(`CUT ${String(i + 1).padStart(2, '0')}`, k.x + 16, k.y + 30); g.shadowBlur = 0;
-  });
-  // 바닥글: with 캐릭터 · 날짜 · 이름 · 번호
-  const user = ($('username').value.trim() || $('coin-name-input').value.trim() || 'GUEST');
-  const d = new Date(), date = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
-  g.textAlign = 'center'; g.fillStyle = '#3B2F22'; g.font = '30px "Song Myung","Gowun Batang",serif'; g.fillText(`with ${c.name}`, BW / 2, 1412);
-  g.fillStyle = bFoil(g, 150, 1420, 450, 1450, booth.frame); g.fillRect(BW / 2 - 90, 1426, 180, 1.5);
-  g.fillStyle = '#5A4A38'; g.font = 'bold 13px "Cinzel","Gowun Batang",serif'; bSpaced(g, `${date}  ·  ${user.toUpperCase()}  ·  ${serialOf(user.toUpperCase())}`, BW / 2, 1456, 2);
-  bSparkle(g, 66, 1400, 12, .9); bSparkle(g, 534, 1430, 9, .9);
-}
-function drawBooth() { renderBooth(bcv.getContext('2d'), bcv.width / BW); updateBoothUI(); }
-function updateBoothUI() {
-  const n = booth.photos.filter(Boolean).length;
-  $('booth-upload-btn').textContent = n === 0 ? 'Upload Photo 1' : n === 1 ? 'Upload Photo 2' : `Change Photo ${booth.sel + 1}`;
-  $('booth-step').textContent = n === 0 ? `① 첫 번째 사진을 올려 주세요. 캐릭터가 설 ${booth.side === 'right' ? '오른쪽' : '왼쪽'} 자리를 비워 두고 찍은 사진이 잘 어울려요.` : n === 1 ? '② 두 번째 사진을 올려 주세요.' : '완성! 마음에 들면 저장하세요. (Reset으로 처음부터)';
-  $('booth-download').disabled = n < 2;
-}
-$('booth-char-group').innerHTML = charIds.map(id => `<button type="button" data-bchar="${id}" class="opt-btn py-3 text-xs border border-stone-300 text-stone-700 hover:border-black hover:text-black transition-colors font-text">${esc(characters[id].name)}</button>`).join('');
-const markActive = (attr, val) => document.querySelectorAll(`[data-${attr}]`).forEach(b => b.classList.toggle('active', b.dataset[attr] === val));
-$('booth-char-group').addEventListener('click', e => { const b = e.target.closest('[data-bchar]'); if (b) { booth.char = b.dataset.bchar; markActive('bchar', booth.char); drawBooth(); } });
-$('booth-frame-group').addEventListener('click', e => { const b = e.target.closest('[data-bframe]'); if (b) { booth.frame = b.dataset.bframe; markActive('bframe', booth.frame); drawBooth(); } });
-$('booth-bg-group').addEventListener('click', e => { const b = e.target.closest('[data-bbg]'); if (!b) return; booth.bg = b.dataset.bbg; markActive('bbg', booth.bg); if (booth.bg === 'original') bgStatus(''); booth.cutouts = booth.cutouts.map(c => c === 'failed' ? null : c); ensureCutouts(); drawBooth(); });
-$('booth-side-group').addEventListener('click', e => { const b = e.target.closest('[data-bside]'); if (b) { booth.side = b.dataset.bside; markActive('bside', booth.side); drawBooth(); } });
-function selectCut(i) { booth.sel = i; $('booth-sel').textContent = `CUT 0${i + 1}`; $('booth-zoom').value = Math.round(booth.tf[i].zoom * 100); }
-$('booth-zoom').addEventListener('input', e => { booth.tf[booth.sel].zoom = e.target.value / 100; drawBooth(); });
-{ let drag = null;
-  const pt = e => { const r = bcv.getBoundingClientRect(); return [(e.clientX - r.left) * BW / r.width, (e.clientY - r.top) * BH / r.height]; };
-  bcv.addEventListener('pointerdown', e => {
-    const [x, y] = pt(e), i = CUTS.findIndex(k => x >= k.x && x <= k.x + k.w && y >= k.y && y <= k.y + k.h); if (i < 0) return;
-    selectCut(i); if (!booth.photos[i]) return;
-    drag = { i, x, y, dx: booth.tf[i].dx, dy: booth.tf[i].dy }; bcv.setPointerCapture(e.pointerId); bcv.style.cursor = 'grabbing';
-  });
-  bcv.addEventListener('pointermove', e => { if (!drag) return; const [x, y] = pt(e), k = CUTS[drag.i]; booth.tf[drag.i].dx = drag.dx + (x - drag.x) / k.w; booth.tf[drag.i].dy = drag.dy + (y - drag.y) / k.h; drawBooth(); });
-  const end = () => { drag = null; bcv.style.cursor = ''; }; bcv.addEventListener('pointerup', end); bcv.addEventListener('pointercancel', end);
-}
-$('booth-upload-btn').addEventListener('click', () => $('booth-upload').click());
-$('booth-upload').addEventListener('change', e => {
-  const f = e.target.files[0]; e.target.value = ''; if (!f || !f.type.startsWith('image/')) return;
-  const url = URL.createObjectURL(f), img = new Image();
-  img.onload = () => { const i = !booth.photos[0] ? 0 : !booth.photos[1] ? 1 : booth.sel; booth.photos[i] = img; booth.cutouts[i] = null; booth.tf[i] = { zoom: 1, dx: 0, dy: 0 }; selectCut(i); URL.revokeObjectURL(url); ensureCutouts(); drawBooth(); };
-  img.src = url;
-});
-$('booth-reset').addEventListener('click', () => { booth.photos = [null, null]; booth.cutouts = [null, null]; booth.tf = [{ zoom: 1, dx: 0, dy: 0 }, { zoom: 1, dx: 0, dy: 0 }]; selectCut(0); bgStatus(''); drawBooth(); });
-$('booth-download').addEventListener('click', () => {
-  const off = document.createElement('canvas'); off.width = BW * 2; off.height = BH * 2; renderBooth(off.getContext('2d'), 2);
-  off.toBlob(b => { const a = document.createElement('a'); a.download = `life-2cut-${Date.now()}.png`; a.href = URL.createObjectURL(b); a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 4000); }, 'image/png');
-});
-markActive('bchar', booth.char); markActive('bframe', booth.frame); markActive('bside', booth.side); markActive('bbg', booth.bg);
-drawBooth();
-document.fonts && document.fonts.ready.then(drawBooth);
-
-/* ===== 하단 문구: 5초마다 교체 (임시 문구 — 아래 배열만 고치면 됩니다) ===== */
-const TICKER = Array.from({ length: 10 }, (_, i) => `${String.fromCharCode(65 + i)}문구가 출력 중입니다.`);
-let ti = 0, tickTimer = null;
-function startTicker() {
-  if (tickTimer) return;
-  $('player').classList.remove('hidden'); tk.textContent = TICKER[0]; ti = 1;
-  tickTimer = setInterval(() => {
-    tk.style.opacity = 0;
-    setTimeout(() => { tk.textContent = TICKER[ti]; tk.style.opacity = 1; ti = (ti + 1) % TICKER.length; }, 500);
-  }, 5000);
-}
-
-/* ===== 스크롤 등장 ===== */
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
-document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
-</script>
+<!-- 작품 내용은 data.js, 공통 기능은 shared/archive.js -->
+<script src="shared/archive.js"></script>
+<script src="shared/intro.js"></script>
 </body>
 </html>
