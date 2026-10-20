@@ -659,7 +659,7 @@ Promise.all([
 /* ===== 인생 두컷: 사진 2장을 순서대로 올리면 프레임에 합성 + 캐릭터 PNG 겹치기 =====
    캐릭터 PNG는 characters[id].booth 경로에 넣으면 자동으로 쓰입니다(없으면 자리표시 실루엣). */
 const bcv = $('booth-canvas');
-const BW = 600, BH = 1500, CUTS = [{ x:36, y:104, w:528, h:612 }, { x:36, y:744, w:528, h:612 }];
+const BW = 540, BH = 1350, CUTS = [{ x:24, y:80, w:492, h:558 }, { x:24, y:668, w:492, h:558 }];
 const booth = { char: charIds[0], frame: 'gold', side: 'right', bg: 'studio', photos: [null, null], cutouts: [null, null], tf: [{ zoom: 1, dx: 0, dy: 0 }, { zoom: 1, dx: 0, dy: 0 }], sel: 0 };
 
 /* --- 배경 교체: 사람만 오려내기 (Google MediaPipe 인물 분리 모델, Apache-2.0 · 무료 · 상업용 가능)
