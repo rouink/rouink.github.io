@@ -61,13 +61,20 @@ window.ARCHIVE = {
       { icon:'🎁', title:'소지품 이름', desc:'소지품 설명' },
       { icon:'🔑', title:'소지품 이름', desc:'소지품 설명' }
     ],
-    gallery:[                                   // 페이지 II 표정·상황 갤러리 (가로 4:3 이미지 · img: 경로, label: 표정/상황, desc: 짧은 설명, secret:true 를 붙이면 흐리게 가려져요 — 기본은 전부 공개)
-      { img:'assets/gallery/char1_01.webp', label:'기본', desc:'평소 대화할 때' },
-      { img:'assets/gallery/char1_02.webp', label:'미소', desc:'칭찬을 들었을 때' },
-      { img:'assets/gallery/char1_03.webp', label:'당황', desc:'갑자기 가까이 다가왔을 때' },
-      { img:'assets/gallery/char1_04.webp', label:'토라짐', desc:'약속을 잊었을 때' },
-      { img:'assets/gallery/char1_05.webp', label:'눈물', desc:'속마음을 털어놓을 때' }
-      // 더 넣으려면 위 줄 끝에 쉼표(,)를 찍고 같은 모양으로 한 줄씩 추가 — 몇십 장이어도 괜찮아요
+    gallery:[                                   // 페이지 II 표정·상황 갤러리 (가로 4:3 · img: 파일 경로, label: 화면에 나오는 이름, desc: 짧은 설명(비워도 됨), secret:true 를 붙이면 흐리게 가려져요)
+      { img:'assets/gallery/iire_01_contempt.webp', label:'경멸', desc:'' },
+      { img:'assets/gallery/iire_02_longing.webp', label:'그리움', desc:'' },
+      { img:'assets/gallery/iire_03_prayer.webp', label:'기도', desc:'' },
+      { img:'assets/gallery/iire_04_default.webp', label:'기본', desc:'' },
+      { img:'assets/gallery/iire_05_fear.webp', label:'두려움', desc:'' },
+      { img:'assets/gallery/iire_06_helpless.webp', label:'막막함', desc:'' },
+      { img:'assets/gallery/iire_07_smile.webp', label:'미소', desc:'' },
+      { img:'assets/gallery/iire_08_sorrow.webp', label:'슬픔', desc:'' },
+      { img:'assets/gallery/iire_09_oracle.webp', label:'신과소통', desc:'' },
+      { img:'assets/gallery/iire_10_tearful.webp', label:'울먹임', desc:'' },
+      { img:'assets/gallery/iire_11_execution.webp', label:'처형식', desc:'' },
+      { img:'assets/gallery/iire_12_resignation.webp', label:'체념', desc:'' }
+      // 더 넣으려면 위 줄 끝에 쉼표(,)를 찍고 같은 모양으로 한 줄씩 추가
     ],
     themeTitle:'테마곡 제목',
     video:'', poster:'',                                  // 영상(.mp4) 주소, 비워 두면 Video coming soon

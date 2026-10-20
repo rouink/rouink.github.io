@@ -755,9 +755,19 @@ function drawBg(g, kind, x, y, w, h, seed) {
   g.restore();
 }
 const boothImgs = {};   // 경로 → { img, ok }
+// 캐릭터 PNG 의 투명한 여백을 자동으로 잘라 냄 (가로로 넓게 그린 그림도 컷 안에 알맞게 들어가도록)
+function trimAlpha(img) {
+  try {
+    const c = document.createElement('canvas'), w = c.width = img.naturalWidth, h = c.height = img.naturalHeight, g = c.getContext('2d'); g.drawImage(img, 0, 0);
+    const d = g.getImageData(0, 0, w, h).data; let x0 = w, y0 = h, x1 = -1, y1 = -1;
+    for (let y = 0; y < h; y += 2) for (let x = 0; x < w; x += 2) if (d[(y * w + x) * 4 + 3] > 16) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    if (x1 < 0) return img; x1 = Math.min(w - 1, x1 + 2); y1 = Math.min(h - 1, y1 + 2);
+    const o = document.createElement('canvas'); o.width = x1 - x0 + 1; o.height = y1 - y0 + 1; o.getContext('2d').drawImage(c, x0, y0, o.width, o.height, 0, 0, o.width, o.height); return o;
+  } catch { return img; }
+}
 function boothImg(src) {
   if (!src) return null;
-  if (!boothImgs[src]) { const img = new Image(); boothImgs[src] = { img, ok: false }; img.onload = () => { boothImgs[src].ok = true; drawBooth(); }; img.onerror = () => {}; img.src = src; }
+  if (!boothImgs[src]) { const img = new Image(); boothImgs[src] = { img, ok: false }; img.onload = () => { boothImgs[src].img = trimAlpha(img); boothImgs[src].ok = true; drawBooth(); }; img.onerror = () => {}; img.src = src; }
   return boothImgs[src].ok ? boothImgs[src].img : null;
 }
 function bRR(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
@@ -828,9 +838,9 @@ function renderBooth(g, scale) {
       g.font = '18px "Gowun Batang", serif'; g.fillText(`${i + 1}번째 사진의`, cx, k.y + k.h * .45 + 34); g.fillText('사람이 여기 서요', cx, k.y + k.h * .45 + 58); g.shadowBlur = 0;
     }
     // 캐릭터 (아래쪽 기준, 좌/우)
-    const src = c.booth && c.booth[i], ci = boothImg(src), chH = k.h * .88;
-    if (ci) { const chW = ci.width * chH / ci.height, x = booth.side === 'right' ? k.x + k.w - chW * .96 : k.x - chW * .04; ground(x + chW / 2, chW * .5); g.drawImage(ci, x, k.y + k.h - chH, chW, chH); }
-    else if (src) { const chW = k.w * .44, x = booth.side === 'right' ? k.x + k.w - chW - 10 : k.x + 10; charPlaceholder(g, x, k.y + k.h - chH, chW, chH, src); }
+    const src = c.booth && c.booth[i], ci = boothImg(src);
+    if (ci) { let chH = k.h * .88, chW = ci.width * chH / ci.height; if (chW > k.w * .62) { chW = k.w * .62; chH = ci.height * chW / ci.width; }   /* 넓은 그림은 컷 폭의 62% 까지만 */ const x = booth.side === 'right' ? k.x + k.w - chW * .96 : k.x - chW * .04; ground(x + chW / 2, chW * .5); g.drawImage(ci, x, k.y + k.h - chH, chW, chH); }
+    else if (src) { const chH = k.h * .88, chW = k.w * .44, x = booth.side === 'right' ? k.x + k.w - chW - 10 : k.x + 10; charPlaceholder(g, x, k.y + k.h - chH, chW, chH, src); }
     // 사진 톤: 은은한 따뜻함 + 가장자리
     g.fillStyle = 'rgba(255,236,210,.06)'; g.fillRect(k.x, k.y, k.w, k.h);
     const vg = g.createRadialGradient(k.x + k.w / 2, k.y + k.h / 2, k.h * .35, k.x + k.w / 2, k.y + k.h / 2, k.h * .8); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.16)'); g.fillStyle = vg; g.fillRect(k.x, k.y, k.w, k.h);
