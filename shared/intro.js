@@ -1049,28 +1049,28 @@ reg('evidence', { look: 'paper', card: false, mount(K) {
 } });
 
 // 36. 유리 깨기 — 터치할 때마다 금이 가고, 세 번째에 산산조각 나며 떨어짐
-reg('glass', { look: 'clear', hint: '유리를 세 번 두드려 보세요 · 0/3', mount(K) {
+reg('glass', { look: 'clear', hint: '화면을 세 번 터치해 보세요 · 0/3', mount(K) {
   K.peek();
   const L = K.layer(1); let tex, cracks = [], hits = 0, shards = null, center = null;
   const make = () => { tex = document.createElement('canvas'); tex.width = K.W * K.DPR; tex.height = K.H * K.DPR; const t = tex.getContext('2d'); t.scale(K.DPR, K.DPR);
-    const gr = t.createLinearGradient(0, 0, K.W, K.H); gr.addColorStop(0, K.rgbVar('--stone-100', .985)); gr.addColorStop(1, K.rgbVar('--stone-200', .985)); t.fillStyle = gr; t.fillRect(0, 0, K.W, K.H);
-    t.fillStyle = 'rgba(255,255,255,.35)'; t.beginPath(); t.moveTo(K.W * .1, 0); t.lineTo(K.W * .35, 0); t.lineTo(K.W * .05, K.H); t.lineTo(-K.W * .2, K.H); t.fill(); t.fillStyle = 'rgba(255,255,255,.18)'; t.beginPath(); t.moveTo(K.W * .5, 0); t.lineTo(K.W * .58, 0); t.lineTo(K.W * .3, K.H); t.lineTo(K.W * .22, K.H); t.fill(); };
+    const gr = t.createLinearGradient(0, 0, K.W, K.H); gr.addColorStop(0, K.rgbVar('--stone-100', .98)); gr.addColorStop(1, K.rgbVar('--stone-200', .98)); t.fillStyle = gr; t.fillRect(0, 0, K.W, K.H);
+    t.fillStyle = 'rgba(255,255,255,.28)'; t.beginPath(); t.moveTo(K.W * .08, 0); t.lineTo(K.W * .32, 0); t.lineTo(K.W * .02, K.H); t.lineTo(-K.W * .15, K.H); t.fill(); t.fillStyle = 'rgba(255,255,255,.12)'; t.beginPath(); t.moveTo(K.W * .48, 0); t.lineTo(K.W * .55, 0); t.lineTo(K.W * .28, K.H); t.lineTo(K.W * .2, K.H); t.fill(); };
   make(); K.onResize(make);
-  const drawCracks = g => { g.strokeStyle = 'rgba(60,85,110,.75)'; g.lineWidth = 1.4; cracks.forEach(c => { g.beginPath(); c.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.stroke(); }); g.strokeStyle = 'rgba(255,255,255,.95)'; g.lineWidth = .8; cracks.forEach(c => { g.beginPath(); c.forEach(([x, y], i) => i ? g.lineTo(x - .9, y - .9) : g.moveTo(x - .9, y - .9)); g.stroke(); }); };
-  const crack = (x, y, n, len) => { for (let i = 0; i < n; i++) { let a = K.rand(0, K.TAU), px = x, py = y; const pts = [[x, y]]; let l = 0; const L2 = len * K.rand(.5, 1.2); while (l < L2) { const st = K.rand(8, 22); a += K.rand(-.35, .35); px += Math.cos(a) * st; py += Math.sin(a) * st; l += st; pts.push([px, py]); } cracks.push(pts); }
-    for (let r = 14; r < len * .7; r += K.rand(18, 34)) { const pts = []; for (let a = 0; a <= K.TAU + .01; a += K.rand(.25, .6)) pts.push([x + Math.cos(a) * r * K.rand(.85, 1.15), y + Math.sin(a) * r * K.rand(.85, 1.15)]); cracks.push(pts); } };
+  const drawCracks = g => { g.strokeStyle = 'rgba(120,140,165,.5)'; g.lineWidth = 1.1; cracks.forEach(c => { g.beginPath(); c.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.stroke(); }); g.strokeStyle = 'rgba(255,255,255,.75)'; g.lineWidth = .6; cracks.forEach(c => { g.beginPath(); c.forEach(([x, y], i) => i ? g.lineTo(x - .6, y - .6) : g.moveTo(x - .6, y - .6)); g.stroke(); }); };
+  const crack = (x, y, n, len) => { for (let i = 0; i < n; i++) { let a = K.rand(0, K.TAU), px = x, py = y; const pts = [[x, y]]; let l = 0; const L2 = len * K.rand(.6, 1.1); while (l < L2) { const st = K.rand(9, 20); a += K.rand(-.28, .28); px += Math.cos(a) * st; py += Math.sin(a) * st; l += st; pts.push([px, py]); } cracks.push(pts); }
+    for (let r = 16; r < len * .65; r += K.rand(20, 36)) { const pts = []; for (let a = 0; a <= K.TAU + .01; a += K.rand(.3, .65)) pts.push([x + Math.cos(a) * r * K.rand(.82, 1.18), y + Math.sin(a) * r * K.rand(.82, 1.18)]); cracks.push(pts); } };
   const paint = () => { const g = L.g; g.clearRect(0, 0, K.W, K.H); if (!shards) { g.drawImage(tex, 0, 0, K.W, K.H); drawCracks(g); return; }
     shards.forEach(s => { g.save(); g.translate(s.cx + s.x, s.cy + s.y); g.rotate(s.r); g.translate(-s.cx, -s.cy); g.beginPath(); s.p.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.clip(); g.drawImage(tex, 0, 0, K.W, K.H); drawCracks(g); g.restore();
-      g.save(); g.translate(s.cx + s.x, s.cy + s.y); g.rotate(s.r); g.translate(-s.cx, -s.cy); g.strokeStyle = 'rgba(255,255,255,.9)'; g.lineWidth = 1; g.beginPath(); s.p.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.stroke(); g.restore(); }); };
+      g.save(); g.translate(s.cx + s.x, s.cy + s.y); g.rotate(s.r); g.translate(-s.cx, -s.cy); g.strokeStyle = 'rgba(255,255,255,.7)'; g.lineWidth = .7; g.beginPath(); s.p.forEach(([x, y], i) => i ? g.lineTo(x, y) : g.moveTo(x, y)); g.closePath(); g.stroke(); g.restore(); }); };
   paint();
-  K.onTap((x, y) => { if (hits >= 3) return; hits++; center = center || [x, y]; K.hint(`유리를 세 번 두드려 보세요 · ${hits}/3`);
-    if (hits < 3) { crack(x, y, hits === 1 ? 7 : 14, hits === 1 ? 90 : 220); K.SFX.glass(hits === 1 ? 0 : 1); K.shake(hits * 2, 160); paint(); return; }
-    K.SFX.glass(2); K.shake(9, 300); K.hideCard(150);
-    const N = 16, rings = [0, 50, 120, 220, 360, 560, 900, 1400], pt = {}; const ang = Array.from({ length: N }, (_, i) => i / N * K.TAU + K.rand(-.12, .12));
-    const P = (i, j) => { const k = i % N + ',' + j; if (!pt[k]) { const r = rings[j] * (j ? K.rand(.85, 1.15) : 0); pt[k] = [x + Math.cos(ang[i % N]) * r, y + Math.sin(ang[i % N]) * r]; } return pt[k]; };
+  K.onTap((x, y) => { if (hits >= 3) return; hits++; center = center || [x, y]; K.hint(`화면을 세 번 터치해 보세요 · ${hits}/3`);
+    if (hits < 3) { crack(x, y, hits === 1 ? 5 : 10, hits === 1 ? 80 : 200); K.SFX.glass(hits === 1 ? 0 : 1); K.shake(hits * 1.5, 140); paint(); return; }
+    K.SFX.glass(2); K.shake(8, 280); K.hideCard(150);
+    const N = 14, rings = [0, 45, 110, 200, 340, 540, 860, 1320], pt = {}; const ang = Array.from({ length: N }, (_, i) => i / N * K.TAU + K.rand(-.1, .1));
+    const P = (i, j) => { const k = i % N + ',' + j; if (!pt[k]) { const r = rings[j] * (j ? K.rand(.88, 1.12) : 0); pt[k] = [x + Math.cos(ang[i % N]) * r, y + Math.sin(ang[i % N]) * r]; } return pt[k]; };
     shards = []; for (let i = 0; i < N; i++) for (let j = 0; j < rings.length - 1; j++) { const p = [P(i, j), P(i + 1, j), P(i + 1, j + 1), P(i, j + 1)], cx = (p[0][0] + p[1][0] + p[2][0] + p[3][0]) / 4, cy = (p[0][1] + p[1][1] + p[2][1] + p[3][1]) / 4;
-      if (cx < -300 || cy < -300 || cx > K.W + 300 || cy > K.H + 300) continue; const dx = cx - x, dy = cy - y, d = Math.hypot(dx, dy) + 1; shards.push({ p, cx, cy, x: 0, y: 0, r: 0, vx: dx / d * K.rand(40, 160), vy: dy / d * K.rand(20, 120) - 60, vr: K.rand(-3, 3), delay: d / 1400 }); }
-    K.go(() => new Promise(res => { let t = 0; K.loop(dt => { t += dt; let alive = 0; shards.forEach(s => { if (t < s.delay) { alive++; return; } s.vy += 1500 * dt; s.x += s.vx * dt; s.y += s.vy * dt; s.r += s.vr * dt; if (s.cy + s.y < K.H + 400) alive++; }); paint(); if (!alive) { res(); return false; } }); }));
+      if (cx < -300 || cy < -300 || cx > K.W + 300 || cy > K.H + 300) continue; const dx = cx - x, dy = cy - y, d = Math.hypot(dx, dy) + 1; shards.push({ p, cx, cy, x: 0, y: 0, r: 0, vx: dx / d * K.rand(35, 145), vy: dy / d * K.rand(15, 110) - 55, vr: K.rand(-2.5, 2.5), delay: d / 1300 }); }
+    K.go(() => new Promise(res => { let t = 0; K.loop(dt => { t += dt; let alive = 0; shards.forEach(s => { if (t < s.delay) { alive++; return; } s.vy += 1400 * dt; s.x += s.vx * dt; s.y += s.vy * dt; s.r += s.vr * dt; if (s.cy + s.y < K.H + 400) alive++; }); paint(); if (!alive) { res(); return false; } }); }));
   });
 } });
 
@@ -1376,6 +1376,229 @@ reg('pagecurl', { look: 'clear', card: false, mount(K) {
     move: (x, y) => { if (!grabbing || done) return; P = [Math.min(x, K.W - 1), Math.min(y, K.H - 1)]; if (Math.hypot(P[0] - K.W, P[1] - K.H) > Math.hypot(K.W, K.H) * .55) turn(); },
     end: (x, y, dx, dy) => { if (done) return; if (!grabbing) { if (Math.hypot(dx, dy) < 8) { K.hint && 0; tip.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.1)' }, { transform: 'scale(1)' }], { duration: 400 }); } return; } grabbing = false; anim = { t: performance.now(), a: P, b: [K.W, K.H] }; tip.style.opacity = '1'; } });
   const turn = () => { done = true; grabbing = false; K.SFX.page(); anim = { t: performance.now(), a: P, b: [-K.W, -K.H * .4], done: () => {} }; tip.remove(); K.go(async () => { await K.wait(750); await K.fade(300); }); };
+} });
+
+// ================= 묶음 7 · 에디토리얼 (사진·타이포 중심, 절제된 연출) =================
+
+// 46. 베일 — 흐릿한 베일 너머의 표지 사진. 길게 누르면 베일이 걷히며 선명해지고, 그대로 첫 화면으로 이어짐
+//     표지 사진(page.heroImage)이 있을 때 가장 잘 어울려요. 없으면 바탕색 위 글자만으로 동작해요.
+reg('veil', { look: 'paper', card: false, mount(K) {
+  const D = window.ARCHIVE || {}, P = D.page || {}, CH = D.characters || {}, C1 = CH[Object.keys(CH)[0]] || {};
+  const title = P.introTitle || P.heroTitle || P.brand || '기록실';
+  const kicker = P.introKicker || P.heroLabel || 'Chapter I';
+  const sub = P.heroSub || '';
+  const brand = ((C1.nameEn || P.brand || 'ARCHIVE') + ' · ARCHIVE').toUpperCase();
+  const img = P.heroImage || '';
+  K.css('ix-veil', `
+  .intro-veil { padding:0; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; }
+  .vl-photo { position:absolute; left:0; right:0; top:0; height:min(72vh,560px); overflow:hidden; }
+  .vl-photo img { width:100%; height:100%; object-fit:cover; object-position:var(--vl-pos,50% 30%); display:block; pointer-events:none;
+    filter:blur(12px) saturate(.75); transform:scale(1.06); will-change:filter,transform; }
+  .vl-photo::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgb(var(--shade) / .38) 0%, rgb(var(--shade) / 0) 24%, transparent 60%, var(--bg) 100%); }
+  .vl-veil { position:absolute; inset:0; background:linear-gradient(180deg, rgb(var(--bg-rgb) / .42) 0%, rgb(var(--bg-rgb) / .58) 40%, var(--bg) 66%); will-change:opacity; }
+  .vl-light { position:absolute; inset:0; pointer-events:none; background:radial-gradient(60% 40% at 22% 8%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%); animation:vlbreath 7s ease-in-out infinite; }
+  @keyframes vlbreath { 50% { opacity:.55; } }
+  .vl-grain { position:absolute; inset:-50%; pointer-events:none; opacity:.28; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .25 0 0 0 0 .22 0 0 0 0 .3 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+  .vl-top { position:absolute; left:0; right:0; top:0; display:flex; justify-content:space-between; align-items:center; padding:18px 22px; font:500 12px var(--f-title,"Cormorant Garamond",serif); letter-spacing:.32em; color:var(--ink); z-index:5; }
+  .intro-veil .ix-sound { position:absolute; top:12px; right:16px; bottom:auto; z-index:31; font:12px var(--f-text,"Gowun Batang"),serif; letter-spacing:.08em; color:var(--muted,var(--ink)); opacity:1; min-height:32px; }
+  .intro-veil .ix-sound input { width:14px; height:14px; accent-color:var(--gold-ink,var(--ink)); }
+  .vl-body { position:absolute; left:0; right:0; bottom:max(7vh,36px); display:flex; flex-direction:column; align-items:center; text-align:center; padding:0 32px; z-index:5; color:var(--ink); }
+  .vl-kicker { margin:0 0 14px; font:500 12px var(--f-title,"Cormorant Garamond",serif); letter-spacing:.42em; text-transform:uppercase; color:var(--gold-ink); }
+  .vl-title { margin:0; font-family:var(--f-intro, var(--f-display,"Hahmlet",serif)); font-weight:200; font-synthesis:none; font-size:clamp(48px,15vw,64px); line-height:1; letter-spacing:.12em; padding-left:.12em; }
+  .vl-sub { margin:12px 0 0; font:italic 400 20px var(--f-title,"Cormorant Garamond",serif); color:var(--muted,var(--ink)); }
+  .vl-rule { display:flex; align-items:center; gap:10px; width:180px; margin:24px 0 26px; }
+  .vl-rule i { flex:1; height:1px; background:var(--gold); }
+  .vl-rule b { width:7px; height:7px; border:1px solid var(--gold); transform:rotate(45deg); }
+  .vl-name { width:min(240px,70vw); background:transparent; border:0; border-bottom:1px solid var(--line2,var(--line)); border-radius:0; outline:none; padding:8px 0; text-align:center; font:16px var(--f-text,"Gowun Batang"),serif; color:var(--ink); -webkit-user-select:text; user-select:text; }
+  .vl-name::placeholder { color:var(--muted,var(--ink)); opacity:.7; }
+  .vl-name:focus { border-bottom-color:var(--gold-ink); }
+  .vl-hold { position:relative; margin-top:30px; width:76px; height:76px; border-radius:50%; border:0; background:transparent; color:var(--ink); cursor:pointer; display:grid; place-items:center; -webkit-tap-highlight-color:transparent; touch-action:none; }
+  .vl-hold svg { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); }
+  .vl-hold .trk { fill:none; stroke:var(--ink); stroke-opacity:.28; stroke-width:1; }
+  .vl-hold .bar { fill:none; stroke:var(--gold-ink); stroke-width:1.5; stroke-linecap:round; }
+  .vl-hold span { font:13px var(--f-text,"Gowun Batang"),serif; letter-spacing:.2em; padding-left:.2em; transition:transform .4s cubic-bezier(.2,.8,.2,1); }
+  .vl-hold.on span { transform:scale(.92); }
+  .vl-hold:focus-visible { outline:1px solid var(--gold-ink); outline-offset:6px; }
+  .vl-hint { margin:14px 0 0; min-height:1.6em; font:13px/1.6 var(--f-text,"Gowun Batang"),serif; color:var(--muted,var(--ink)); letter-spacing:.04em; word-break:keep-all; transition:opacity .3s; }
+  .vl-in > * { opacity:0; transform:translateY(10px); animation:vlin 1.1s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes vlin { to { opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce) { .vl-in > * { animation-duration:.01s; } .vl-light { animation:none; } }
+  `);
+  const R = 37, CIRC = 2 * Math.PI * R;
+  const root = K.el(`<div class="ix-stage">
+    ${img ? `<div class="vl-photo" style="--vl-pos:${K.escI(P.heroPosition || '50% 30%')}"><img src="${K.escI(img)}" alt="" onerror="this.parentNode.remove()"></div>` : ''}
+    <div class="vl-veil"></div><div class="vl-light"></div><div class="vl-grain"></div>
+    <header class="vl-top"><span>${K.escI(brand)}</span></header>
+    <div class="vl-body vl-in">
+      <p class="vl-kicker">${K.escI(kicker)}</p>
+      <h1 class="vl-title">${K.escI(title)}</h1>
+      ${sub ? `<p class="vl-sub">${K.escI(sub)}</p>` : ''}
+      <div class="vl-rule" aria-hidden="true"><i></i><b></b><i></i></div>
+      <input type="text" class="vl-name" id="vl-name" placeholder="당신의 이름" maxlength="10" aria-label="이름" autocomplete="off">
+      <button type="button" class="vl-hold" id="vl-hold" data-ix aria-label="길게 눌러 입장">
+        <svg viewBox="0 0 80 80" aria-hidden="true"><circle class="trk" cx="40" cy="40" r="${R}"/><circle class="bar" cx="40" cy="40" r="${R}" stroke-dasharray="${CIRC}" stroke-dashoffset="${CIRC}"/></svg>
+        <span>입장</span>
+      </button>
+      <p class="vl-hint" id="vl-hint" aria-live="polite">길게 눌러 베일을 걷어 주세요</p>
+    </div></div>`);
+  [...root.querySelectorAll('.vl-in > *')].forEach((e, i) => { e.style.animationDelay = (300 + i * 110) + 'ms'; });
+  const photo = root.querySelector('.vl-photo img'), veil = root.querySelector('.vl-veil'), body = root.querySelector('.vl-body');
+  const btn = root.querySelector('#vl-hold'), bar = btn.querySelector('.bar'), hint = root.querySelector('#vl-hint'), nameEl = root.querySelector('#vl-name');
+  K.gw.addEventListener('contextmenu', e => e.preventDefault());
+  let k = 0, holding = false, done = false, touched = false;
+  const HOLD = K.RM ? .5 : 1.5;
+  const apply = () => { const e = 1 - Math.pow(1 - k, 2.2);
+    if (photo) { photo.style.filter = `blur(${(12 * (1 - e)).toFixed(2)}px) saturate(${(.75 + .25 * e).toFixed(3)})`; photo.style.transform = `scale(${(1.06 - .06 * e).toFixed(4)})`; }
+    veil.style.opacity = (1 - e).toFixed(3); bar.style.strokeDashoffset = (CIRC * (1 - k)).toFixed(2); };
+  const start = e => { if (done) return; if (e && e.target === nameEl) return; holding = true; touched = true; btn.classList.add('on'); hint.textContent = '그대로 눌러 주세요'; };
+  const stop = () => { if (!holding) return; holding = false; btn.classList.remove('on'); if (!done && k < 1) hint.textContent = k > .05 ? '조금만 더 길게 눌러 주세요' : '길게 눌러 베일을 걷어 주세요'; };
+  btn.addEventListener('pointerdown', e => { e.preventDefault(); try { btn.setPointerCapture(e.pointerId); } catch {} start(e); });
+  K.gw.addEventListener('pointerdown', e => { if (e.target.closest('.vl-name, .ix-sound, #vl-hold')) return; start(e); });   // 화면 어디를 길게 눌러도 됨
+  addEventListener('pointerup', stop); addEventListener('pointercancel', stop); btn.addEventListener('lostpointercapture', stop);
+  btn.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); K.prime(); start(); } });
+  btn.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+  nameEl.addEventListener('keydown', e => { if (e.key === 'Enter') { nameEl.blur(); hint.textContent = '이제 아래 원을 길게 눌러 주세요'; } });
+  apply();
+  K.loop(dt => { if (done) return false;
+    const nk = K.clamp(k + (holding ? dt / HOLD : -dt / .7), 0, 1);
+    if (nk !== k) { k = nk; apply(); }
+    if (k >= 1) finish(); });
+  const finish = () => { done = true; holding = false;
+    const u = document.getElementById('username'); if (u) u.value = nameEl.value.trim();
+    hint.textContent = ''; K.SFX.chime([523, 659, 784], .16);
+    K.go(async () => {
+      body.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-8px)' }], { duration: K.RM ? 100 : 600, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' });
+      root.querySelector('.vl-top').animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+      await K.wait(420); await K.fade(900); }); };
+  if (!touched) setTimeout(() => { if (!touched && !done) hint.animate([{ opacity: 1 }, { opacity: .35 }, { opacity: 1 }], { duration: 1800, iterations: 2 }); }, 4500);
+} });
+
+// 47. 채색 기도서 — 금박 머리글자·붉은 글씨·덩굴 테두리의 양피지 기도서. 봉랍을 길게 눌러 떼면 금박이 반짝이고 책장이 넘어감
+//     글귀 바꾸기(data.js page): introPrayer: ['첫 줄', '둘째 줄'] · introKicker · introTitle
+reg('psalter', { look: 'paper', card: false, mount(K) {
+  const D = window.ARCHIVE || {}, P = D.page || {}, CH = D.characters || {}, C1 = CH[Object.keys(CH)[0]] || {};
+  const title = P.introTitle || P.heroTitle || P.brand || '기록실';
+  const en = String(C1.nameEn || P.brand || 'Archive').trim();
+  const init = en.charAt(0).toUpperCase(), rest = en.slice(1).toLowerCase();
+  const kicker = P.introKicker || 'Liber · Horarum';
+  const sub = P.heroSub || '', img = P.heroImage || '';
+  const pr = [].concat(P.introPrayer || ['모두를 위해 기도하던 성녀가 있었습니다.', '이제 그 기도는, 단 한 사람을 향합니다.']);
+  const GOLD = 'linear-gradient(115deg,#7E5F25 0%,#C9A452 22%,#F4E3A6 38%,#B88F3E 52%,#E9D08A 66%,#8C6A2C 82%,#D9BD72 100%)';
+  K.css('ix-psalter', `
+  .intro-psalter { z-index:95; padding:0; background:#EFE4CC; color:#2B2219; -webkit-user-select:none; user-select:none; -webkit-touch-callout:none; perspective:1600px; }
+  .ps-vel { position:absolute; inset:0; background-size:cover; }
+  .ps-vel::after { content:''; position:absolute; inset:0; background:radial-gradient(120% 90% at 50% 40%, rgba(255,250,236,.0) 55%, rgba(120,84,40,.22) 100%); }
+  .ps-orn { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .ps-rib { position:absolute; top:0; right:46px; width:16px; height:min(26vh,190px); background:linear-gradient(90deg,#3E2154,#6B3F86 45%,#53306B); clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%); box-shadow:0 2px 6px rgba(40,20,50,.35); transform-origin:top center; animation:psrib 5s ease-in-out infinite; z-index:3; }
+  @keyframes psrib { 50% { transform:rotate(1.2deg); } }
+  .ps-col { position:absolute; left:50%; top:0; bottom:0; width:min(100% - 108px, 330px); transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; text-align:center; padding:max(7vh,46px) 0 max(4vh,22px); box-sizing:border-box; z-index:2; }
+  .ps-rub { margin:0; font:600 11px "Cinzel","Cormorant Garamond",serif; letter-spacing:.38em; padding-left:.38em; color:#A3242B; text-transform:uppercase; }
+  .ps-head { display:flex; align-items:flex-end; gap:12px; margin-top:18px; }
+  .ps-init { position:relative; width:86px; height:94px; flex:none; display:grid; place-items:center; background:#24386C; box-shadow:inset 0 0 0 3px #24386C, inset 0 0 0 4px #D9BD72, 0 2px 0 rgba(60,40,10,.15); }
+  .ps-init::before { content:''; position:absolute; inset:7px; background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.08) 1px, transparent 1.5px) 0 0/9px 9px, radial-gradient(circle at 70% 70%, rgba(217,189,114,.35) 1px, transparent 1.6px) 0 0/9px 9px; }
+  .ps-init b { position:relative; font:400 74px/1 "Cinzel Decorative","Cinzel",serif; background:${GOLD}; background-size:240% 100%; background-position:0% 0; -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 1px 0 rgba(40,25,5,.55)); }
+  .ps-en { font:500 40px/1 "Cinzel","Cormorant Garamond",serif; letter-spacing:.14em; color:#2B2219; padding-bottom:4px; text-align:left; }
+  .ps-title { margin:18px 0 0; font-family:var(--f-intro,"Hahmlet","Song Myung",serif); font-weight:300; font-synthesis:none; font-size:clamp(40px,12vw,52px); line-height:1; letter-spacing:.16em; padding-left:.16em; color:#2B2219; }
+  .ps-sub { margin:10px 0 0; font:italic 400 18px "Cormorant Garamond",serif; color:#6A5A44; }
+  .ps-div { width:200px; height:18px; margin:16px 0 14px; }
+  .ps-mini { position:relative; width:clamp(96px,15vh,128px); aspect-ratio:3/4; margin:2px 0 16px; padding:4px; background:linear-gradient(135deg,#8C6A2C,#E9D08A 40%,#B88F3E 60%,#D9BD72); border-radius:999px 999px 2px 2px; box-shadow:0 6px 14px rgba(70,45,15,.22); }
+  .ps-mini > div { width:100%; height:100%; border-radius:999px 999px 1px 1px; overflow:hidden; background:#24386C; box-shadow:inset 0 0 0 1px rgba(255,255,255,.5); }
+  .ps-mini img { width:100%; height:100%; object-fit:cover; display:block; pointer-events:none; filter:sepia(.18) saturate(.9); }
+  @media (max-height:720px) { .ps-mini { display:none; } }
+  .ps-pr { margin:0; width:100%; font:15px/2 var(--f-text,"Gowun Batang"),serif; color:#3A2E22; text-align:left; word-break:keep-all; }
+  .ps-pr span { display:block; padding-left:1.4em; text-indent:-1.4em; } .ps-pr span + span i { color:#24386C; }
+  .ps-pr i { font:normal 700 16px "Cormorant Garamond","Gowun Batang",serif; color:#A3242B; display:inline-block; width:1.4em; text-indent:0; }
+  .ps-sign { display:flex; align-items:baseline; gap:10px; width:100%; margin-top:16px; }
+  .ps-sign label { flex:none; font:13px var(--f-text,"Gowun Batang"),serif; color:#A3242B; letter-spacing:.06em; }
+  .ps-sign input { flex:1; min-width:0; border:0; border-bottom:1px solid rgba(90,64,30,.45); background:transparent; border-radius:0; outline:none; padding:6px 2px; font:italic 17px "Cormorant Garamond","Gowun Batang",serif; color:#2B2219; -webkit-user-select:text; user-select:text; }
+  .ps-sign input::placeholder { color:#8A7A62; font-style:normal; font-family:"Gowun Batang",serif; font-size:14px; }
+  .ps-foot { margin-top:auto; display:flex; flex-direction:column; align-items:center; }
+  .ps-seal { position:relative; width:92px; height:92px; border:0; padding:0; background:none; cursor:pointer; touch-action:none; -webkit-tap-highlight-color:transparent; }
+  .ps-seal svg { width:100%; height:100%; display:block; overflow:visible; filter:drop-shadow(0 3px 3px rgba(70,10,10,.35)); transition:filter .3s; }
+  .ps-seal.on svg { filter:drop-shadow(0 9px 8px rgba(70,10,10,.32)); }
+  .ps-seal:focus-visible { outline:1px solid #A3242B; outline-offset:6px; border-radius:50%; }
+  .ps-cord { position:absolute; left:50%; top:46%; width:150px; height:2px; transform:translateX(-50%); background:linear-gradient(90deg,transparent,#8A2A2F 18%,#B5444A 50%,#8A2A2F 82%,transparent); z-index:-1; }
+  .ps-hint { margin:12px 0 0; min-height:1.5em; font:13px/1.5 var(--f-text,"Gowun Batang"),serif; color:#6A5A44; letter-spacing:.04em; }
+  .ps-half { position:absolute; inset:0; pointer-events:none; }
+  .intro-psalter .ix-sound { top:12px; right:auto; left:16px; bottom:auto; z-index:31; font:12px "Gowun Batang",serif; color:#6A5A44; opacity:1; min-height:32px; }
+  .intro-psalter .ix-sound input { width:14px; height:14px; accent-color:#A3242B; }
+  .ps-shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg, rgba(60,40,15,0), rgba(60,40,15,.35)); opacity:0; z-index:40; }
+  .ps-in > * { opacity:0; animation:psin 1.2s cubic-bezier(.2,.7,.2,1) forwards; }
+  @keyframes psin { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  @keyframes psshine { from { background-position:0% 0; } to { background-position:100% 0; } }
+  .ps-shine .ps-init b { animation:psshine 1.1s ease-in-out forwards; }
+  @media (prefers-reduced-motion: reduce) { .ps-in > * { animation-duration:.01s; } .ps-rib { animation:none; } }
+  `);
+  // 양피지 질감
+  const vel = K.el(`<div class="ps-vel"></div>`);
+  try { vel.style.backgroundImage = `url(${K.paper(540, 960, { base: '#F1E6CE', aged: .55 }).toDataURL('image/jpeg', .86)})`; } catch {}
+  // 테두리·덩굴 장식 (금선 이중 테두리 + 왼쪽 덩굴 + 네 모서리 꽃장식)
+  const orn = K.el(`<svg class="ps-orn" aria-hidden="true"></svg>`);
+  const drawOrn = () => { const W = K.W, H = K.H, m = 16, m2 = 22; let s = `<defs><linearGradient id="psg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9C7A35"/><stop offset=".45" stop-color="#E9D08A"/><stop offset=".7" stop-color="#B88F3E"/><stop offset="1" stop-color="#D9BD72"/></linearGradient></defs>`;
+    s += `<rect x="${m}" y="${m}" width="${W - 2 * m}" height="${H - 2 * m}" fill="none" stroke="url(#psg)" stroke-width="1.6"/><rect x="${m2}" y="${m2}" width="${W - 2 * m2}" height="${H - 2 * m2}" fill="none" stroke="#A3242B" stroke-opacity=".55" stroke-width=".7"/>`;
+    const q = (x, y) => `<g transform="translate(${x} ${y})"><circle r="4.2" cx="-4.2" fill="#24386C"/><circle r="4.2" cx="4.2" fill="#24386C"/><circle r="4.2" cy="-4.2" fill="#A3242B"/><circle r="4.2" cy="4.2" fill="#A3242B"/><rect x="-3.6" y="-3.6" width="7.2" height="7.2" transform="rotate(45)" fill="url(#psg)"/></g>`;
+    s += q(m, m) + q(W - m, m) + q(m, H - m) + q(W - m, H - m);
+    // 왼쪽 여백 덩굴
+    const vx = 30; let d = `M${vx} 64`; for (let y = 64; y <= H - 64; y += 8) d += ` L${(vx + Math.sin(y / 34) * 5).toFixed(1)} ${y}`;
+    s += `<path d="${d}" fill="none" stroke="url(#psg)" stroke-width="1.1"/>`;
+    let side = 1; for (let y = 84; y < H - 70; y += 30) { const x = vx + Math.sin(y / 34) * 5, a = side * 38;
+      s += `<ellipse cx="${(x + side * 6).toFixed(1)}" cy="${y}" rx="6" ry="2.4" transform="rotate(${a} ${(x + side * 6).toFixed(1)} ${y})" fill="url(#psg)"/>`;
+      if ((y / 30 | 0) % 2) s += `<circle cx="${(x - side * 6).toFixed(1)}" cy="${y + 10}" r="1.8" fill="${(y / 60 | 0) % 2 ? '#A3242B' : '#24386C'}"/>`; side = -side; }
+    orn.innerHTML = s; };
+  drawOrn(); K.onResize(drawOrn);
+  K.el(`<div class="ps-rib" aria-hidden="true"></div>`);
+  const sealSVG = `<svg viewBox="0 0 100 100" aria-hidden="true"><defs><radialGradient id="psw" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#D2464C"/><stop offset=".5" stop-color="#A3242B"/><stop offset="1" stop-color="#5E0D12"/></radialGradient><radialGradient id="psw2" cx=".6" cy=".65" r=".6"><stop offset="0" stop-color="#8E1A21"/><stop offset="1" stop-color="#B9343B"/></radialGradient></defs>
+    <path d="M50 3 C63 2 70 9 79 13 C90 18 97 30 96 44 C99 57 94 68 88 77 C80 90 66 97 51 96 C37 99 25 93 16 85 C6 76 2 63 4 50 C2 37 8 23 18 14 C28 6 38 4 50 3 Z" fill="url(#psw)"/>
+    <circle cx="50" cy="50" r="31" fill="url(#psw2)"/><circle cx="50" cy="50" r="31" fill="none" stroke="#5E0D12" stroke-opacity=".55" stroke-width="1.2"/><circle cx="50" cy="50" r="27" fill="none" stroke="#E07A7F" stroke-opacity=".35" stroke-width=".8"/>
+    <text x="50" y="62" text-anchor="middle" font-family="Cinzel Decorative, Cinzel, serif" font-size="34" fill="#6E1016" opacity=".9">${K.escI(init)}</text>
+    <text x="49.2" y="61.2" text-anchor="middle" font-family="Cinzel Decorative, Cinzel, serif" font-size="34" fill="#E58489" opacity=".35">${K.escI(init)}</text>
+    <path class="ps-crack" d="M22 30 L38 44 L33 52 L52 58 L49 67 L74 80" fill="none" stroke="#3A0609" stroke-width="1.6" stroke-linejoin="round" stroke-dasharray="90" stroke-dashoffset="90"/></svg>`;
+  const col = K.el(`<div class="ps-col ps-in">
+    <p class="ps-rub">${K.escI(kicker)}</p>
+    <div class="ps-head"><div class="ps-init"><b>${K.escI(init)}</b></div><div class="ps-en">${K.escI(rest)}</div></div>
+    <h1 class="ps-title">${K.escI(title)}</h1>
+    ${sub ? `<p class="ps-sub">${K.escI(sub)}</p>` : ''}
+    ${img ? `<div class="ps-mini"><div><img src="${K.escI(img)}" alt="" style="object-position:${K.escI(P.heroPosition || '50% 30%')}" onerror="this.closest('.ps-mini').remove()"></div></div>` : ''}
+    <svg class="ps-div" viewBox="0 0 200 18" aria-hidden="true"><path d="M8 9 H84 M116 9 H192" stroke="#B88F3E" stroke-width="1"/><path d="M100 2 L107 9 L100 16 L93 9 Z" fill="none" stroke="#B88F3E"/><circle cx="100" cy="9" r="2" fill="#A3242B"/><circle cx="88" cy="9" r="1.6" fill="#24386C"/><circle cx="112" cy="9" r="1.6" fill="#24386C"/></svg>
+    <p class="ps-pr"><span><i>¶</i>${K.escI(pr[0] || '')}</span>${pr[1] ? `<span><i>¶</i>${K.escI(pr[1])}</span>` : ''}</p>
+    <div class="ps-sign"><label for="ps-name">기도하는 이</label><input type="text" id="ps-name" placeholder="이름을 적어 주세요" maxlength="10" autocomplete="off"></div>
+    <div class="ps-foot"><button type="button" class="ps-seal" id="ps-seal" data-ix aria-label="봉랍을 길게 눌러 떼기"><span class="ps-cord"></span>${sealSVG}</button>
+    <p class="ps-hint" id="ps-hint" aria-live="polite">봉랍을 길게 눌러 떼어 주세요</p></div></div>`);
+  [...col.children].forEach((e, i) => { e.style.animationDelay = (200 + i * 120) + 'ms'; });
+  const seal = col.querySelector('#ps-seal'), crackP = seal.querySelector('.ps-crack'), hint = col.querySelector('#ps-hint'), nameEl = col.querySelector('#ps-name');
+  K.gw.addEventListener('contextmenu', e => e.preventDefault());
+  let k = 0, holding = false, done = false;
+  const HOLD = K.RM ? .4 : 1.0;
+  const apply = () => { seal.style.transform = `translateY(${(-6 * k).toFixed(2)}px) rotate(${(-4 * k).toFixed(2)}deg) scale(${(1 + .05 * k).toFixed(3)})`; crackP.style.strokeDashoffset = (90 * (1 - Math.min(1, k * 1.25))).toFixed(1); };
+  const start = () => { if (done) return; holding = true; seal.classList.add('on'); hint.textContent = '그대로…'; K.SFX.rip(.25); };
+  const stop = () => { if (!holding) return; holding = false; seal.classList.remove('on'); if (!done && k < 1) hint.textContent = k > .08 ? '조금만 더 길게 눌러 주세요' : '봉랍을 길게 눌러 떼어 주세요'; };
+  seal.addEventListener('pointerdown', e => { e.preventDefault(); try { seal.setPointerCapture(e.pointerId); } catch {} start(); });
+  addEventListener('pointerup', stop); addEventListener('pointercancel', stop); seal.addEventListener('lostpointercapture', stop);
+  seal.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.repeat) { e.preventDefault(); K.prime(); start(); } });
+  seal.addEventListener('keyup', e => { if (e.key === 'Enter' || e.key === ' ') stop(); });
+  nameEl.addEventListener('keydown', e => { if (e.key === 'Enter') { nameEl.blur(); hint.textContent = '이제 봉랍을 길게 눌러 주세요'; } });
+  K.loop(dt => { if (done) return false; const nk = K.clamp(k + (holding ? dt / HOLD : -dt / .5), 0, 1); if (nk !== k) { k = nk; apply(); } if (k >= 1) finish(); });
+  const finish = () => { done = true; holding = false; hint.textContent = '';
+    const u = document.getElementById('username'); if (u) u.value = nameEl.value.trim();
+    K.SFX.crack(); K.SFX.page();
+    // 봉랍이 두 조각으로 갈라져 떨어짐
+    const r = seal.getBoundingClientRect();
+    [['inset(0 50% 0 0)', -1], ['inset(0 0 0 50%)', 1]].forEach(([clip, sd]) => {
+      const h = K.el(`<div class="ps-half" style="position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;clip-path:${clip};z-index:35">${sealSVG}</div>`, K.gw);
+      h.querySelector('svg').style.cssText = 'width:100%;height:100%;filter:drop-shadow(0 6px 6px rgba(70,10,10,.3))';
+      h.querySelector('.ps-crack').style.strokeDashoffset = 0;
+      h.animate([{ transform: 'none', opacity: 1 }, { transform: `translate(${sd * 34}px, 60px) rotate(${sd * 28}deg)`, opacity: 1, offset: .6 }, { transform: `translate(${sd * 48}px, 140px) rotate(${sd * 40}deg)`, opacity: 0 }], { duration: K.RM ? 150 : 1100, easing: 'cubic-bezier(.3,0,.7,1)', fill: 'forwards' }); });
+    seal.style.visibility = 'hidden'; col.querySelector('.ps-cord') && (col.querySelector('.ps-cord').style.visibility = 'hidden');
+    K.go(async () => {
+      K.gw.classList.add('ps-shine'); await K.wait(900);
+      // 책장이 왼쪽으로 넘어가며 기록 페이지가 드러남
+      const sh = K.el(`<div class="ps-shade"></div>`, K.gw); K.SFX.page();
+      sh.animate([{ opacity: 0 }, { opacity: 1 }], { duration: K.RM ? 150 : 1100, fill: 'forwards' });
+      K.gw.style.transformOrigin = 'left center';
+      await K.gw.animate([{ transform: 'perspective(1600px) rotateY(0deg)', opacity: 1 }, { transform: 'perspective(1600px) rotateY(-70deg)', opacity: 1, offset: .75 }, { transform: 'perspective(1600px) rotateY(-96deg)', opacity: 0 }], { duration: K.RM ? 200 : 1250, easing: 'cubic-bezier(.55,0,.35,1)', fill: 'forwards' }).finished; });
+  };
+  setTimeout(() => { if (!done && !holding && k === 0) seal.animate([{ transform: 'none' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(4deg)' }, { transform: 'none' }], { duration: 700 }); }, 4200);
 } });
 
 // ===== 시작 =====

@@ -8,6 +8,7 @@ classic        기본 (이름 입력 → 입장)
 [미스터리]   board 수사 보드 · redacted 지워진 기록 · cctv CCTV 화면 · cassette 녹음테이프 · cipher 암호 해독 · evidence 증거물 봉투 · glass 유리 깨기
 [놀이·장치]  domino 도미노 · plane 종이비행기 · balloon 풍선 · scratch 스크래치 복권 · puzzle 자물쇠 퍼즐 · gacha 뽑기 기계 · musicbox 오르골 · light 불 켜기
 [시각 연출]  lightname 이름이 빛으로 · curtain 커튼 걷기 · paint 물감 떨어뜨리기 · frost 창문 성에 · film 필름 영사기 · pagecurl 페이지 접기
+[에디토리얼] psalter 채색 기도서 (봉랍을 떼면 책장이 넘어감 · 중세·성녀 작품 추천) · veil 베일 걷기 (표지 사진이 서서히 선명해짐)
 [초안]       bullet 총알 · ink 잉크 · fingerprint 지문 · seal 봉랍
 
 선택 옵션 (data.js 의 page 안에 추가):

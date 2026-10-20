@@ -3,7 +3,7 @@
    · 캐릭터챗이라 캐릭터는 한 명(char1)이에요. 늘리려면 char1 블록을 복사해 char2로 이름만 바꿔 붙이세요(앞 블록 끝에 쉼표 필요). */
 window.ARCHIVE = {
   page: {
-    intro: 'glass',                                 // 시작 화면 효과 이름 (shared/intro-list.txt 참고) · 미리보기: 주소 뒤에 ?intro=이름
+    intro: 'psalter',                                 // 시작 화면 효과 이름 (shared/intro-list.txt 참고) · 미리보기: 주소 뒤에 ?intro=이름
     fonts: {},                                       // 글꼴: { display:'학교안심 붓펜', text:'학교안심 산뜻바탕' } · 목록은 shared/font-list.txt
     theme: 'lavender',                           // 색 테마: cream · blue · rose · sage · lavender · mono
     pages: ['기록', '갤러리', '제작소'],          // 하단 메뉴 바의 페이지 이름 (I · II · III)
@@ -12,6 +12,7 @@ window.ARCHIVE = {
     brand: '이이레',                             // 작품명: 상단 로고·주화·포토카드·인생 두컷 프레임의 'PROJECT ARCHIVE' 자리에 들어가요
     title: '이이레',                              // 브라우저 탭 제목
     heroImage: 'assets/hero.jpg',               // 표지 사진 (비우면 글자만)
+    heroVideo: 'assets/hero.mp4',              // 움직이는 표지 영상 · 소리 없이 반복 재생, 비우면 사진만
     heroPosition: '40% 30%',                    // 표지 사진에서 보여 줄 위치 (가로% 세로%)
     heroCaption: '처형식에 가는 길',             // 표지 사진 설명 (오른쪽 아래 작은 글씨)
     heroLabel: 'Chapter I',

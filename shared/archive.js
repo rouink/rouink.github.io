@@ -25,6 +25,16 @@ const $ = id => document.getElementById(id);
     $('hero-media').classList.remove('hidden'); document.body.classList.add('has-hero');
     if (p.heroCaption) { $('hero-caption').textContent = '— ' + p.heroCaption; $('hero-caption').classList.remove('hidden'); }
   }
+  if (p.heroVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches) {   // 움직이는 표지(mp4): 소리 없이 반복 재생. 재생이 안 되면 heroImage 사진이 그대로 보임
+    const m = $('hero-media'), v = document.createElement('video');
+    Object.assign(v, { src: p.heroVideo, muted: true, loop: true, autoplay: true, playsInline: true, preload: 'auto' });
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true'); if (p.heroImage) v.poster = p.heroImage;
+    v.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:var(--hero-pos,50% 30%)';
+    v.addEventListener('error', () => v.remove());
+    if (p.heroPosition) m.style.setProperty('--hero-pos', p.heroPosition);
+    m.insertBefore(v, $('hero-img').nextSibling); m.classList.remove('hidden'); document.body.classList.add('has-hero');
+    const go = () => v.play().catch(() => {}); go(); document.addEventListener('visibilitychange', () => { if (!document.hidden) go(); });
+  }
   if (p.quote) { $('page-quote-text').textContent = p.quote; $('page-quote-by').textContent = p.quoteBy ? '— ' + p.quoteBy : ''; $('page-quote').classList.remove('hidden'); }
   if (p.footer) $('site-footer').textContent = p.footer;
   if (p.brand && $('nav-brand')) $('nav-brand').textContent = p.brand;
@@ -106,7 +116,7 @@ function enter(withAudio, exitAnim) {
   $('nav-user-label').textContent = user;
   $('coin-name-input').value = user;
   if (!(withAudio && playing)) setBgm(withAudio);   // 시작 화면에서 이미 음악을 켰다면 그대로 이어서
-  const reveal = () => { mainView.classList.remove('opacity-0', 'translate-y-4'); startTicker(); drawCoin(); };
+  const reveal = () => { showPage('1'); mainView.classList.remove('opacity-0', 'translate-y-4'); startTicker(); drawCoin(); };   // 시작 화면 다음엔 언제나 Ⅰ 기록부터
   if (exitAnim) { reveal(); Promise.resolve(exitAnim()).then(() => { gateway.style.display = 'none'; }); return; }
   gateway.classList.add('opacity-0', 'pointer-events-none');
   setTimeout(() => { gateway.style.display = 'none'; reveal(); }, 500);
@@ -659,7 +669,8 @@ Promise.all([
 /* ===== 인생 두컷: 사진 2장을 순서대로 올리면 프레임에 합성 + 캐릭터 PNG 겹치기 =====
    캐릭터 PNG는 characters[id].booth 경로에 넣으면 자동으로 쓰입니다(없으면 자리표시 실루엣). */
 const bcv = $('booth-canvas');
-const BW = 540, BH = 1350, CUTS = [{ x:24, y:80, w:492, h:558 }, { x:24, y:668, w:492, h:558 }];
+const BW = 600, BH = 1156, CUTS = [{ x:36, y:104, w:528, h:440 }, { x:36, y:572, w:528, h:440 }];   // 컷 비율 6:5 (캐릭터가 컷을 넉넉히 채우도록)
+bcv.height = Math.round(bcv.width * BH / BW); bcv.style.aspectRatio = `${BW} / ${BH}`;
 const booth = { char: charIds[0], frame: 'gold', side: 'right', bg: 'studio', photos: [null, null], cutouts: [null, null], tf: [{ zoom: 1, dx: 0, dy: 0 }, { zoom: 1, dx: 0, dy: 0 }], sel: 0 };
 
 /* --- 배경 교체: 사람만 오려내기 (Google MediaPipe 인물 분리 모델, Apache-2.0 · 무료 · 상업용 가능)
@@ -839,7 +850,7 @@ function renderBooth(g, scale) {
     }
     // 캐릭터 (아래쪽 기준, 좌/우)
     const src = c.booth && c.booth[i], ci = boothImg(src);
-    if (ci) { let chH = k.h * .88, chW = ci.width * chH / ci.height; if (chW > k.w * .62) { chW = k.w * .62; chH = ci.height * chW / ci.width; }   /* 넓은 그림은 컷 폭의 62% 까지만 */ const x = booth.side === 'right' ? k.x + k.w - chW * .96 : k.x - chW * .04; ground(x + chW / 2, chW * .5); g.drawImage(ci, x, k.y + k.h - chH, chW, chH); }
+    if (ci) { let chH = k.h * .9, chW = ci.width * chH / ci.height; if (chW > k.w * .68) { chW = k.w * .68; chH = ci.height * chW / ci.width; }   /* 넓은 그림은 컷 폭의 68% 까지만 */ const x = booth.side === 'right' ? k.x + k.w - chW * .96 : k.x - chW * .04; ground(x + chW / 2, chW * .5); g.drawImage(ci, x, k.y + k.h - chH, chW, chH); }
     else if (src) { const chH = k.h * .88, chW = k.w * .44, x = booth.side === 'right' ? k.x + k.w - chW - 10 : k.x + 10; charPlaceholder(g, x, k.y + k.h - chH, chW, chH, src); }
     // 사진 톤: 은은한 따뜻함 + 가장자리
     g.fillStyle = 'rgba(255,236,210,.06)'; g.fillRect(k.x, k.y, k.w, k.h);
@@ -852,10 +863,10 @@ function renderBooth(g, scale) {
   // 바닥글: with 캐릭터 · 날짜 · 이름 · 번호
   const user = ($('username').value.trim() || $('coin-name-input').value.trim() || 'GUEST');
   const d = new Date(), date = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
-  g.textAlign = 'center'; g.fillStyle = '#3B2F22'; g.font = '30px "Song Myung","Gowun Batang",serif'; g.fillText(`with ${c.name}`, BW / 2, 1412);
-  g.fillStyle = bFoil(g, 150, 1420, 450, 1450, booth.frame); g.fillRect(BW / 2 - 90, 1426, 180, 1.5);
-  g.fillStyle = '#5A4A38'; g.font = 'bold 13px "Cinzel","Gowun Batang",serif'; bSpaced(g, `${date}  ·  ${user.toUpperCase()}  ·  ${serialOf(user.toUpperCase())}`, BW / 2, 1456, 2);
-  bSparkle(g, 66, 1400, 12, .9); bSparkle(g, 534, 1430, 9, .9);
+  g.textAlign = 'center'; g.fillStyle = '#3B2F22'; g.font = '30px "Song Myung","Gowun Batang",serif'; g.fillText(`with ${c.name}`, BW / 2, BH - 88);
+  g.fillStyle = bFoil(g, 150, BH - 80, 450, BH - 50, booth.frame); g.fillRect(BW / 2 - 90, BH - 74, 180, 1.5);
+  g.fillStyle = '#5A4A38'; g.font = 'bold 13px "Cinzel","Gowun Batang",serif'; bSpaced(g, `${date}  ·  ${user.toUpperCase()}  ·  ${serialOf(user.toUpperCase())}`, BW / 2, BH - 44, 2);
+  bSparkle(g, 66, BH - 100, 12, .9); bSparkle(g, 534, BH - 70, 9, .9);
 }
 function drawBooth() { renderBooth(bcv.getContext('2d'), bcv.width / BW); updateBoothUI(); }
 function updateBoothUI() {
