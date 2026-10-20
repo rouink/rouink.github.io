@@ -185,7 +185,7 @@ function fillModal(id) {
   $('modal-tmi').innerHTML = c.tmi.map(t => `<details class="acc"><summary>${esc(t.q)}</summary><p class="ans">${esc(t.a)}</p></details>`).join('');
   $('modal-story').innerHTML = c.story.map(p => `<p>${esc(p)}</p>`).join('');
   $('modal-inv-count').textContent = c.items.length + ' items';
-  $('modal-inv').innerHTML = c.items.map((it, i) => `<button type="button" data-item="${i}"><span class="ic" aria-hidden="true">${it.icon}</span><span class="nm">${esc(it.title)}</span></button>`).join('');
+  $('modal-inv').innerHTML = c.items.map((it, i) => `<button type="button" data-item="${i}">${it.img ? `<span class="ic im" aria-hidden="true"><img src="${esc(it.img)}" alt="" loading="lazy"></span>` : `<span class="ic" aria-hidden="true">${it.icon || ''}</span>`}<span class="nm">${esc(it.title)}</span></button>`).join('');
   $('modal-theme-label').textContent = (c.nameEn || c.name) + ' Theme Song'; $('modal-theme').textContent = c.themeTitle;
   const ck = $('modal-crack'); if (ck) { const url = c.crack || (ARCHIVE.page && ARCHIVE.page.crackUrl); ck.classList.toggle('hidden', !url); if (url) ck.href = url; }
   if ($('modal-nav')) $('modal-nav').style.display = SINGLE ? 'none' : '';
@@ -219,7 +219,7 @@ video.addEventListener('error', () => { if (video.getAttribute('src')) fallback.
 $('modal-inv').addEventListener('click', e => {
   const b = e.target.closest('[data-item]'); if (!b) return;
   const it = characters[curId].items[+b.dataset.item];
-  $('lightbox-icon').textContent = it.icon; $('lightbox-title').textContent = it.title; $('lightbox-desc').textContent = it.desc;
+  const li = $('lightbox-icon'); li.classList.toggle('im', !!it.img); li.textContent = ''; if (it.img) { const im = document.createElement('img'); im.src = it.img; im.alt = it.title || ''; li.appendChild(im); } else li.textContent = it.icon || ''; $('lightbox-title').textContent = it.title; $('lightbox-desc').textContent = it.desc;
   lightbox.classList.replace('hidden', 'flex'); $('lightbox-close').focus();
 });
 $('lightbox-close').addEventListener('click', closeLightbox);
