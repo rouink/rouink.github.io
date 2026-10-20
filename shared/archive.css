@@ -302,8 +302,10 @@
   .gate .quiet:hover { color:var(--ink); }
 
   /* 떠다니는 문장: 화면 위에 뜨지만 클릭·터치는 그대로 통과 */
-  #whisper { position:fixed; left:0; top:0; z-index:45; pointer-events:none; user-select:none; max-width:min(78vw,400px); font-family:var(--f-display); font-weight:300; font-size:clamp(14px,3.8vw,16px); line-height:1.8; letter-spacing:.02em; color:var(--ink2); text-shadow:0 0 6px var(--bg), 0 0 14px var(--bg), 0 0 22px var(--bg); opacity:0; transform:translateY(10px); transition:opacity 1.1s ease, transform 4.8s ease; word-break:keep-all; }
-  #whisper.show { opacity:.92; transform:translateY(-8px); }
+  /* 떠다니는 문장: 지금 보고 있는 화면 아래, 메뉴 바 바로 위 가운데 한 줄 */
+  #whisper { position:fixed; left:50%; bottom:calc(86px + env(safe-area-inset-bottom)); z-index:45; pointer-events:none; user-select:none; max-width:calc(100vw - 48px); padding:7px 16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-align:center; font-family:var(--f-text); font-size:13px; line-height:1.5; letter-spacing:.03em; color:var(--ink2); background:color-mix(in srgb, var(--paper) 90%, transparent); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid var(--line); opacity:0; transform:translate(-50%, 6px); transition:opacity .9s ease, transform .9s ease; }
+  #whisper::before { content:''; display:inline-block; width:5px; height:5px; margin:0 10px 2px 0; border:1px solid var(--gold); transform:rotate(45deg); vertical-align:middle; }
+  #whisper.show { opacity:1; transform:translate(-50%, 0); }
 
   /* 스크롤 등장 */
   .fade-up { opacity:0; transform:translateY(18px); transition:opacity .9s ease, transform .9s ease; }

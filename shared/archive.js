@@ -194,7 +194,8 @@ function fillModal(id) {
   $('modal-scroll').scrollTop = 0;
   fallback.classList.replace('flex', 'hidden');
   if (c.video) { video.poster = c.poster || ''; video.src = c.video; video.play().catch(() => {}); }
-  else { video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load(); if (!portraitOf(c)) fallback.classList.replace('hidden', 'flex'); }
+  video.classList.toggle('hidden', !c.video);   // 영상이 없으면 영상 칸 자체를 숨김 (안드로이드의 큰 재생 아이콘 방지)
+  if (!c.video) { video.pause(); video.removeAttribute('src'); video.removeAttribute('poster'); video.load(); if (!portraitOf(c)) fallback.classList.replace('hidden', 'flex'); }
   const pimg = $('modal-portrait'), psrc = portraitOf(c); pimg.classList.toggle('hidden', !psrc || !!c.video); if (psrc) { pimg.src = psrc; pimg.alt = c.name; }
   switchTrack(c.music || CONFIG.bgm, c.name + ' Theme Song');
 }
@@ -923,7 +924,7 @@ markActive('bchar', booth.char); markActive('bframe', booth.frame); markActive('
 drawBooth();
 document.fonts && document.fonts.ready.then(drawBooth);
 
-/* ===== 떠다니는 문장: 5초마다 화면 곳곳에 랜덤 문장 (터치·클릭에 영향 없음) =====
+/* ===== 떠다니는 문장: 5초마다 화면 아래(메뉴 바 위)에 랜덤 문장 한 줄 (터치·클릭에 영향 없음) =====
    문장은 각 작품 data.js의 ticker 배열에서 가져옵니다(비어 있으면 A~J 임시 문구). */
 const TICKER = (ARCHIVE.ticker && ARCHIVE.ticker.length) ? ARCHIVE.ticker : Array.from({ length: 10 }, (_, i) => `${String.fromCharCode(65 + i)}문구가 출력 중입니다.`);
 let tickTimer = null, bag = [], lastLine = '';
@@ -936,9 +937,6 @@ function showWhisper() {
   whisper.classList.remove('show');
   setTimeout(() => {
     whisper.textContent = nextLine();
-    const vw = innerWidth, vh = innerHeight, w = Math.min(whisper.offsetWidth || 260, vw * .8);
-    whisper.style.left = Math.round(vw * .06 + Math.random() * Math.max(0, vw * .88 - w)) + 'px';
-    whisper.style.top = Math.round(vh * (.14 + Math.random() * .6)) + 'px';
     requestAnimationFrame(() => whisper.classList.add('show'));
   }, 1100);
 }

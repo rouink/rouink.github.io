@@ -81,7 +81,7 @@ window.ARCHIVE = {
       // 더 넣으려면 위 줄 끝에 쉼표(,)를 찍고 같은 모양으로 한 줄씩 추가
     ],
     themeTitle:'이이레 테마',
-    video:'', poster:'',                                  // 영상(.mp4) 주소, 비워 두면 Video coming soon
+    video:'assets/hero.mp4', poster:'assets/hero.jpg',                                  // 영상(.mp4) 주소, 비워 두면 Video coming soon
     music:'assets/music/char1.mp3',                      // 팝업에서 나오는 캐릭터 음악
     booth:['assets/booth/char1_1.png', 'assets/booth/char1_2.png'],  // 인생 두컷용 배경 투명 PNG (1컷, 2컷)
     crack:'https://crack.wrtn.ai/characters/6acb14cda305f4d2da554073/detail'   // '크랙에서 대화하기' 버튼 주소
