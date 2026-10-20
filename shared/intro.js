@@ -193,7 +193,6 @@ function boot(name) {
   E.mount(K);
 }
 
-
 // ===== 시안: 총알 · 지문 · 봉랍 · 잉크 =====
 reg('bullet', { hint: '화면을 터치하면 입장합니다', mount(K) {
   K.css('ix-bullet', `.intro-bullet { cursor:crosshair; }`);
@@ -254,7 +253,6 @@ reg('seal', { hint: '봉인을 눌러 편지를 여세요', mount(K) {
   K.card.insertBefore(s, document.getElementById('ix-hint'));
   s.addEventListener('click', () => K.go(async () => { K.SFX.crack(); s.classList.add('broken'); K.hint('— 봉인 해제 —'); await K.wait(650); K.hideCard(0); await K.split(); }));
 } });
-
 
 // ================= 묶음 1 · 종이·기록 =================
 
@@ -484,7 +482,6 @@ reg('key', { look: 'clear', card: false,
     if (Math.abs(deg) >= 90) { phase = 2; ring.classList.remove('on'); K.SFX.clack(); step(3); K.go(async () => { await K.wait(500); await K.split(900); }); } });
 } });
 
-
 // ================= 묶음 2 · 신비·판타지 =================
 
 // 9. 물에 비친 글씨 — 수면에 거꾸로 비친 제목이 일렁이고, 터치하면 파문이 퍼진 뒤 글씨가 바로 섬
@@ -668,7 +665,6 @@ reg('moon', { look: 'dark', cardPos: 'top', hint: '옆으로 밀어(또는 눌�
     if (n >= STEPS) { done = true; K.hint('보름달이 떴어요'); K.SFX.chime([784, 988, 1175, 1568, 1976], .12); K.go(async () => { await K.wait(1600); K.flash('#FFF6DA', 700, .7); await K.fade(700); }); } };
   K.drag(K.gw, { end: (x, y, dx, dy) => { if (Math.abs(dx) > 30 || (Math.abs(dx) < 8 && Math.abs(dy) < 8)) step(); } });
 } });
-
 
 // ================= 묶음 3 · 감성·로맨스 =================
 
@@ -894,7 +890,6 @@ reg('heartbeat', { look: 'clear', cardPos: 'top', input: false, hint: '고리가
     else K.hint('고리가 하트에 닿는 순간 톡!'); });
 } });
 
-
 // ================= 묶음 4 · 미스터리·스릴러 =================
 
 // 29. 수사 보드 — 코르크 보드의 핀을 번호 순서대로 빨간 실로 이으면 사건 파일이 열림 (번호·점선 안내로 쉽게)
@@ -1079,7 +1074,6 @@ reg('glass', { look: 'clear', hint: '화면을 세 번 터치해 보세요 · 0/
   });
 } });
 
-
 // ================= 묶음 5 · 놀이·장치 =================
 
 // 37. 도미노 — 첫 도미노를 톡 밀면 줄줄이 쓰러지며 마지막에 종이 울림
@@ -1262,7 +1256,6 @@ reg('light', { look: 'clear', cardPos: 'bottom', input: false, hint: '전등 줄
     K.go(async () => { await K.wait(1400); await K.fade(800); }); };
 } });
 
-
 // ================= 묶음 6 · 시각 연출 =================
 
 // 45. 이름이 빛으로 — 적은 이름이 빛 알갱이로 흩어졌다가 작품 제목으로 다시 모임
@@ -1385,7 +1378,6 @@ reg('pagecurl', { look: 'clear', card: false, mount(K) {
   const turn = () => { done = true; grabbing = false; K.SFX.page(); anim = { t: performance.now(), a: P, b: [-K.W, -K.H * .4], done: () => {} }; tip.remove(); K.go(async () => { await K.wait(750); await K.fade(300); }); };
 } });
 
-
 // ================= 묶음 7 · 에디토리얼 (사진·타이포 중심, 절제된 연출) =================
 
 // 46. 베일 — 흐릿한 베일 너머의 표지 사진. 길게 누르면 베일이 걷히며 선명해지고, 그대로 첫 화면으로 이어짐
@@ -1429,8 +1421,8 @@ reg('veil', { look: 'paper', card: false, mount(K) {
   .vl-hold.on span { transform:scale(.92); }
   .vl-hold:focus-visible { outline:1px solid var(--gold-ink); outline-offset:6px; }
   .vl-hint { margin:14px 0 0; min-height:1.6em; font:13px/1.6 var(--f-text,"Gowun Batang"),serif; color:var(--muted,var(--ink)); letter-spacing:.04em; word-break:keep-all; transition:opacity .3s; }
-  .vl-in > * { opacity:0; transform:translateY(10px); animation:vlin 1.1s cubic-bezier(.2,.7,.2,1) forwards; }
-  @keyframes vlin { to { opacity:1; transform:none; } }
+  .vl-in > * { animation:vlin 1.1s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes vlin { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
   @media (prefers-reduced-motion: reduce) { .vl-in > * { animation-duration:.01s; } .vl-light { animation:none; } }
   `);
   const R = 37, CIRC = 2 * Math.PI * R;
@@ -1482,7 +1474,6 @@ reg('veil', { look: 'paper', card: false, mount(K) {
   if (!touched) setTimeout(() => { if (!touched && !done) hint.animate([{ opacity: 1 }, { opacity: .35 }, { opacity: 1 }], { duration: 1800, iterations: 2 }); }, 4500);
 } });
 
-
 // 47. 채색 기도서 — 금박 머리글자·붉은 글씨·덩굴 테두리의 양피지 기도서. 봉랍을 길게 눌러 떼면 금박이 반짝이고 책장이 넘어감
 //     글귀 바꾸기(data.js page): introPrayer: ['첫 줄', '둘째 줄'] · introKicker · introTitle
 reg('psalter', { look: 'paper', card: false, mount(K) {
@@ -1533,7 +1524,7 @@ reg('psalter', { look: 'paper', card: false, mount(K) {
   .intro-psalter .ix-sound { top:12px; right:auto; left:16px; bottom:auto; z-index:31; font:12px "Gowun Batang",serif; color:#6A5A44; opacity:1; min-height:32px; }
   .intro-psalter .ix-sound input { width:14px; height:14px; accent-color:#A3242B; }
   .ps-shade { position:absolute; inset:0; pointer-events:none; background:linear-gradient(90deg, rgba(60,40,15,0), rgba(60,40,15,.35)); opacity:0; z-index:40; }
-  .ps-in > * { opacity:0; animation:psin 1.2s cubic-bezier(.2,.7,.2,1) forwards; }
+  .ps-in > * { animation:psin 1.2s cubic-bezier(.2,.7,.2,1) both; }   /* 기본은 보이는 상태 · '동작 줄이기' 폰에서도 글이 나오게 */
   @keyframes psin { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
   @keyframes psshine { from { background-position:0% 0; } to { background-position:100% 0; } }
   .ps-shine .ps-init b { animation:psshine 1.1s ease-in-out forwards; }
@@ -1610,7 +1601,6 @@ reg('psalter', { look: 'paper', card: false, mount(K) {
   };
   setTimeout(() => { if (!done && !holding && k === 0) seal.animate([{ transform: 'none' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(4deg)' }, { transform: 'none' }], { duration: 700 }); }, 4200);
 } });
-
 
 // ===== 시작 =====
 const q = new URLSearchParams(location.search).get('intro');

@@ -25,7 +25,7 @@ const $ = id => document.getElementById(id);
     $('hero-media').classList.remove('hidden'); document.body.classList.add('has-hero');
     if (p.heroCaption) { $('hero-caption').textContent = '— ' + p.heroCaption; $('hero-caption').classList.remove('hidden'); }
   }
-  if (p.heroVideo && !matchMedia('(prefers-reduced-motion: reduce)').matches) {   // 움직이는 표지(mp4): 소리 없이 반복 재생. 재생이 안 되면 heroImage 사진이 그대로 보임
+  if (p.heroVideo) {   // 휴대폰의 '애니메이션 효과 제거' 설정과 상관없이 항상 재생   // 움직이는 표지(mp4): 소리 없이 반복 재생. 재생이 안 되면 heroImage 사진이 그대로 보임
     const m = $('hero-media'), v = document.createElement('video');
     Object.assign(v, { src: p.heroVideo, muted: true, loop: true, autoplay: true, playsInline: true, preload: 'auto' });
     v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.setAttribute('aria-hidden', 'true'); if (p.heroImage) v.poster = p.heroImage;
