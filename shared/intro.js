@@ -193,6 +193,7 @@ function boot(name) {
   E.mount(K);
 }
 
+
 // ===== 시안: 총알 · 지문 · 봉랍 · 잉크 =====
 reg('bullet', { hint: '화면을 터치하면 입장합니다', mount(K) {
   K.css('ix-bullet', `.intro-bullet { cursor:crosshair; }`);
@@ -253,6 +254,7 @@ reg('seal', { hint: '봉인을 눌러 편지를 여세요', mount(K) {
   K.card.insertBefore(s, document.getElementById('ix-hint'));
   s.addEventListener('click', () => K.go(async () => { K.SFX.crack(); s.classList.add('broken'); K.hint('— 봉인 해제 —'); await K.wait(650); K.hideCard(0); await K.split(); }));
 } });
+
 
 // ================= 묶음 1 · 종이·기록 =================
 
@@ -482,6 +484,7 @@ reg('key', { look: 'clear', card: false,
     if (Math.abs(deg) >= 90) { phase = 2; ring.classList.remove('on'); K.SFX.clack(); step(3); K.go(async () => { await K.wait(500); await K.split(900); }); } });
 } });
 
+
 // ================= 묶음 2 · 신비·판타지 =================
 
 // 9. 물에 비친 글씨 — 수면에 거꾸로 비친 제목이 일렁이고, 터치하면 파문이 퍼진 뒤 글씨가 바로 섬
@@ -665,6 +668,7 @@ reg('moon', { look: 'dark', cardPos: 'top', hint: '옆으로 밀어(또는 눌�
     if (n >= STEPS) { done = true; K.hint('보름달이 떴어요'); K.SFX.chime([784, 988, 1175, 1568, 1976], .12); K.go(async () => { await K.wait(1600); K.flash('#FFF6DA', 700, .7); await K.fade(700); }); } };
   K.drag(K.gw, { end: (x, y, dx, dy) => { if (Math.abs(dx) > 30 || (Math.abs(dx) < 8 && Math.abs(dy) < 8)) step(); } });
 } });
+
 
 // ================= 묶음 3 · 감성·로맨스 =================
 
@@ -890,6 +894,7 @@ reg('heartbeat', { look: 'clear', cardPos: 'top', input: false, hint: '고리가
     else K.hint('고리가 하트에 닿는 순간 톡!'); });
 } });
 
+
 // ================= 묶음 4 · 미스터리·스릴러 =================
 
 // 29. 수사 보드 — 코르크 보드의 핀을 번호 순서대로 빨간 실로 이으면 사건 파일이 열림 (번호·점선 안내로 쉽게)
@@ -1074,6 +1079,7 @@ reg('glass', { look: 'clear', hint: '화면을 세 번 터치해 보세요 · 0/
   });
 } });
 
+
 // ================= 묶음 5 · 놀이·장치 =================
 
 // 37. 도미노 — 첫 도미노를 톡 밀면 줄줄이 쓰러지며 마지막에 종이 울림
@@ -1256,6 +1262,7 @@ reg('light', { look: 'clear', cardPos: 'bottom', input: false, hint: '전등 줄
     K.go(async () => { await K.wait(1400); await K.fade(800); }); };
 } });
 
+
 // ================= 묶음 6 · 시각 연출 =================
 
 // 45. 이름이 빛으로 — 적은 이름이 빛 알갱이로 흩어졌다가 작품 제목으로 다시 모임
@@ -1378,6 +1385,7 @@ reg('pagecurl', { look: 'clear', card: false, mount(K) {
   const turn = () => { done = true; grabbing = false; K.SFX.page(); anim = { t: performance.now(), a: P, b: [-K.W, -K.H * .4], done: () => {} }; tip.remove(); K.go(async () => { await K.wait(750); await K.fade(300); }); };
 } });
 
+
 // ================= 묶음 7 · 에디토리얼 (사진·타이포 중심, 절제된 연출) =================
 
 // 46. 베일 — 흐릿한 베일 너머의 표지 사진. 길게 누르면 베일이 걷히며 선명해지고, 그대로 첫 화면으로 이어짐
@@ -1473,6 +1481,7 @@ reg('veil', { look: 'paper', card: false, mount(K) {
       await K.wait(420); await K.fade(900); }); };
   if (!touched) setTimeout(() => { if (!touched && !done) hint.animate([{ opacity: 1 }, { opacity: .35 }, { opacity: 1 }], { duration: 1800, iterations: 2 }); }, 4500);
 } });
+
 
 // 47. 채색 기도서 — 금박 머리글자·붉은 글씨·덩굴 테두리의 양피지 기도서. 봉랍을 길게 눌러 떼면 금박이 반짝이고 책장이 넘어감
 //     글귀 바꾸기(data.js page): introPrayer: ['첫 줄', '둘째 줄'] · introKicker · introTitle
@@ -1581,17 +1590,18 @@ reg('psalter', { look: 'paper', card: false, mount(K) {
   K.loop(dt => { if (done) return false; const nk = K.clamp(k + (holding ? dt / HOLD : -dt / .5), 0, 1); if (nk !== k) { k = nk; apply(); } if (k >= 1) finish(); });
   const finish = () => { done = true; holding = false; hint.textContent = '';
     const u = document.getElementById('username'); if (u) u.value = nameEl.value.trim();
-    K.SFX.crack(); K.SFX.page();
-    // 봉랍이 두 조각으로 갈라져 떨어짐
-    const r = seal.getBoundingClientRect();
-    [['inset(0 50% 0 0)', -1], ['inset(0 0 0 50%)', 1]].forEach(([clip, sd]) => {
-      const h = K.el(`<div class="ps-half" style="position:fixed;left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;clip-path:${clip};z-index:35">${sealSVG}</div>`, K.gw);
-      h.querySelector('svg').style.cssText = 'width:100%;height:100%;filter:drop-shadow(0 6px 6px rgba(70,10,10,.3))';
-      h.querySelector('.ps-crack').style.strokeDashoffset = 0;
-      h.animate([{ transform: 'none', opacity: 1 }, { transform: `translate(${sd * 34}px, 60px) rotate(${sd * 28}deg)`, opacity: 1, offset: .6 }, { transform: `translate(${sd * 48}px, 140px) rotate(${sd * 40}deg)`, opacity: 0 }], { duration: K.RM ? 150 : 1100, easing: 'cubic-bezier(.3,0,.7,1)', fill: 'forwards' }); });
-    seal.style.visibility = 'hidden'; col.querySelector('.ps-cord') && (col.querySelector('.ps-cord').style.visibility = 'hidden');
+    K.SFX.crack();
+    // 봉랍이 금빛으로 스르륵 사라짐
+    seal.animate([
+      { opacity: 1, filter: 'drop-shadow(0 3px 3px rgba(70,10,10,.35)) brightness(1)', transform: 'none' },
+      { opacity: .7, filter: 'drop-shadow(0 5px 4px rgba(217,189,114,.5)) brightness(1.2)', transform: 'scale(.98)', offset: .4 },
+      { opacity: .2, filter: 'drop-shadow(0 2px 2px rgba(217,189,114,.8)) brightness(1.5)', transform: 'scale(.96)', offset: .8 },
+      { opacity: 0, filter: 'drop-shadow(0 0px 0px rgba(217,189,114,0)) brightness(1.8)', transform: 'scale(.94)' }
+    ], { duration: K.RM ? 280 : 1400, easing: 'cubic-bezier(.25,.5,.35,1)', fill: 'forwards' });
+    const cord = col.querySelector('.ps-cord'); if (cord) cord.animate([{ opacity: 1 }, { opacity: 0 }], { duration: K.RM ? 280 : 1400, easing: 'cubic-bezier(.25,.5,.35,1)', fill: 'forwards' });
     K.go(async () => {
-      K.gw.classList.add('ps-shine'); await K.wait(900);
+      await K.wait(K.RM ? 300 : 1500);
+      K.gw.classList.add('ps-shine');
       // 책장이 왼쪽으로 넘어가며 기록 페이지가 드러남
       const sh = K.el(`<div class="ps-shade"></div>`, K.gw); K.SFX.page();
       sh.animate([{ opacity: 0 }, { opacity: 1 }], { duration: K.RM ? 150 : 1100, fill: 'forwards' });
@@ -1600,6 +1610,7 @@ reg('psalter', { look: 'paper', card: false, mount(K) {
   };
   setTimeout(() => { if (!done && !holding && k === 0) seal.animate([{ transform: 'none' }, { transform: 'rotate(-5deg)' }, { transform: 'rotate(4deg)' }, { transform: 'none' }], { duration: 700 }); }, 4200);
 } });
+
 
 // ===== 시작 =====
 const q = new URLSearchParams(location.search).get('intro');
