@@ -26,7 +26,7 @@ window.ARCHIVE = {
       '이단자로 찍혀 감옥에 갇힌 후 자애를 잃었다',
       '기도는 이제 그들의 것. 성녀의 기도는 당신만을 향한다'
     ],
-    footer: '© ROUINK PROJECT HUB. ALL RIGHTS RESERVED.'
+    footer: '© 2026 페르르. ALL RIGHTS RESERVED.\nAll designs, code, images and text on this site are protected by copyright. Any unauthorized copying, distribution or reuse is strictly prohibited.'   // 맨 아래 저작권 고지 (\n = 줄바꿈)
   },
   config: {
     bgm: 'assets/music/main.mp3'                // 메인 음악 (첫 화면~스크롤)
