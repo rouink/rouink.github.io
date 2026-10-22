@@ -1,6 +1,6 @@
 /*! © 2026 페르르. All rights reserved. 무단 복제·배포·재사용 금지 */
-(()=>{let m=window.ARCHIVE||{},x=(m.page||{}).secretVault;if(x&&x.code){let l=String(x.code).replace(/\D/g,""),v=l.length||4,e=m.page&&m.page.playerColor||"#A8102A",p=matchMedia("(prefers-reduced-motion: reduce)").matches,d=t=>String(null==t?"":t).replace(/[&<>"']/g,t=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[t]),s="pa_vault_"+location.pathname,c={get(){try{return localStorage.getItem(s)}catch{return null}},set(t){try{localStorage.setItem(s,t)}catch{}}},g=(x.photos||[]).filter(t=>t&&t.img),t=document.getElementById("gallery");if(t){var f=t.closest("section");if(f){var u=document.createElement("style"),u=(u.textContent=`
-.sv{--sv:${e};padding:72px 24px 8px;max-width:520px;margin:0 auto}
+(()=>{let u=window.ARCHIVE||{},x=(u.page||{}).secretVault;if(x&&x.code){let d=String(x.code).replace(/\D/g,""),c=d.length||4,t=u.page&&u.page.playerColor||"#A8102A",p=matchMedia("(prefers-reduced-motion: reduce)").matches,g=e=>String(null==e?"":e).replace(/[&<>"']/g,e=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[e]),s="pa_vault_"+location.pathname,m={get(){try{return localStorage.getItem(s)}catch{return null}},set(e){try{localStorage.setItem(s,e)}catch{}}},h=(x.photos||[]).filter(e=>e&&e.img),f=x.laugh||{};f.img&&((new Image).src=f.img);var b=document.getElementById("gallery");if(b){b=b.closest("section");if(b){var y=document.createElement("style"),y=(y.textContent=`
+.sv{--sv:${t};padding:72px 24px 8px;max-width:520px;margin:0 auto}
 .sv .sv-head{text-align:center}
 .sv .sv-title{font-family:var(--f-display,serif);font-weight:400;font-size:34px;line-height:1.1;margin:10px 0 0;color:var(--ink)}
 .sv .sv-sub{margin:8px 0 0;font-size:13.5px;line-height:1.7;color:var(--muted);word-break:keep-all}
@@ -24,6 +24,24 @@
 .sv .sv-hint p{margin:0;font-size:13.5px;line-height:1.65;color:var(--ink);word-break:keep-all}
 .sv .sv-hint em{font:600 18px var(--f-title,serif);font-style:normal;font-variant-numeric:lining-nums;letter-spacing:.12em;color:var(--sv)}
 .sv .sv-hint small{display:block;margin-top:4px;font:italic 500 13px var(--f-title,serif);color:var(--muted)}
+.sv .sv-laugh{display:flex;gap:14px;align-items:center;max-width:340px;margin:12px auto 0;padding:10px;background:#FBFBFA;border:1px solid var(--line);border-left:2px solid var(--sv);box-shadow:0 10px 30px rgb(var(--shade,20 21 24) / .10);opacity:0;transform:translateY(6px);transition:opacity .7s ease,transform .7s ease}
+.sv .sv-laugh.on{opacity:1;transform:none}
+.sv .sv-laugh[hidden]{display:none}
+.sv .sv-laugh img{flex:none;width:96px;aspect-ratio:4/3;object-fit:cover;object-position:50% 25%;display:block}
+.sv .sv-laugh p{margin:0;font-size:13.5px;line-height:1.65;color:var(--ink);word-break:keep-all}
+.sv .sv-laugh small{display:block;margin-top:4px;font:italic 500 13px var(--f-title,serif);color:var(--muted)}
+.sv .sv-frame img{transition:opacity .45s ease}
+.sv .sv-frame img.fade{opacity:0}
+.sv .sv-frame{touch-action:pan-y}
+.sv .sv-line{transition:opacity .45s ease}
+.sv .sv-line.fade{opacity:0}
+.sv .sv-dots{display:flex;justify-content:center;gap:8px;margin-top:14px}
+.sv .sv-dots i{width:6px;height:6px;border:1px solid var(--muted);transform:rotate(45deg);transition:background .3s,border-color .3s}
+.sv .sv-dots i.seen{border-color:var(--sv)}
+.sv .sv-dots i.cur{background:var(--sv);border-color:var(--sv)}
+.sv .sv-fin{margin:18px 0 0;text-align:center;font:italic 500 14px var(--f-title,serif);color:var(--sv);opacity:0;transition:opacity 1s ease;word-break:keep-all}
+.sv .sv-fin.on{opacity:1}
+.sv .sv-fin[hidden]{display:none}
 .sv .sv-open{max-width:420px;margin:0 auto;opacity:0;transform:translateY(8px);transition:opacity .9s ease,transform .9s ease}
 .sv .sv-open.on{opacity:1;transform:none}
 .sv .sv-open[hidden]{display:none}
@@ -37,24 +55,27 @@
 .sv .sv-nav button,.sv .sv-relock{border:0;background:none;padding:8px 6px;font-size:12.5px;color:var(--muted);cursor:pointer}
 .sv .sv-relock{display:block;margin:16px auto 0;text-decoration:underline;text-underline-offset:3px}
 @media (prefers-reduced-motion:reduce){.sv *{transition-duration:.01s!important}}
-`,document.head.appendChild(u),`<svg class="sv-seal" id="sv-seal" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="sv-arc" d="M50 50 m-35 0 a35 35 0 1 1 70 0 a35 35 0 1 1 -70 0"/></defs>
-  <circle cx="50" cy="50" r="46" fill="${e}" opacity=".9"/><circle cx="50" cy="50" r="41" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".8"/>
+`,document.head.appendChild(y),`<svg class="sv-seal" id="sv-seal" viewBox="0 0 100 100" aria-hidden="true"><defs><path id="sv-arc" d="M50 50 m-35 0 a35 35 0 1 1 70 0 a35 35 0 1 1 -70 0"/></defs>
+  <circle cx="50" cy="50" r="46" fill="${t}" opacity=".9"/><circle cx="50" cy="50" r="41" fill="none" stroke="#fff" stroke-opacity=".55" stroke-width=".8"/>
   <text font-size="8.5" letter-spacing="3.2" fill="#fff" fill-opacity=".8" font-family="serif"><textPath href="#sv-arc">AURORA · CONTRACT · SEALED ·</textPath></text>
-  <text x="50" y="57" text-anchor="middle" font-size="22" font-style="italic" fill="#fff" font-family="serif">S.Y.</text></svg>`),h=document.createElement("section");h.dataset.page=f.dataset.page||"2",h.className="sv",h.id="secret-vault",h.innerHTML=`
-  <div class="sv-head"><p class="label">Secret · The Vault</p><h2 class="sv-title">${d(x.title||"비밀 금고")}</h2>${x.sub?`<p class="sv-sub">${d(x.sub)}</p>`:""}<div class="sv-orn"></div></div>
+  <text x="50" y="57" text-anchor="middle" font-size="22" font-style="italic" fill="#fff" font-family="serif">S.Y.</text></svg>`),k=document.createElement("section");k.dataset.page=b.dataset.page||"2",k.className="sv",k.id="secret-vault",k.innerHTML=`
+  <div class="sv-head"><p class="label">Secret · The Vault</p><h2 class="sv-title">${g(x.title||"비밀 금고")}</h2>${x.sub?`<p class="sv-sub">${g(x.sub)}</p>`:""}<div class="sv-orn"></div></div>
   <div id="sv-lock">
     <div class="sv-doc" id="sv-doc">
-      ${x.article?`<p class="sv-art">${d(x.article)}</p>`:""}
-      ${x.clause?`<p class="sv-clause">${d(x.clause)}</p>`:""}
-      <label class="sv-digits" id="sv-digits">${"<span></span>".repeat(v)}<input id="sv-in" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="${v}" autocomplete="off" aria-label="계약 번호 ${v}자리"></label>
-      ${x.sign?`<p class="sv-sign">${d(x.sign)}</p>`:""}
-      ${u}
+      ${x.article?`<p class="sv-art">${g(x.article)}</p>`:""}
+      ${x.clause?`<p class="sv-clause">${g(x.clause)}</p>`:""}
+      <label class="sv-digits" id="sv-digits">${"<span></span>".repeat(c)}<input id="sv-in" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="${c}" autocomplete="off" aria-label="계약 번호 ${c}자리"></label>
+      ${x.sign?`<p class="sv-sign">${g(x.sign)}</p>`:""}
+      ${y}
     </div>
     <p class="sv-again" id="sv-again" aria-live="polite"></p>
     <div class="sv-hint" id="sv-hint" hidden role="status"></div>
+    <div class="sv-laugh" id="sv-laugh" hidden role="status"></div>
   </div>
-  <div class="sv-open" id="sv-open" hidden></div>`,f.after(h);let s=t=>document.getElementById(t),a=s("sv-in"),t=[...s("sv-digits").children].filter(t=>"SPAN"===t.tagName),i=0,n=!1,o=0,r=()=>{let s=a.value;t.forEach((t,e)=>{t.textContent=s[e]||"",t.classList.toggle("cur",document.activeElement===a&&e===Math.min(s.length,v-1))})};function b(t){var e=g[t];s("sv-open").innerHTML=e?`
-    <div class="sv-frame"><img src="${d(e.img)}" alt="시크릿 사진 ${t+1}" loading="lazy"><span class="sv-tag">SECRET ${String(t+1).padStart(2,"0")}</span></div>
-    ${e.line?`<p class="sv-line">${d(e.line)}</p>`:""}<p class="sv-by">— ${d((Object.values(m.characters||{})[0]||{}).nameEn||"")}</p>
-    ${1<g.length?`<div class="sv-nav"><button type="button" data-d="-1">← 이전</button><span class="label" style="align-self:center">${t+1} / ${g.length}</span><button type="button" data-d="1">다음 →</button></div>`:""}
-    <button type="button" class="sv-relock" id="sv-relock">금고 다시 잠그기</button>`:`<p class="sv-line">${d(x.empty||"아직 비어 있어.")}</p><button type="button" class="sv-relock" id="sv-relock">금고 다시 잠그기</button>`}function y(t){b(o=0),s("sv-lock").hidden=!0;let e=s("sv-open");e.hidden=!1,t&&!p?requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("on"))):e.classList.add("on")}a.addEventListener("input",()=>{n||(a.value=a.value.replace(/\D/g,"").slice(0,v),s("sv-digits").classList.remove("bad"),r(),a.value.length===v&&(n=!0,a.value===l?(a.blur(),s("sv-again").textContent="",s("sv-hint").hidden=!0,s("sv-seal").classList.add("on"),setTimeout(()=>{c.set("1"),y(!0)},p?200:1300)):(i++,s("sv-digits").classList.add("bad"),setTimeout(()=>{if(a.value="",r(),n=!1,1===i&&x.hint){let t=s("sv-hint"),e=d(x.hint).replace(new RegExp(l),`<em>${l}</em>`);t.innerHTML=`<p>${e}</p>`+(x.hintBy?`<small>— ${d(x.hintBy)}</small>`:""),t.hidden=!1,requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add("on"))),s("sv-again").textContent=""}else s("sv-again").textContent=x.again||"틀렸어. 다시."},p?150:650))))}),a.addEventListener("focus",r),a.addEventListener("blur",r),s("sv-open").addEventListener("click",t=>{var e=t.target.closest("[data-d]");e?b(o=(o+ +e.dataset.d+g.length)%g.length):t.target.closest("#sv-relock")&&(c.set(""),s("sv-open").hidden=!0,s("sv-open").classList.remove("on"),s("sv-lock").hidden=!1,s("sv-seal").classList.remove("on"),a.value="",i=0,n=!1,s("sv-hint").hidden=!0,s("sv-hint").classList.remove("on"),r())}),"1"===c.get()&&y(!1),r()}}}})();
+  <div class="sv-open" id="sv-open" hidden></div>`,b.after(k);let o=e=>document.getElementById(e),a=o("sv-in"),e=[...o("sv-digits").children].filter(e=>"SPAN"===e.tagName),i=0,n=!1,s=0,r=0,l=()=>{let s=a.value;e.forEach((e,t)=>{e.textContent=s[t]||"",e.classList.toggle("cur",document.activeElement===a&&t===Math.min(s.length,c-1))})},v=(a.addEventListener("input",()=>{n||(a.value=a.value.replace(/\D/g,"").slice(0,c),o("sv-digits").classList.remove("bad"),l(),a.value.length===c&&(n=!0,a.value===d?(a.blur(),o("sv-again").textContent="",o("sv-hint").hidden=!0,o("sv-laugh").hidden=!0,o("sv-seal").classList.add("on"),setTimeout(()=>{m.set("1"),$(!0)},p?200:1300)):(i++,o("sv-digits").classList.add("bad"),setTimeout(()=>{if(a.value="",l(),n=!1,1===i&&x.hint){let e=o("sv-hint"),t=g(x.hint).replace(new RegExp(d),`<em>${d}</em>`);e.innerHTML=`<p>${t}</p>`+(x.hintBy?`<small>— ${g(x.hintBy)}</small>`:""),e.hidden=!1,requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("on"))),o("sv-again").textContent=""}else if(f.img&&i===(f.at||4)){let e=o("sv-laugh");e.innerHTML=`<img src="${g(f.img)}" alt=""><div><p>${g(f.line||"")}</p>${f.by?`<small>— ${g(f.by)}</small>`:""}</div>`,e.hidden=!1,requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("on"))),o("sv-again").textContent=""}else{var e=x.wrong||[],t=e.length,s=r++;o("sv-again").textContent=t?s<t?e[s]:e[t<2?0:t-2+(s-t)%2]:x.again||"틀렸어. 다시."}},p?150:650))))}),a.addEventListener("focus",l),a.addEventListener("blur",l),new Set);function w(i,t){let n=h[i];if(n){let s=o("sv-img"),a=o("sv-line"),e=()=>{s.src=n.img,s.alt="시크릿 사진 "+(i+1),o("sv-tag").textContent="SECRET "+String(i+1).padStart(2,"0")+(1<h.length?" / "+String(h.length).padStart(2,"0"):""),a.textContent=n.line||"",a.style.display=n.line?"":"none",o("sv-count")&&(o("sv-count").textContent=i+1+" / "+h.length),v.add(i),o("sv-dots")&&[...o("sv-dots").children].forEach((e,t)=>{e.classList.toggle("cur",t===i),e.classList.toggle("seen",v.has(t))});let e=o("sv-fin");e&&v.size===h.length&&e.hidden&&(e.hidden=!1,requestAnimationFrame(()=>requestAnimationFrame(()=>e.classList.add("on"))));var t=h[(i+1)%h.length];t&&((new Image).src=t.img),s.classList.remove("fade"),a.classList.remove("fade")};t&&!p&&s.getAttribute("src")?(s.classList.add("fade"),a.classList.add("fade"),setTimeout(e,420)):e()}}function L(e){h.length<2||w(s=(s+e+h.length)%h.length,!0)}function $(e){s=0;var i=o("sv-open");if(h.length){let e=(Object.values(u.characters||{})[0]||{}).nameEn||"",t=(i.innerHTML=`
+    <div class="sv-frame" id="sv-frame"><img id="sv-img" alt=""><span class="sv-tag" id="sv-tag"></span></div>
+    <p class="sv-line" id="sv-line"></p><p class="sv-by">— ${g(e)}</p>
+    ${1<h.length?`<div class="sv-dots" id="sv-dots" aria-hidden="true">${"<i></i>".repeat(h.length)}</div>
+    <div class="sv-nav"><button type="button" data-d="-1">← 이전</button><span class="label" style="align-self:center" id="sv-count"></span><button type="button" data-d="1">다음 →</button></div>`:""}
+    ${x.finale&&1<h.length?`<p class="sv-fin" id="sv-fin" hidden>${g(x.finale)}</p>`:""}
+    <button type="button" class="sv-relock" id="sv-relock">금고 다시 잠그기</button>`,o("sv-frame")),s=null,a=0;t.addEventListener("touchstart",e=>{s=e.touches[0].clientX,a=e.touches[0].clientY},{passive:!0}),t.addEventListener("touchend",e=>{var t;null!=s&&(t=e.changedTouches[0].clientX-s,e=e.changedTouches[0].clientY-a,s=null,40<Math.abs(t))&&Math.abs(t)>1.3*Math.abs(e)&&L(t<0?1:-1)},{passive:!0})}else i.innerHTML=`<p class="sv-line">${g(x.empty||"아직 비어 있어.")}</p><button type="button" class="sv-relock" id="sv-relock">금고 다시 잠그기</button>`;w(0,!1),o("sv-lock").hidden=!0;let t=o("sv-open");t.hidden=!1,e&&!p?requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add("on"))):t.classList.add("on")}document.addEventListener("keydown",e=>{var t,s=o("sv-open");s.hidden||/INPUT|TEXTAREA|SELECT/.test((document.activeElement||{}).tagName||"")||"ArrowLeft"!==e.key&&"ArrowRight"!==e.key||(t=s.getBoundingClientRect()).bottom<0||t.top>innerHeight||!s.offsetParent||L("ArrowRight"===e.key?1:-1)}),o("sv-open").addEventListener("click",e=>{var t=e.target.closest("[data-d]");t?L(+t.dataset.d):e.target.closest("#sv-relock")&&(m.set(""),o("sv-open").hidden=!0,o("sv-open").classList.remove("on"),o("sv-lock").hidden=!1,o("sv-seal").classList.remove("on"),a.value="",i=0,r=0,n=!1,o("sv-hint").hidden=!0,o("sv-hint").classList.remove("on"),o("sv-laugh").hidden=!0,o("sv-laugh").classList.remove("on"),o("sv-again").textContent="",o("sv-digits").classList.remove("bad"),l())}),"1"===m.get()&&$(!1),l()}}}})();
