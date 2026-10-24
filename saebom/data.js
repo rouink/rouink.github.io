@@ -20,7 +20,7 @@ window.ARCHIVE = {
       name: '단골 이름', namePh: '이름 적어 줘',
       sign: "SAEBOM · FLOWERS DON'T LIE"
     },
-    fonts: { display: 'Diphylleia', intro: 'Diphylleia', title: 'Cormorant Garamond', text: 'Gowun Batang' },
+    fonts: { display: 'Diphylleia', intro: 'Diphylleia', title: 'Cormorant Garamond', text: 'Noto Serif KR' },
     guestName: '단골',                               // 이름을 안 적었을 때 주문서·인생 두컷에 들어가는 이름
     hunt: {                                          // 숨은 장치: 갤러리 사진에 몰래 꽂아 둔 물망초 다섯 송이 (shared/flower-hunt.js)
       spots: [                                       // gi = 갤러리 순서(0부터) · x, y = 사진 안 위치(%)
@@ -39,7 +39,7 @@ window.ARCHIVE = {
       ],
       head: 'MULMANG · UNDER THE COUNTER',
       title: '꽃말 장부',
-      sub: '3년 동안, 네 꽃다발에 몰래 꽂아 둔 꽃.',
+      sub: '3년 동안, 당신의 꽃다발에 몰래 꽂아 둔 꽃.',
       rows: [
         { d: '23.10.27', f: '물망초', m: '나를 잊지 마요' },
         { d: '24.02.16', f: '스위트피', m: '추억' },
@@ -194,11 +194,11 @@ window.ARCHIVE = {
       '스물여섯, 광고회사 야근 끝에 할머니의 부고를 들었다. 장례식장에서 받은 건 열쇠 꾸러미 하나와, 시든 물망초가 꽂힌 빈 가게였다. 그녀는 다음 날 사표를 냈다.',
       '개업 첫날 비가 왔다. 손님은 한 명이었고, 그 사람은 아무 꽃이나 달라고 했다. 그녀는 아무 꽃이 아닌 걸 골랐다. 그 뒤로 3년, 장부 맨 아래 칸은 늘 같은 날짜, 같은 시간으로 채워졌다.'
     ],
-    items:[                                          // 소지품 (선 그림 아이콘, assets/items/*.svg)
-      { img:'assets/items/scissors.svg', title:'할머니의 꽃가위', desc:'손잡이가 닳아 손가락 모양이 남았다. 줄기를 사선으로 자르는 버릇도 같이 물려받았다. 네 꽃만은 한 번 더 다듬는다.' },
-      { img:'assets/items/ledger.svg', title:'카운터 아래 꽃말 장부', desc:'날짜와 꽃 이름만 적힌 얇은 노트. 받는 사람 칸은 3년째 비어 있다. 누가 물으면 재고 장부라고 한다.' },
-      { img:'assets/items/ribbon.svg', title:'레몬색 리본', desc:'네 꽃다발만 두 번 감는다. 매듭이 하나 더 있다는 건, 그냥 실수라고 해 두자.' },
-      { img:'assets/items/apron.svg', title:'닳은 앞치마', desc:'오른쪽 주머니 안쪽에 작은 물망초 자수가 있다. 직접 놓았고, 아무에게도 보여 준 적 없다.' }
+    items:[                                          // 소지품 (사진 assets/items/*.webp)
+      { img:'assets/items/scissors.webp', title:'할머니의 꽃가위', desc:'붉은 칠이 벗겨진 손잡이에 손가락 모양이 남았다. 줄기를 사선으로 자르는 버릇도 같이 물려받았다. 당신의 꽃만은 한 번 더 다듬는다.' },
+      { img:'assets/items/ledger.webp', title:'카운터 아래 꽃말 장부', desc:'날짜와 꽃 이름만 적힌 얇은 노트. 받는 사람 칸은 3년째 비어 있다. 누가 물으면 재고 장부라고 한다.' },
+      { img:'assets/items/ribbon.webp', title:'레몬색 리본', desc:'당신의 꽃다발만 두 번 감는다. 매듭이 하나 더 있다는 건, 그냥 실수라고 해 두자.' },
+      { img:'assets/items/apron.webp', title:'닳은 앞치마', desc:'오른쪽 주머니 안쪽에 작은 물망초 자수가 있다. 직접 놓았고, 아무에게도 보여 준 적 없다.' }
     ],
     gallery:[                                      // 페이지 II 갤러리 (가로 4:3)
       { img:'assets/gallery/saebom_01_calm.webp', label:'기본', desc:'어서 와요. …아, 너구나.' },
