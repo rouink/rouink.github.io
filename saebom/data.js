@@ -229,7 +229,7 @@ window.ARCHIVE = {
     music:'assets/music/theme.mp3',                 // 테마곡 — 기록 팝업이 열려 있을 때만 재생
     portrait:'assets/portrait.webp',               // 기록 카드·팝업 사진 (금빛 미소)
     booth:['assets/booth/char1_1.png', 'assets/booth/char1_2.png'],  // 인생 두컷용 배경 투명 PNG (1컷 반가움, 2컷 윙크)
-    crack:''                                        // '크랙에서 대화하기' 버튼 주소 (발행하면 넣기)
+    crack:'https://crack.wrtn.ai/characters/6adc427b87237d1436a5c8e2/detail'   // '크랙에서 대화하기' 버튼 주소
   }
   }
 };
