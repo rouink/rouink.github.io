@@ -48,10 +48,12 @@ window.ARCHIVE = {
         { d: '26.01.09', f: '빨간 튤립', m: '사랑의 고백' },
         { d: '26.10.23', f: '노란 장미', m: '~~질투~~ 고백할 꽃…?' }
       ],
-      video: 'assets/secret/ribbon.mp4', poster: 'assets/secret/ribbon.jpg',
+      poster: 'assets/gallery/saebom_14_wink.webp',     // 장부 아래 사진 (윙크 · 둘만의 비밀). 리본 영상은 기록 팝업에서 씀
       line: '받는 사람 칸이 왜 3년째 비어 있었는지, 이제 알겠지?',
       by: '— 온새봄, 장부 맨 아래 칸에',
-      reopen: '꽃말 장부 다시 보기'
+      reopen: '꽃말 장부 다시 보기',
+      hint: '찾은 물망초',                              // 갤러리 위 작은 표시 (뒤에 '0 / 5'가 붙음). 사진을 크게 봐도 꽃이 보임
+      hintDone: '다섯 송이 다 찾았네 · 장부는 갤러리 맨 아래'
     },
     bouquet: {                                       // 3페이지 맨 아래 '꽃다발 주문서' (shared/bouquet.js)
       label: 'Florist', title: '꽃다발 주문서', sub: '고른 꽃과 이름은 내 기기에서만 처리돼요.',
@@ -227,6 +229,7 @@ window.ARCHIVE = {
     ],
     themeTitle:'Butterflies and Bad Intentions',   // 테마곡 제목 (기록 팝업에 나옴)
     music:'assets/music/theme.mp3',                 // 테마곡 — 기록 팝업이 열려 있을 때만 재생
+    video:'assets/secret/ribbon.mp4', poster:'assets/secret/ribbon.jpg',   // 기록 팝업 위 영상 (리본 · 고개 갸웃 미소) · 비우면 사진만
     portrait:'assets/portrait.webp',               // 기록 카드·팝업 사진 (금빛 미소)
     booth:['assets/booth/char1_1.png', 'assets/booth/char1_2.png'],  // 인생 두컷용 배경 투명 PNG (1컷 반가움, 2컷 윙크)
     crack:'https://crack.wrtn.ai/characters/6adc427b87237d1436a5c8e2/detail'   // '크랙에서 대화하기' 버튼 주소
