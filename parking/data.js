@@ -22,7 +22,7 @@ window.ARCHIVE = {
       namePh: '적지 않아도 돼요', enter: '기록 보기',
       sign: 'GO JI-SEO · DAWN ON DUTY'
     },
-    fonts: { display: 'Hahmlet', intro: 'Hahmlet', title: 'Sometype Mono', text: 'Gowun Batang' },
+    fonts: { display: 'Hahmlet', intro: 'Hahmlet', title: 'Sometype Mono', text: 'IBM Plex Sans KR' },
     heroLabel: 'Chapter Ⅰ · 07:50',
     heroTitle: '고지서',
     heroSub: 'Dawn on Duty',
@@ -158,7 +158,7 @@ window.ARCHIVE = {
     }
   },
 
-  config: { bgm: '' },                               // 음악 파일이 생기면 'assets/music/main.mp3'
+  config: { bgm: 'assets/music/main.mp3' },                               // Seven AM Arrival
 
   characters: {
     char1: {
@@ -192,13 +192,13 @@ window.ARCHIVE = {
         '스물넷, 구청 주정차 단속 자리에 지원했다. 규칙은 사람을 이름으로 보지 않는다. 번호판과 시간과 자리만 본다. 그게 좋았다. 가방 안쪽 주머니에는 3년째 접힌 종이가 한 장 있다. 무슨 종이인지는 아직 아무도 모른다.'
       ],
       items: [
-        { img: 'assets/items/terminal.svg', title: '단속 단말기', desc: '사진 두 장 사이엔 언제나 10분. 규정이라서요. …마지막 한 장은, 늘 같은 번호판.' },
-        { img: 'assets/items/pen.svg', title: '볼펜', desc: '잉크가 떨어지기 전에 바꾼다. 아침은 기다려 주지 않으니까.' },
-        { img: 'assets/items/badge.svg', title: '뒤집힌 명찰', desc: '앞면엔 사진과 이름. 그래서 늘 뒷면이 보이게 단다. 팀장님 지적, 이번 달만 네 번.' },
-        { img: 'assets/items/form.svg', title: '접힌 서류 한 장', desc: '가방 안쪽 주머니, 3년째 같은 자리. 칸은 다 채웠고, 날짜만 비어 있다.' }
+        { img: 'assets/items/terminal.webp', title: '단속 단말기', desc: '사진 두 장 사이엔 언제나 10분. 규정이라서요. …마지막 한 장은, 늘 같은 번호판.' },
+        { img: 'assets/items/pen.webp', title: '볼펜', desc: '잉크가 떨어지기 전에 바꾼다. 아침은 기다려 주지 않으니까.' },
+        { img: 'assets/items/badge.webp', title: '단속원증', desc: '앞면엔 사진과 이름. 그래서 늘 뒷면이 보이게 단다. 팀장님 지적, 이번 달만 네 번.' },
+        { img: 'assets/items/form.webp', title: '접힌 서류 한 장', desc: '가방 안쪽 주머니, 3년째 같은 자리. 칸은 다 채웠고, 날짜만 비어 있다.' }
       ],
-      themeTitle: '',
-      music: '',
+      themeTitle: 'Two Shoes in the Pantry',
+      music: 'assets/music/theme.mp3',
       portrait: 'assets/portrait.webp',
       booth: ['assets/booth/char1_1.png', 'assets/booth/char1_2.png'],   // 인생 두컷 1컷 원칙 · 2컷 옅은 미소
       crack: '',                                     // 크랙 공개 후 주소를 넣어요
