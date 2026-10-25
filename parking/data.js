@@ -201,7 +201,7 @@ window.ARCHIVE = {
       music: 'assets/music/theme.mp3',
       portrait: 'assets/portrait.webp',
       booth: ['assets/booth/char1_1.png', 'assets/booth/char1_2.png'],   // 인생 두컷 1컷 원칙 · 2컷 옅은 미소
-      crack: '',                                     // 크랙 공개 후 주소를 넣어요
+      crack: 'https://crack.wrtn.ai/characters/6add9e46799d63485a56628c/detail',                                     // 크랙 공개 후 주소를 넣어요
       gallery: [
         { img: 'assets/gallery/g01_duty.webp', label: '07:50, 1장', desc: '오늘도 같은 자리. 단말기가 먼저 움직인다.' },
         { img: 'assets/gallery/g02_glare.webp', label: '9분 50초', desc: '두 번째 사진 직전. 이 눈을 보면 다들 뛰어나온다.' },
