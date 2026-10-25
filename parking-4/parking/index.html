@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>고지서 — Dawn on Duty</title>
+<meta name="description" content="상가 골목, 아침 7시 50분. 사진 한 장, 10분, 또 한 장. 스물두 장째인데 당신은 아직 그녀의 이름을 모른다. 명찰은 늘 뒤집혀 있다.">
+<!-- 카톡·SNS 링크 미리보기 (제목·설명·사진) -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GO JI-SEO · DAWN ON DUTY">
+<meta property="og:title" content="고지서 — Dawn on Duty">
+<meta property="og:description" content="상가 골목, 아침 7시 50분. 사진 한 장, 10분, 또 한 장. 스물두 장째인데 당신은 아직 그녀의 이름을 모른다. 명찰은 늘 뒤집혀 있다.">
+<meta property="og:url" content="https://rouink.github.io/parking/">
+<meta property="og:image" content="https://rouink.github.io/parking/assets/og.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#F3F0E8">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='5' y='4' width='14' height='17' rx='2.4' fill='%231E2942'/%3E%3Crect x='9' y='2' width='6' height='3.4' rx='1' fill='%23C9F03A'/%3E%3Crect x='8' y='15' width='8' height='1.6' fill='%23C9F03A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- 글꼴: 모두 SIL 오픈 폰트 라이선스 (상업 이용 가능, 출처 표기 의무 없음) -->
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;700;800&family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=Sometype+Mono:wght@400;500&family=Cinzel:wght@400;700&family=Cinzel+Decorative:wght@700&family=Song+Myung&display=swap" rel="stylesheet">
+<script src="data.js?v=3"></script>
+<script src="../shared/fonts.js?v=3"></script>
+<script>(function(){var t=(window.ARCHIVE&&ARCHIVE.page&&ARCHIVE.page.theme)||'cream';document.documentElement.setAttribute('data-theme',t);})();</script>
+<link rel="stylesheet" href="../shared/archive.css?v=3">
+<link rel="stylesheet" href="theme.css?v=2">
+</head>
+<body>
+
+<!-- 1. 입장 화면 (기본 classic · 다른 효과는 shared/intro.js 가 이 자리를 바꿔 그림) -->
+<div id="gateway">
+  <div class="gate">
+    <p class="label">Confidential Archive</p>
+    <h1 class="hero-title" id="gate-title">기록실 입장</h1>
+    <div class="orn" aria-hidden="true"><i></i></div>
+    <p class="sub">이름을 남기고 기록실로 들어오세요.</p>
+    <input type="text" id="username" class="line-input" placeholder="이름을 입력하세요" maxlength="10" aria-label="이름" autocomplete="off">
+    <div class="acts">
+      <button type="button" id="btn-bgm-on" class="btn solid">음악과 함께 입장</button>
+      <button type="button" id="btn-bgm-off" class="quiet">조용히 입장</button>
+    </div>
+  </div>
+</div>
+
+<script>(function(){var g=document.getElementById('gateway'),P=(window.ARCHIVE&&ARCHIVE.page)||{},q=new URLSearchParams(location.search).get('intro');if(q?q==='badge':P.intro==='badge'){g.style.background='#F3F0E8';g.firstElementChild.style.visibility='hidden';setTimeout(function(){if(!g.classList.contains('bd'))g.firstElementChild.style.visibility='';},4000);}})();</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink-edge"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feDisplacementMap in="SourceGraphic" scale="9"/></filter></svg>
+<audio id="main-bgm" loop preload="none"></audio>
+
+<!-- 2. 메인 -->
+<div id="main-view" class="opacity-0 translate-y-4">
+  <header class="topbar">
+    <span id="nav-brand" class="brand">Project Archive</span>
+    <span class="user"><i aria-hidden="true"></i><span id="nav-user-label">GUEST</span></span>
+  </header>
+
+  <main>
+    <!-- 페이지 I · 표지 -->
+    <section data-page="1" class="hero" id="hero">
+      <div class="hero-media hidden" id="hero-media">
+        <img id="hero-img" alt="">
+        <p class="hero-caption hidden" id="hero-caption"></p>
+      </div>
+      <div class="hero-text">
+        <p id="hero-label" class="label">Chapter I</p>
+        <h1 id="hero-title" class="hero-title">작품 A</h1>
+        <p id="hero-sub" class="hero-sub hidden"></p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+
+    <section data-page="1" class="sec fade-up">
+      <div class="sec-head"><p class="label" id="world-label">Ⅰ · The World</p></div>
+      <p id="hero-text" class="prose"></p>
+    </section>
+
+    <section data-page="1" class="fade-up" style="padding-top:56px">
+      <div class="sec-head center" style="padding:0 30px" id="cast-head">
+        <p class="label">Ⅱ · The Characters</p>
+        <h2 class="sec-title">등장인물 기록</h2>
+      </div>
+      <!-- 카드는 data.js 의 characters 에서 자동 생성 (한 명이면 큰 기록 카드) -->
+      <div id="character-grid"></div>
+      <div id="page-song"></div>
+    </section>
+
+    <section data-page="1" class="quote fade-up hidden" id="page-quote"><p id="page-quote-text"></p><small id="page-quote-by"></small></section>
+
+    <!-- 페이지 II · 갤러리 -->
+    <section data-page="2" class="sec fade-up" style="padding-top:40px">
+      <div class="sec-head center">
+        <p class="label">Page Ⅱ · Mornings</p>
+        <h2 id="gallery-title" class="sec-title">표정 갤러리</h2>
+        <p id="gallery-sub" class="sec-sub">크랙에서는 잠겨 있는 이미지를 여기서 먼저 만나 보세요.</p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <section data-page="2" class="fade-up" style="padding-top:28px"><div id="gallery" class="gal"></div></section>
+
+    <!-- 페이지 III · 기념주화 제작소 -->
+    <section data-page="3" class="sec fade-up" style="padding-top:40px">
+      <div class="sec-head center">
+        <p class="label">Page Ⅲ · Atelier</p>
+        <h2 class="sec-title">기념주화 제작소</h2>
+        <p class="sec-sub">입력한 이름과 사진은 내 기기에서만 처리돼요.</p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <section data-page="3" class="fade-up" style="padding-top:28px">
+      <div class="studio">
+        <div class="stage-wrap"><div class="coin-stage"><canvas id="coin-canvas" width="900" height="900" aria-label="기념주화 미리보기"></canvas></div></div>
+        <div class="ctrl">
+          <div class="field">
+            <span class="label">Shape</span>
+            <div class="seg" id="shape-group" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <button type="button" data-shape="card" class="opt-btn">Photocard</button>
+              <button type="button" data-shape="can" class="opt-btn">Can Badge</button>
+              <button type="button" data-shape="shield" class="opt-btn">Shield</button>
+              <button type="button" data-shape="deco" class="opt-btn">Deco</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Finish</span>
+            <div class="seg" id="metal-group" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+              <button type="button" data-metal="gold" class="opt-btn">Gold</button>
+              <button type="button" data-metal="rose" class="opt-btn">Rose</button>
+              <button type="button" data-metal="silver" class="opt-btn">Platinum</button>
+              <button type="button" data-metal="aurora" class="opt-btn">Aurora</button>
+            </div>
+          </div>
+          <div class="field" id="photo-style-row">
+            <span class="label">Photo Style</span>
+            <div class="seg" id="photo-group" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <button type="button" data-photo="color" class="opt-btn">Full Color</button>
+              <button type="button" data-photo="relief" class="opt-btn">Engraved</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="coin-name-input" class="label">Engraving Name</label>
+            <input type="text" id="coin-name-input" class="line-input" placeholder="새길 이름을 입력하세요" maxlength="10">
+          </div>
+          <input type="file" id="coin-avatar-upload" accept="image/*" class="hidden">
+          <div class="row">
+            <button type="button" id="btn-upload" class="btn" style="flex:0 0 36%">사진 올리기</button>
+            <button type="button" id="btn-download" class="btn solid">만들어 저장하기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 페이지 III · 인생 두컷 -->
+    <section data-page="3" class="sec fade-up" style="padding-top:72px">
+      <div class="sec-head center">
+        <p class="label">Photo Booth</p>
+        <h2 class="sec-title">인생 두컷</h2>
+        <p class="sec-sub">올린 사진은 내 기기에서만 처리돼요.</p>
+        <div class="orn" aria-hidden="true"><i></i></div>
+      </div>
+    </section>
+    <section data-page="3" class="fade-up" style="padding-top:28px">
+      <div class="studio">
+        <div class="stage-wrap"><canvas id="booth-canvas" width="600" height="1500" aria-label="인생 두컷 미리보기" style="height:min(560px,62vh);width:auto;aspect-ratio:600/1500;touch-action:pan-y"></canvas></div>
+        <div class="ctrl">
+          <div class="field" id="booth-char-row">
+            <span class="label">Character</span>
+            <div class="seg" id="booth-char-group"></div>
+          </div>
+          <div class="field">
+            <span class="label">Frame</span>
+            <div class="seg" id="booth-frame-group" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+              <button type="button" data-bframe="gold" class="opt-btn">Gold</button>
+              <button type="button" data-bframe="rose" class="opt-btn">Rose</button>
+              <button type="button" data-bframe="silver" class="opt-btn">Platinum</button>
+              <button type="button" data-bframe="aurora" class="opt-btn">Aurora</button>
+            </div>
+          </div>
+          <div class="field">
+            <span class="label">Background</span>
+            <div class="seg" id="booth-bg-group" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+              <button type="button" data-bbg="sunset" class="opt-btn">Sunset</button>
+              <button type="button" data-bbg="night" class="opt-btn">Night</button>
+              <button type="button" data-bbg="sakura" class="opt-btn">Sakura</button>
+              <button type="button" data-bbg="sky" class="opt-btn">Sky</button>
+              <button type="button" data-bbg="studio" class="opt-btn">Studio</button>
+              <button type="button" data-bbg="holo" class="opt-btn">Holo</button>
+            </div>
+            <p id="booth-bg-status" class="note" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <span class="label">Character Side</span>
+            <div class="seg" id="booth-side-group" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+              <button type="button" data-bside="left" class="opt-btn">Left</button>
+              <button type="button" data-bside="right" class="opt-btn">Right</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="booth-zoom" class="label">Photo Size · <span id="booth-sel">CUT 01</span></label>
+            <input type="range" id="booth-zoom" min="50" max="180" value="100">
+            <button type="button" id="booth-move" aria-pressed="false" class="opt-btn kr">사진 옮기기 · 꺼짐</button>
+            <p class="note">사진 옮기기를 켜면 미리보기에서 사진을 끌어 옮길 수 있어요. 다 옮겼으면 꺼 주세요. 켜져 있는 동안은 미리보기 위에서 스크롤이 멈춰요.</p>
+          </div>
+          <p id="booth-step" class="note" style="color:var(--ink2)" aria-live="polite"></p>
+          <input type="file" id="booth-upload" accept="image/*" class="hidden">
+          <div class="row">
+            <button type="button" id="booth-upload-btn" class="btn"></button>
+            <button type="button" id="booth-reset" class="btn ghost" style="flex:0 0 30%">다시</button>
+          </div>
+          <button type="button" id="booth-download" class="btn solid block" disabled>인화해서 저장하기</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer">© 2026 페르르. ALL RIGHTS RESERVED.</footer>
+</div>
+
+<!-- 하단 메뉴 바 -->
+<div id="player" class="hidden">
+  <p id="audio-notice" class="hidden"></p>
+  <button type="button" id="audio-btn" aria-pressed="false" aria-label="음악 켜기/끄기">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg>
+    <span id="audio-state">OFF</span>
+  </button>
+  <nav id="page-nav" aria-label="페이지 이동">
+    <button type="button" data-goto="1" class="page-tab"><span class="num">Ⅰ</span><span class="page-label">기록</span></button>
+    <button type="button" data-goto="2" class="page-tab"><span class="num">Ⅱ</span><span class="page-label">갤러리</span></button>
+    <button type="button" data-goto="3" class="page-tab"><span class="num">Ⅲ</span><span class="page-label">제작소</span></button>
+  </nav>
+  <label class="vol"><span class="sr-only">볼륨</span><input type="range" id="vol" min="0" max="100" step="1"></label>
+  <span id="ticker-text" class="sr-only"></span>
+  <span id="audio-track" class="sr-only" aria-live="polite"></span>
+</div>
+
+<!-- 갤러리 크게 보기 -->
+<div id="gviewer" class="hidden" role="dialog" aria-modal="true" aria-label="이미지 크게 보기">
+  <button type="button" id="gv-close" class="iconbtn" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button type="button" id="gv-prev" class="iconbtn" aria-label="이전"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button type="button" id="gv-next" class="iconbtn" aria-label="다음"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+  <figure>
+    <div class="fr"><img id="gv-img" alt=""></div>
+    <figcaption><p id="gv-count"></p><p id="gv-label"></p><p id="gv-desc"></p></figcaption>
+  </figure>
+</div>
+
+<!-- 3. 캐릭터 기록 (팝업) -->
+<div id="char-modal" role="dialog" aria-modal="true" aria-labelledby="modal-name" class="hidden opacity-0">
+  <div id="modal-panel" class="scale-95">
+    <button type="button" id="modal-close" class="iconbtn" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div id="modal-scroll">
+      <div class="m-media">
+        <img id="modal-portrait" alt="" class="hidden">
+        <video id="modal-video" loop muted playsinline></video>
+        <div id="modal-video-fallback" class="hidden">Video coming soon</div>
+      </div>
+      <div class="m-body">
+        <div class="m-head">
+          <p id="modal-subtitle" class="label"></p>
+          <h2 id="modal-name"></h2>
+          <p id="modal-name-en"></p>
+          <div id="modal-tags" class="tags"></div>
+          <div class="orn" aria-hidden="true"><i></i></div>
+        </div>
+        <p id="modal-desc"></p>
+        <div class="m-sec"><span class="label">Profile</span><ul id="modal-specs" class="spec"></ul></div>
+        <div class="m-sec" id="modal-extra"></div>
+        <div class="m-sec"><span class="label">TMI</span><div id="modal-tmi" class="acc-wrap"></div></div>
+        <div class="m-sec"><span class="label">History</span>
+          <div class="acc-wrap"><details class="acc"><summary>지나온 이야기 펼쳐 보기</summary><div id="modal-story" class="ans"></div></details></div>
+        </div>
+        <div class="m-sec">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="label">What's in My Bag</span><span id="modal-inv-count" class="label" style="color:var(--muted);letter-spacing:.2em"></span></div>
+          <div id="modal-inv" class="inv"></div>
+        </div>
+        <div class="m-sec m-song">
+          <span class="disc" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/></svg></span>
+          <div><span id="modal-theme-label" class="label" style="font-size:11px"></span><p id="modal-theme"></p></div>
+        </div>
+        <a id="modal-crack" href="#" target="_blank" rel="noopener" class="btn solid block hidden">크랙에서 대화하기</a>
+        <nav id="modal-nav" aria-label="캐릭터 이동">
+          <button type="button" id="modal-prev" style="text-align:left"><span class="label">← Prev</span><span id="modal-prev-name"></span></button>
+          <button type="button" id="modal-next" style="text-align:right"><span class="label">Next →</span><span id="modal-next-name"></span></button>
+        </nav>
+      </div>
+    </div>
+    <div id="lightbox" class="hidden" role="dialog" aria-label="아이템 상세">
+      <div class="lb-card">
+        <button type="button" id="lightbox-close" class="iconbtn" aria-label="닫기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        <div id="lightbox-icon" aria-hidden="true"></div>
+        <h3 id="lightbox-title"></h3>
+        <p id="lightbox-desc"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 작품 내용은 data.js, 공통 기능은 shared/archive.js -->
+<script src="../shared/archive.js?v=3"></script>
+<script src="../shared/presence.js?v=3"></script>
+<!-- 이 작품 전용 (parking 폴더 안) -->
+<script src="js/badge.js?v=2"></script>
+<script src="js/duty.js?v=1"></script>
+<script src="js/notice.js?v=1"></script>
+</body>
+</html>
