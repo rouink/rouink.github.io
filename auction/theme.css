@@ -270,3 +270,59 @@
 @media (prefers-reduced-motion: reduce) { .hz-dial .rot, .hz-card .ph img, .hz-status .bar i { transition:none !important; } }
 
 [data-theme="auction"] h1, [data-theme="auction"] h2, [data-theme="auction"] h3, [data-theme="auction"] p, [data-theme="auction"] b, [data-theme="auction"] .hz-secret * { word-break:keep-all; overflow-wrap:break-word; }
+
+/* 기록 팝업: 소지품 번호표 · TMI */
+[data-theme="auction"] #modal-inv .ic:not(.im) { font-family:var(--f-mono); font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--mus); }
+
+/* ── 상태 줄 4칸 · 보일러 버튼 · 2등의 차 ── */
+.hz-status .in { grid-template-columns:repeat(2, minmax(0,1fr)); }
+.hz-status .cell:nth-child(odd) { padding-left:0; border-left:0; }
+.hz-status .cell:nth-child(n+3) { border-top:1px solid var(--line); }
+.hz-boil { display:inline-block; margin-top:10px; padding:7px 12px; border:1px solid rgba(217,166,46,.6); font-family:var(--f-text); font-size:12.5px; font-weight:700; letter-spacing:-.01em; color:var(--mus); transition:background .35s var(--ez), color .35s var(--ez); }
+.hz-boil:hover, .hz-boil:focus-visible { background:var(--mus); color:#16110C; outline:none; }
+.hz-alert { grid-column:1 / -1; display:flex; align-items:center; gap:12px; padding:14px 0; border-top:1px solid var(--line); font-size:14.5px; color:var(--ink2); }
+.hz-alert .dot { flex:none; width:8px; height:8px; border-radius:50%; background:var(--mus); box-shadow:0 0 0 0 rgba(217,166,46,.5); animation:hzPing 2.4s var(--ez) infinite; }
+.hz-alert .tx { flex:1; min-width:0; word-break:keep-all; }
+.hz-alert button { flex:none; padding:8px 14px; border:1px solid rgba(243,236,225,.35); font-size:13px; font-weight:700; color:var(--ink); transition:background .35s var(--ez), color .35s var(--ez); }
+.hz-alert button:hover, .hz-alert button:focus-visible { background:var(--ink); color:var(--bg); outline:none; }
+@keyframes hzPing { 0% { box-shadow:0 0 0 0 rgba(217,166,46,.5); } 70%,100% { box-shadow:0 0 0 10px rgba(217,166,46,0); } }
+
+/* ── 오버레이 (창밖 보기) ── */
+.hz-ov { position:fixed; inset:0; z-index:90; display:flex; align-items:center; justify-content:center; padding:22px; background:rgba(10,8,6,.86); opacity:0; transition:opacity .5s var(--ez); }
+.hz-ov.on { opacity:1; }
+.hz-ov .card { width:min(520px, 100%); padding:18px 18px 22px; background:#15110E; border:1px solid rgba(217,166,46,.4); transform:translateY(14px); transition:transform .7s var(--ez); }
+.hz-ov.on .card { transform:none; }
+.hz-ov img { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+.hz-ov .tag { margin-top:16px; font-family:var(--f-mono); font-size:10.5px; letter-spacing:.24em; color:var(--mus); }
+.hz-ov .ln { margin-top:10px; font-family:var(--f-display); font-weight:700; font-size:clamp(20px, 5.4vw, 24px); line-height:1.45; letter-spacing:-.04em; color:var(--ink); word-break:keep-all; }
+.hz-ov .btn { margin-top:18px; width:100%; }
+
+/* ── 하루 한 장 영수증 ── */
+.hz-count { margin-top:14px; font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; color:var(--muted); }
+.hz-count b { font-family:var(--f-text); font-size:13px; font-weight:700; letter-spacing:0; color:var(--mus); margin-right:6px; }
+.rcpt.daily .tape { background:rgba(217,166,46,.85); }
+.rcpt .nw { position:absolute; right:12px; top:14px; padding:3px 7px; background:#110E0C; color:var(--mus); font-family:var(--f-mono); font-size:9.5px; letter-spacing:.18em; }
+
+/* ── 다음 물건 임장 노트 ── */
+.hz-next { display:grid; gap:18px; }
+.hz-next .lot { position:relative; padding:22px 22px 24px; background:var(--cream); color:#2B2420; box-shadow:0 22px 50px rgba(0,0,0,.4); }
+.hz-next .lot::before { content:''; position:absolute; inset:0; pointer-events:none; opacity:.45; background-image:linear-gradient(rgba(43,36,32,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(43,36,32,.05) 1px, transparent 1px); background-size:22px 22px; }
+.hz-next .top { position:relative; display:flex; justify-content:space-between; align-items:center; font-family:var(--f-mono); font-size:11px; letter-spacing:.16em; color:rgba(43,36,32,.6); }
+.hz-next .st { padding:4px 8px; border:1.5px solid #A0701A; color:#A0701A; font-size:10px; letter-spacing:.12em; transform:rotate(-3deg); }
+.hz-next .kind { position:relative; margin-top:14px; font-family:var(--f-display); font-weight:800; font-size:24px; letter-spacing:-.045em; line-height:1.3; word-break:keep-all; }
+.hz-next .r { position:relative; display:flex; justify-content:space-between; margin-top:10px; padding-top:10px; border-top:1px dashed rgba(43,36,32,.25); font-family:var(--f-mono); font-size:13px; }
+.hz-next .pen { position:relative; margin-top:16px; font-family:var(--f-pen); font-size:26px; line-height:1.15; color:#A26F12; transform:rotate(-2deg); word-break:keep-all; }
+.hz-next-end { margin-top:34px; font-family:var(--f-pen); font-size:clamp(28px, 7.6vw, 40px); line-height:1.2; color:var(--mus); text-align:center; word-break:keep-all; }
+.hz-next-end:empty { display:none; }
+@media (min-width:900px) {
+  .hz-status .in { grid-template-columns:repeat(4, minmax(0,1fr)); }
+  .hz-status .cell:nth-child(n) { padding-left:14px; border-left:1px solid var(--line); border-top:0; }
+  .hz-status .cell:first-child { padding-left:0; border-left:0; }
+  .hz-next { grid-template-columns:repeat(3, 1fr); gap:24px; }
+  .hz-next .lot:nth-child(2) { transform:translateY(18px) rotate(.6deg); }
+  .hz-next .lot:nth-child(3) { transform:rotate(-.6deg); }
+}
+@media (prefers-reduced-motion: reduce) { .hz-alert .dot { animation:none; } .hz-ov, .hz-ov .card { transition:none; } }
+.hz-boil-note { display:block; margin-top:8px; font-family:var(--f-pen); font-size:20px; line-height:1; color:var(--mus); transform:rotate(-2deg); transform-origin:left; }
+.rcpt.old { display:none; }
+.hz-more { display:block; margin:6px auto 0; padding:12px 22px; font-size:14px; }

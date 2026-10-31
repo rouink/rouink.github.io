@@ -1,6 +1,8 @@
 /* 주인하 — 이 집 (auction 전용 · shared 파일을 고치지 않음)
    표지 로고 · 지금 상태 줄 · 세계관 · 평면도(방을 누르면 장면) · 영수증 수첩(소지품+TMI) · 이사비 협상 다이얼 · 철벽 게이지 · 보일러(밤)
-   data.js page.house 에 값을 적으면 켜져요.  미리보기: ?hour=23 (밤) · ?visit=5 · ?wall=40 */
+   + 보일러 켜 주기 · 하루 한 장 영수증 · 이자 날 D-n · 2등의 차 · 다음 물건 임장 노트
+   data.js page.house 에 값을 적으면 켜져요.
+   미리보기: ?hour=23 (밤) · ?visit=5 · ?wall=40 · ?days=7 (영수증 장수) · ?iday=0 (이자 날까지 남은 날) · ?car=1 (2등의 차) */
 (() => {
 const D = window.ARCHIVE || {}, P = D.page || {}, H = P.house, API = window.ARCHIVE_API;
 if (!H || !API) return;
@@ -22,12 +24,21 @@ st.deals = st.deals || 0; st.stay = st.stay || 0;
 const hNow = q.get('hour') != null && q.get('hour') !== '' ? +q.get('hour') : new Date().getHours();
 const night = hNow >= 22 || hNow < 5;
 
+/* ── 하루 기준: 새벽 5시에 날이 바뀐다 (밤 22~5시는 같은 밤) ── */
+const dkey = () => { const d = new Date(Date.now() - 5 * 3600e3); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+const today = dkey();
+st.days = Array.isArray(st.days) ? st.days : [];
+const firstToday = !st.days.includes(today);
+if (firstToday) { st.days.push(today); if (st.days.length > 60) st.days = st.days.slice(-60); save(); }
+const B = H.boiler || {};
+st.boilerN = st.boilerN || 0;
+
 /* ── 철벽 ── */
 const W = H.wall || {};
 const visit = +q.get('visit') || +ls.get('pa_visit_' + location.pathname) || 1;
 function wallNow() {
   if (q.get('wall') != null && q.get('wall') !== '') return Math.max(0, Math.min(100, +q.get('wall')));
-  const v = (W.start || 100) - (W.perVisit || 6) * (visit - 1) - Math.min(30, (W.perDeal || 2) * st.deals) - Math.min(40, (W.perStay || 2) * Math.floor(st.stay / (W.staySec || 180)));
+  const v = (W.start || 100) - (W.perVisit || 6) * (visit - 1) - Math.min(30, (W.perDeal || 2) * st.deals) - Math.min(40, (W.perStay || 2) * Math.floor(st.stay / (W.staySec || 180))) - Math.min(B.max || 20, (B.perOn || 4) * st.boilerN);
   return Math.max(0, Math.min(100, Math.round(v)));
 }
 let wall = wallNow();
@@ -49,11 +60,23 @@ if (heroText) {
 /* ── 2. 지금 상태 줄 ── */
 const L = H.statusLabels || {};
 const pad = n => String(n).padStart(2, '0');
+const I = H.interest || {}, Cc = H.car || null;
+const dLeft = (() => {
+  if (q.get('iday') != null && q.get('iday') !== '') return Math.max(0, +q.get('iday'));
+  if (!I.day) return null;
+  const n = new Date(Date.now() - 5 * 3600e3), t0 = new Date(n.getFullYear(), n.getMonth(), n.getDate());
+  let t = new Date(n.getFullYear(), n.getMonth(), Math.min(I.day, new Date(n.getFullYear(), n.getMonth() + 1, 0).getDate()));
+  if (t < t0) t = new Date(n.getFullYear(), n.getMonth() + 1, Math.min(I.day, new Date(n.getFullYear(), n.getMonth() + 2, 0).getDate()));
+  return Math.round((t - t0) / 864e5);
+})();
+const carOn = !!Cc && (q.get('car') === '1' || (q.get('car') !== '0' && Math.random() < (Cc.chance || .2)));
 const status = document.createElement('section'); status.setAttribute('data-page', '1'); status.className = 'hz-status';
 status.innerHTML = `<div class="in">
   <div class="cell"><span class="k">${esc(L.wall || '철벽')}</span><b class="v" id="hz-wall">${wall}%</b><div class="bar"><i id="hz-wall-bar" style="transform:scaleX(${wall / 100})"></i></div></div>
   <div class="cell"><span class="k">${esc(L.fee || '이사비')}</span><b class="v" id="hz-fee">₩${(st.last != null ? st.last : (H.dealStart || 200))}만</b></div>
-  <div class="cell"><span class="k" id="hz-clock">${pad(hNow)}:${pad(new Date().getMinutes())}</span><b class="v${night ? ' off' : ''}">${esc(night ? (H.boilerOff || '보일러 OFF') : (H.boilerOn || '보일러 ON'))}</b></div>
+  <div class="cell"><span class="k" id="hz-clock">${pad(hNow)}:${pad(new Date().getMinutes())}</span><b class="v${night && st.boilerLast !== today ? ' off' : ''}" id="hz-boil-v">${esc(night ? (st.boilerLast === today ? (B.on || '보일러 ON') : (H.boilerOff || '보일러 OFF')) : (H.boilerOn || '보일러 ON'))}</b>${night && B.btn && st.boilerLast !== today ? `<button type="button" class="hz-boil" id="hz-boil">${esc(B.btn)}</button>` : ''}${night && st.boilerLast === today && B.onNote ? `<span class="hz-boil-note">${esc(B.onNote)}</span>` : ''}</div>
+  ${I.day ? `<div class="cell"><span class="k">${esc(I.label || '이자일')}</span><b class="v${dLeft === 0 ? ' off' : ''}">${dLeft === 0 ? 'D-DAY' : 'D-' + dLeft}</b></div>` : ''}
+  ${carOn ? `<div class="hz-alert"><span class="dot" aria-hidden="true"></span><span class="tx">${esc(Cc.alert || '')}</span><button type="button" id="hz-car">${esc(Cc.btn || '보기')}</button></div>` : ''}
 </div>`;
 const heroSec = $('hero'); if (heroSec) heroSec.after(status);
 
@@ -141,18 +164,28 @@ planSec.querySelector('svg').addEventListener('keydown', e => { const g = e.targ
 showRoom('living');
 
 /* ── 5. 영수증 수첩 (소지품 + TMI) ── */
-const items = C.items || [], tmi = C.tmi || [];
+const items = C.items || [], tmi = C.receiptQA || C.tmi || [];
 const rcSec = document.createElement('section'); rcSec.setAttribute('data-page', '1'); rcSec.className = 'sec fade-up';
 let n = 0; const no = () => `No.${String(++n).padStart(4, '0')}`;
-rcSec.innerHTML = `<div class="sec-head"><div class="hz-rule"><p class="label">${esc(H.rcLabel || 'Receipts')}</p></div><h2 class="sec-title">${two(H.rcTitle || [])}</h2><p class="sec-sub">${esc(H.rcSub || '')}</p></div>
+const DL = H.daily || [];
+const dayCount = Math.min(DL.length, q.get('days') ? +q.get('days') : st.days.length);
+const won = s => +String(s).replace(/[^0-9]/g, '') || 0;
+const dailyHTML = DL.slice(0, dayCount).map((r, i) => ({ r, i })).reverse().map(({ r, i }, k) => `<article class="rcpt daily${k === 0 && (firstToday || q.get('days')) ? ' new' : ''}${k >= 4 ? ' old' : ''}"><span class="tape" aria-hidden="true"></span>${k === 0 && (firstToday || q.get('days')) ? '<span class="nw">TODAY</span>' : ''}<div class="h">${esc(r.shop || '')}</div><div>DAY ${String(i + 1).padStart(2, '0')}</div>
+  ${(r.rows || []).map(([a, b]) => `<div class="r"><span>${esc(a)}</span><span>${esc(b)}</span></div>`).join('')}
+  <div class="t r"><span>합계</span><span>${(r.rows || []).reduce((t, [, b]) => t + won(b), 0).toLocaleString()}</span></div>
+  ${r.memo ? `<p class="memo">${esc(r.memo)}</p>` : ''}<p class="no">D-${String(i + 1).padStart(3, '0')}</p></article>`).join('');
+rcSec.innerHTML = `<div class="sec-head"><div class="hz-rule"><p class="label">${esc(H.rcLabel || 'Receipts')}</p></div><h2 class="sec-title">${two(H.rcTitle || [])}</h2><p class="sec-sub">${esc(H.rcSub || '')}</p>${DL.length ? `<p class="hz-count"><b>${esc(H.dailyLabel || '오늘 붙은 영수증')}</b> ${dayCount} / ${DL.length}</p>` : ''}</div>
 <div class="hz-rc" tabindex="0" aria-label="영수증 수첩">
+${dailyHTML}
 ${items.map(it => `<article class="rcpt"><span class="tape" aria-hidden="true"></span><div class="h">${esc(it.shop || '')}</div><p class="it">${esc(it.title || '')}</p><div>${esc(it.date || '')}</div>
   ${(it.rows || []).map(([a, b]) => `<div class="r"><span>${esc(a)}</span><span>${esc(b)}</span></div>`).join('')}
   ${it.total ? `<div class="t r"><span>합계</span><span>${esc(it.total)}</span></div>` : ''}
   ${it.desc ? `<p class="a" style="font-size:13.5px;margin-top:10px">${esc(it.desc)}</p>` : ''}
   ${it.memo ? `<p class="memo">${esc(it.memo)}</p>` : ''}<p class="no">${no()}</p></article>`).join('')}
 ${tmi.map((t, i) => `<article class="rcpt"><span class="tape" aria-hidden="true"></span><div class="h">Q&amp;A · ${String(i + 1).padStart(3, '0')}</div><p class="q">Q. ${esc(t.q)}</p><p class="a">${esc(t.a)}</p><p class="no">${no()}</p></article>`).join('')}
-</div>`;
+</div>
+${dayCount > 4 ? `<button type="button" class="btn hz-more" id="hz-more">지난 영수증 ${dayCount - 4}장 더 보기</button>` : ''}`;
+rcSec.addEventListener('click', e => { if (e.target.id === 'hz-more') { rcSec.querySelectorAll('.rcpt.old').forEach(x => x.classList.remove('old')); e.target.remove(); } });
 
 /* ── 6. 이사비 협상 ── */
 const MIN = H.dealMin || 0, MAX = H.dealMax || 1000;
@@ -175,7 +208,16 @@ dealSec.innerHTML = `<div class="sec-head"><div class="hz-rule"><p class="label"
     <div class="acts"><button type="button" class="btn solid" id="hz-offer">${esc(H.dealBtn || '부르기')}</button><button type="button" class="btn" id="hz-save" style="flex:0 0 38%">${esc(H.dealSave || '영수증 저장')}</button></div>
   </div>
 </div>`;
-if (castSec) { castSec.after(rcSec); rcSec.after(dealSec); } else { document.querySelector('main').append(rcSec, dealSec); }
+/* ── ⑤ 다음 물건 임장 노트 ── */
+const NX = H.next || [];
+const nextSec = document.createElement('section'); nextSec.setAttribute('data-page', '1'); nextSec.className = 'sec fade-up';
+if (NX.length) nextSec.innerHTML = `<div class="sec-head"><div class="hz-rule"><p class="label">${esc(H.nextLabel || 'Next Lot')}</p></div><h2 class="sec-title">${two(H.nextTitle || [])}</h2><p class="sec-sub">${esc(H.nextSub || '')}</p></div>
+<div class="hz-next">${NX.map(x => `<article class="lot"><div class="top"><span>${esc(x.no || '')}</span><span class="st">임장 예정</span></div><p class="kind">${esc(x.kind || '')}</p>
+  ${(x.price || []).map(([a, b]) => `<div class="r"><span>${esc(a)}</span><span>${esc(b)}</span></div>`).join('')}<p class="pen">${esc(x.pen || '')}</p></article>`).join('')}</div>
+<p class="hz-next-end" id="hz-next-end"></p>`;
+const nextEnd = () => { const el = $('hz-next-end'); if (!el) return; const rows = (H.nextEnd || []).slice().sort((a, b) => b.below - a.below); let t = ''; rows.forEach(r => { if (wall < r.below) t = r.line; }); el.textContent = t; };
+if (castSec) { castSec.after(rcSec); rcSec.after(dealSec); dealSec.after(nextSec); } else { document.querySelector('main').append(rcSec, dealSec, nextSec); }
+nextEnd();
 
 function setVal(v) {
   val = Math.max(MIN, Math.min(MAX, Math.round(v)));
@@ -236,7 +278,7 @@ function secretBlock() {
 }
 function updateWall() {
   const was = wall; wall = wallNow();
-  $('hz-wall').textContent = wall + '%'; $('hz-wall-bar').style.transform = `scaleX(${wall / 100})`;
+  $('hz-wall').textContent = wall + '%'; $('hz-wall-bar').style.transform = `scaleX(${wall / 100})`; nextEnd();
   if (was >= (W.nameAt || 50) && wall < (W.nameAt || 50)) {
     // 50% 아래로: 그녀의 방이 열리고, 이름을 부름 (한 번만)
     const g = planSec.querySelector('[data-room="her"]'); if (g) { g.classList.remove('lock'); const lk = [...g.querySelectorAll('text')].find(t => t.textContent === 'LOCKED'); if (lk) lk.remove(); g.setAttribute('aria-label', (byId.her || {}).name || ''); }
@@ -251,8 +293,33 @@ let lastT = Date.now();
 setInterval(() => { const now = Date.now(); if (!document.hidden && document.documentElement.dataset.in === '1') { st.stay += Math.min(5, (now - lastT) / 1000); if (Math.floor(st.stay) % 10 === 0) { save(); updateWall(); } } lastT = now; }, 1000);
 addEventListener('pagehide', save);
 
-/* ── 8. 기록 팝업: 소지품·TMI 는 영수증 수첩으로 옮겼으니 팝업에서는 숨김 ── */
-['modal-tmi', 'modal-inv'].forEach(id => { const el = $(id), sec = el && el.closest('.m-sec'); if (sec) sec.style.display = 'none'; });
+/* ── 창(오버레이): 2등의 차 ── */
+function overlay(o) {
+  const ov = document.createElement('div'); ov.className = 'hz-ov'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true');
+  ov.innerHTML = `<div class="card"><img src="${esc(o.img)}" alt="${esc(C.name || '')}"><p class="tag">${esc(o.tag || '')}</p><p class="ln">${esc(o.line || '')}</p><button type="button" class="btn">${esc(o.close || '닫기')}</button></div>`;
+  document.body.appendChild(ov); requestAnimationFrame(() => ov.classList.add('on'));
+  const close = () => { ov.classList.remove('on'); setTimeout(() => ov.remove(), RM ? 0 : 500); document.removeEventListener('keydown', k); };
+  const k = e => { if (e.key === 'Escape') close(); };
+  ov.addEventListener('click', e => { if (e.target === ov || e.target.closest('button')) close(); }); document.addEventListener('keydown', k);
+  ov.querySelector('button').focus();
+}
+if (carOn && $('hz-car')) $('hz-car').addEventListener('click', () => overlay(Cc));
+
+/* ── ① 보일러 켜 주기 (밤) ── */
+if ($('hz-boil')) $('hz-boil').addEventListener('click', () => {
+  st.boilerLast = today; st.boilerN++; save();
+  const v = $('hz-boil-v'); v.textContent = B.on || '보일러 ON'; v.classList.remove('off');
+  const nt = document.createElement('span'); nt.className = 'hz-boil-note'; nt.textContent = B.onNote || ''; $('hz-boil').replaceWith(nt); updateWall(); say(B.done);
+});
+
+/* ── ③ 이자 날 장면 ── */
+if (I.day && dLeft === 0 && I.img) {
+  const box = document.createElement('div'); box.className = 'hz-secret hz-iday fade-up in';
+  box.innerHTML = `<img src="${esc(I.img)}" alt="${esc(C.name || '')}" loading="lazy"><div><p class="tag">${esc(I.tag || '')}</p><p style="margin-top:10px">${esc(I.line || '')}</p></div>`;
+  $('hz-secret-slot').prepend(box);
+}
+
+/* ── 8. 기록 팝업: 소지품(영수증 번호표)·TMI 는 팝업에도 그대로 둔다 ── */
 const fv = $('modal-video-fallback'); if (fv) fv.textContent = '';
 
 /* ── 시계 · 들어온 순간 ── */
@@ -260,10 +327,13 @@ setInterval(() => { const d = new Date(), c = $('hz-clock'); if (c && q.get('hou
 function onEnter() {
   document.documentElement.dataset.in = '1';
   if (wall < (W.nameAt || 50) && !st.named) { st.named = 1; save(); setTimeout(() => say(fill(W.low, { name: guest() })), 14000); }
+  // 어젯밤 보일러를 켜 두었다면, 다음 날 묻는다 (한 번만)
+  if (st.boilerLast && st.boilerLast !== today && st.boilerSeen !== st.boilerLast) { const t = st.boilerN > 1 && B.again ? B.again : B.next; st.boilerSeen = st.boilerLast; save(); setTimeout(() => say(t), 9000); }
+  if (I.day && dLeft === 0 && I.say && st.idaySaid !== today) { st.idaySaid = today; save(); setTimeout(() => say(I.say), 20000); }
 }
 document.addEventListener('archive:enter', onEnter);
 if (API.mainView && !API.mainView.classList.contains('opacity-0') && getComputedStyle(API.gateway).display === 'none') onEnter();
 /* 새로 넣은 구역도 스크롤 등장 */
 const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .08 });
-[planSec, rcSec, dealSec].forEach(el => io.observe(el));
+[planSec, rcSec, dealSec, nextSec].forEach(el => io.observe(el));
 })();
