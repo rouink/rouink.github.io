@@ -276,7 +276,7 @@ window.ARCHIVE = {
       music: 'assets/music/theme.mp3',
       portrait: 'assets/portrait.webp',
       booth: ['assets/booth/char1_1.webp', 'assets/booth/char1_2.webp'],   // 인생 두컷 1컷 원칙 · 2컷 옅은 미소
-      crack: '',                                      // 크랙 공개 후 주소를 넣어요
+      crack: 'https://crack.wrtn.ai/characters/6ae714fd0eb5f117cb005926/detail',
       gallery: [
         { img: 'assets/gallery/g01_cold.webp', label: '확인하겠습니다', desc: '조사 1일차 아침. 인사보다 자료 목록이 먼저였다.' },
         { img: 'assets/gallery/g02_window.webp', label: '창을 등지고', desc: '빛을 등진 자리. 얼굴보다 서류가 먼저 보이게 앉는다.' },

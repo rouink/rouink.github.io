@@ -276,7 +276,7 @@ window.ARCHIVE = {
       mediaShape: 'wide',
       portrait: 'assets/portrait.webp',
       booth: ['assets/booth/char1_1.webp', 'assets/booth/char1_2.webp'],   // 인생 두컷 1컷 팔짱 · 2컷 옅은 미소
-      crack: '',                                    // 크랙 공개 후 주소를 넣어요
+      crack: 'https://crack.wrtn.ai/characters/6ae6cbd0dfa03a9023335b74/detail',
       gallery: [
         { img: 'assets/gallery/00_base_neutral.webp', label: '19:40, 거실 창가', desc: '잔금 다음 날 저녁. 그녀가 먼저 와 있었다.' },
         { img: 'assets/gallery/01_sarcastic.webp', label: '얼마면 돼요?', desc: '집은 물건, 당신은 점유자님.' },
