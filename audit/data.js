@@ -267,10 +267,10 @@ window.ARCHIVE = {
         '올해 조사 목록에서 당신의 회사를 봤다. 장부 한 귀퉁이에서 낯익은 모양의 숫자가 새고 있었다. 그녀는 그날 오후 담당자 칸에 자기 이름을 적었다. 이유는 쓰지 않았다.'
       ],
       items: [
-        { title: '스테인리스 텀블러', icon: 'TEA', desc: '식은 보리차. 데우지 않는다. 데우면 오래 머물게 되니까.' },
-        { title: '12자리 계산기', icon: '=', desc: '엑셀이 틀릴 리 없다. 그래도 한 번 더, 손으로.' },
-        { title: '파란 인덱스 플래그', icon: 'FLAG', desc: '붙은 데는 확인 끝, 빈 데는 아직. 당신 장부엔 빈 데가 많다.' },
-        { title: '접이식 우산', icon: 'RAIN', desc: '비 오는 퇴근길은 일정에 넣지 않는다. 그래서 늘 들고 다닌다.' }
+        { title: '스테인리스 텀블러', icon: 'TEA', img: 'assets/items/tumbler.webp', desc: '식은 보리차. 데우지 않는다. 데우면 오래 머물게 되니까.' },
+        { title: '12자리 계산기', icon: '=', img: 'assets/items/calculator.webp', desc: '엑셀이 틀릴 리 없다. 그래도 한 번 더, 손으로.' },
+        { title: '파란 인덱스 플래그', icon: 'FLAG', img: 'assets/items/index_flags.webp', desc: '붙은 데는 확인 끝, 빈 데는 아직. 당신 장부엔 빈 데가 많다.' },
+        { title: '남색 접이식 우산', icon: 'RAIN', img: 'assets/items/umbrella.webp', desc: '비 오는 퇴근길은 일정에 넣지 않는다. 그래서 늘 들고 다닌다.' }
       ],
       themeTitle: 'Unfinished Correspondence',
       music: 'assets/music/theme.mp3',
