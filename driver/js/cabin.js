@@ -1,6 +1,6 @@
 /* 한여로 — 운전석 장치 (driver 전용 · shared 파일을 고치지 않음)
    룸미러(n번째 배차) · 계기판 · 내비 · 카오디오 · 휴대폰 거치대(단골 기사·고객 메모·운행 요금·메시지)
-   · 글로브박스 · 경적·시트·컵홀더 · 비 오는 밤 앞유리 · 34초 머물기
+   · 글로브박스 · 비 오는 밤 앞유리 · 34초 머물기
    글은 data.js page.cabin, 상태는 js/state.js. 모양은 theme.css 의 .yr-* */
 (() => {
 const D = window.ARCHIVE || {}, P = D.page || {}, K = P.cabin, API = window.ARCHIVE_API, Y = window.YR;
@@ -85,7 +85,7 @@ if (hero) {
 const DS = K.dash || {};
 const dash = el('section', 'yr-sec yr-dash fade-up'); dash.setAttribute('data-page', '1');
 const arc = (v, cls) => { const r = 26, c = Math.PI * r, f = Math.max(0, Math.min(1, v)); return `<svg viewBox="0 0 64 40" aria-hidden="true"><path d="M6 34a26 26 0 0 1 52 0" class="tr"/><path d="M6 34a26 26 0 0 1 52 0" class="lit ${cls || ''}" style="stroke-dasharray:${(c * f).toFixed(1)} ${c.toFixed(1)}"/><g class="nd" style="transform:rotate(${(-90 + 180 * f).toFixed(1)}deg)"><line x1="32" y1="34" x2="32" y2="12"/><circle cx="32" cy="34" r="2.6"/></g></svg>`; };
-function fuelV() { return Math.max(.06, .86 - (s.hornToday || 0) * .09); }
+function fuelV() { if (Y.mode !== 'night') return .86; const h = (Y.hour + 24 - 19) % 24; return Math.max(.08, .9 - h * .09); }
 function waitSec() {
   const d = new Date(); if (Y.q.get('hour') != null) d.setHours(Y.hour, 10, 0);
   const st = new Date(d); st.setHours(19, 0, 0, 0); if (d.getHours() < 19) st.setDate(st.getDate() - 1);
@@ -286,7 +286,7 @@ if (GB) {
   box.insertAdjacentHTML('beforeend', `
     <div class="yr-gbox" id="yr-gbox">
       <button type="button" class="lid" id="yr-lid"><span>${esc(GB.open)}</span></button>
-      <div class="in">${GB.items.map((it, i) => `<button type="button" data-gi="${i}"><span class="ic">${ICON[it.key] || ''}</span><span class="nm">${esc(it.name)}</span></button>`).join('')}</div>
+      <div class="in">${GB.items.map((it, i) => `<button type="button" data-gi="${i}"><span class="ic">${it.img ? `<img src="${esc(it.img)}" alt="" loading="lazy">` : (ICON[it.key] || '')}</span><span class="nm">${esc(it.name)}</span></button>`).join('')}</div>
     </div>
     <div class="yr-gcard" id="yr-gcard" hidden></div>`);
   const gb = $('yr-gbox'), gc = $('yr-gcard');
@@ -296,12 +296,21 @@ if (GB) {
     const b = e.target.closest('[data-gi]'); if (!b) return; const it = GB.items[+b.dataset.gi];
     gb.querySelectorAll('[data-gi]').forEach(x => x.classList.toggle('on', x === b));
     let extra = '';
-    if (it.key === 'card') extra = `<div class="yr-file"><p class="fn">${esc(it.file)}</p><div class="pl"><button type="button" id="yr-play" aria-label="재생">▶</button><span class="bar"><i></i></span><span class="tm">00:00 / 00:34</span></div><p class="lk">${esc(it.locked)}</p></div>`;
+    if (it.key === 'card') extra = `<div class="yr-file"><p class="fn">${esc(it.file)}</p><div class="pl"><button type="button" id="yr-play" aria-label="재생">▶</button><span class="bar"><i></i></span><span class="tm">00:00 / 00:34</span></div><p class="lk" id="yr-lk">${esc(it.locked)}</p><ol class="yr-log" id="yr-log34"></ol><p class="yr-after" id="yr-after" hidden>${esc(it.after || '')}</p></div>`;
     if (it.key === 'candy') extra = `<ul class="yr-facts">${it.facts.map(f => `<li>${esc(f)}</li>`).join('')}</ul>`;
     if (it.key === 'ticket') extra = `<button type="button" class="btn" id="yr-story">${esc(it.more)}</button>`;
-    gc.innerHTML = `<span class="ic">${ICON[it.key] || ''}</span><div><h3>${esc(it.name)}</h3><p>${esc(it.desc)}</p>${extra}</div>`;
+    gc.innerHTML = `<span class="ic${it.img ? ' ph' : ''}">${it.img ? `<img src="${esc(it.img)}" alt="${esc(it.name)}">` : (ICON[it.key] || '')}</span><div><h3>${esc(it.name)}</h3><p>${esc(it.desc)}</p>${extra}</div>`;
     gc.hidden = false; gc.classList.remove('show'); requestAnimationFrame(() => requestAnimationFrame(() => gc.classList.add('show')));
-    if ($('yr-play')) $('yr-play').onclick = () => { $('yr-play').classList.add('no'); say(it.play); };
+    if ($('yr-play')) $('yr-play').onclick = () => {
+      const pb = $('yr-play'); if (pb.classList.contains('no')) return; pb.classList.add('no');
+      const L = it.log || [], ol = $('yr-log34'), bar = gc.querySelector('.bar i'), tm = gc.querySelector('.tm'); $('yr-lk').hidden = true;
+      const sec = t => +t.slice(0, 2) * 60 + +t.slice(3);
+      L.forEach(([t, line], i) => setTimeout(() => {
+        ol.insertAdjacentHTML('beforeend', `<li><span>${esc(t)}</span>${esc(line)}</li>`);
+        bar.style.width = (sec(t) / 34 * 100) + '%'; tm.textContent = `${t} / 00:34`;
+        if (i === L.length - 1) { $('yr-after').hidden = false; setTimeout(() => say(it.play), RM ? 0 : 600); }
+      }, RM ? 0 : i * 1100));
+    };
     if ($('yr-story')) $('yr-story').onclick = () => {
       const c = document.querySelector('#character-grid [data-id]'); if (!c) return; c.click();
       setTimeout(() => { const d = document.querySelector('#modal-story'); if (!d) return; const det = d.closest('details'); if (det) det.open = true; const sc = $('modal-scroll'); if (sc) sc.scrollTo({ top: d.parentNode.offsetTop - 80, behavior: RM ? 'auto' : 'smooth' }); }, 420);
@@ -416,5 +425,5 @@ const ch = (D.characters || {}).char1;
 if (ch && ch.items) { const keys = ['log', 'card', 'candy', 'ticket']; ch.items.forEach((it, i) => { if (!it.img && !it.icon) it.icon = ICON[keys[i]] || ''; }); }
 
 /* 들어온 직후 첫마디를 말풍선으로도 */
-document.addEventListener('archive:enter', () => { setTimeout(() => { const f = $('yr-first'); if (f) say(f.textContent.replace(/[“”]/g, '')); }, RM ? 400 : 2200); }, { once: true });
+/* 첫마디는 표지에 이미 크게 나오므로 말풍선으로 되풀이하지 않는다 (11-08) */
 })();
