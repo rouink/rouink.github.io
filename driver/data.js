@@ -224,7 +224,7 @@ window.ARCHIVE = {
       poster: '',
       music: 'assets/music/theme.mp3',               // 테마곡 · Not Deleted
       themeTitle: 'Not Deleted',
-      crack: '',                                     // 크랙에 올린 뒤 주소
+      crack: 'https://crack.wrtn.ai/characters/6af02168d274c2799c63bb2f/detail',                                     // 크랙에 올린 뒤 주소
       tmi: [
         { q: '운전할 때 장갑을 끼는 이유는?', a: '손끝을 자른 장갑. 핸들에 기름 자국을 남기지 않으려고. 당신 차 핸들에는 특히.' },
         { q: '제일 싫어하는 손님은?', a: '목적지를 말 안 하는 손님. …한 명만 예외.' },
