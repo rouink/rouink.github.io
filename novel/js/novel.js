@@ -30,13 +30,15 @@ const status = S.writing() ? `<span class="st on"><i></i>집필 중</span>` : `<
 const seats = N.seats || [];
 const ex = (N.excerpts || []);
 const exOf = n => ex.find(e => e.ep === n);
-const epRows = (() => {
-  const list = [ep];
-  ex.map(e => e.ep).filter(n => n < ep).sort((a, b) => b - a).forEach(n => list.includes(n) || list.push(n));
-  for (let n = ep - 1; list.length < 7 && n > 0; n--) if (!list.includes(n)) list.push(n);
-  return list.sort((a, b) => b - a).slice(0, 7);
-})();
-const dLabel = n => n === ep ? (off ? '휴재' : S.posted ? '오늘' : '23시 공개') : `${ep - n}일 전`;
+const CHAP = window.NOVEL_CHAPTERS || {};
+const textOf = n => CHAP[n] || (exOf(n) || {}).text || '';
+/* 오늘 회차를 지금 읽을 수 있나 (휴재·23시 전이면 아직) */
+const openNow = n => n < ep || (n === ep && (S.done || (!off && S.posted)));
+const canRead = n => n >= 1 && openNow(n) && !!textOf(n);
+s.read = Array.isArray(s.read) ? s.read : [];
+const SHOW = 7;
+const epRows = Array.from({ length: ep }, (_, i) => ep - i);
+const dLabel = n => n === ep ? (S.done ? '완결' : off ? '휴재' : S.posted ? '오늘' : '23시 공개') : (ep - n === 1 ? '어제' : `${ep - n}일 전`);
 
 /* 조회수 그래프 */
 const G = N.graph || {}, first = G.first || 3;
@@ -103,7 +105,9 @@ ${off ? `<div class="nv-off"><b>${esc((N.off || {}).tag)}</b><span>${esc((N.off 
 
 <div class="nv-sec" id="nv-eps">
   <div class="nv-h"><span class="nv-lb">Episodes</span><strong>회차</strong><em>최신순</em></div>
-  <ul class="nv-eps">${epRows.map(n => `<li class="${exOf(n) || n === ep ? '' : 'lock'}"><button type="button" data-ep="${n}"><span class="n">${n}화</span><span class="t">${esc(titleOf(n))}</span><span class="d">${esc(dLabel(n))}</span></button></li>`).join('')}</ul>
+  <ul class="nv-eps" id="nv-epl">${epRows.map((n, i) => `<li class="${canRead(n) ? '' : 'lock'}${s.read.includes(n) ? ' rd' : ''}"${i >= SHOW ? ' hidden' : ''}><button type="button" data-ep="${n}"><span class="n">${n}화</span><span class="t">${esc(titleOf(n))}</span><span class="d">${esc(dLabel(n))}</span></button></li>`).join('')}</ul>
+  ${epRows.length > SHOW ? `<button type="button" class="nv-more" id="nv-epmore">이전 회차 ${epRows.length - SHOW}개 더 보기</button>` : ''}
+  <p class="nv-first"><button type="button" data-ep="1">1화부터 읽기 →</button></p>
   <div class="nv-vote">
     <div class="q">${esc(V.q)}</div><div class="sub">${esc(V.sub)}</div>
     <div class="ops">${(V.options || []).map((o, i) => `<button type="button" class="op" data-v="${i}"><i class="bar"></i><span>${esc(o)}</span><span class="pc"></span></button>`).join('')}</div>
@@ -144,16 +148,27 @@ sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closes
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && sheet.classList.contains('on')) closeSheet(); });
 
 function openEp(n) {
-  const e = exOf(n);
-  let body;
-  if (n === ep && off) body = `<p>${esc((N.off || {}).text)}</p>`;
-  else if (n === ep && !S.posted && !e) body = `<p>${esc(N.excerptLater)}</p>`;
-  else if (e) body = e.text.split('\n').map(p => `<p data-fill="${esc(p)}">${F(p)}</p>`).join('');
-  else body = `<p>${esc(N.excerptNone)}</p>`;
-  openSheet(`<div class="ep">${n}화 · ${esc(N.app)}</div><h3>${esc(e ? e.title : titleOf(n))}</h3><div class="bd">${body}</div><p class="ft">작가 ${esc(N.author)} · ${esc(T.join(' '))}</p>`);
+  const txt = textOf(n);
+  let body, ok = false;
+  if (n === ep && !S.done && off) body = `<p class="nt">${esc((N.off || {}).text)}</p>`;
+  else if (n === ep && !S.done && !S.posted) body = `<p class="nt">${esc(N.excerptLater)}</p>`;
+  else if (txt) { ok = true; body = txt.split('\n').filter(Boolean).map(p => `<p data-fill="${esc(p)}">${F(p)}</p>`).join(''); }
+  else body = `<p class="nt">${esc(N.excerptNone)}</p>`;
+  const prev = n > 1 && canRead(n - 1), next = canRead(n + 1);
+  const nextNote = !next && n + 1 <= (N.episodes || []).length ? (n + 1 === ep && !S.posted && !off ? '다음 화는 23시에 올라와요' : n + 1 > ep ? '다음 화는 내일 23시' : '') : '';
+  const nav = ok ? `<div class="nv-pg">${prev ? `<button type="button" data-goep="${n - 1}">← ${n - 1}화</button>` : '<span></span>'}${next ? `<button type="button" class="nx" data-goep="${n + 1}">${n + 1}화 →</button>` : `<span class="wt">${esc(nextNote)}</span>`}</div>` : '';
+  openSheet(`<div class="ep">${n}화 · ${esc(N.app)}</div><h3>${esc(titleOf(n))}</h3><div class="bd">${body}</div>${nav}<p class="ft">작가 ${esc(N.author)} · ${esc(T.join(' '))}</p>`);
+  sheet.querySelector('.pn').scrollTop = 0;
+  if (ok && !s.read.includes(n)) {
+    s.read.push(n); S.save();
+    const li = sec.querySelector(`#nv-epl [data-ep="${n}"]`); if (li) li.parentNode.classList.add('rd');
+  }
 }
+sheet.addEventListener('click', e => { const b = e.target.closest('[data-goep]'); if (b) openEp(+b.dataset.goep); });
 sec.addEventListener('click', e => {
   const b = e.target.closest('[data-ep]'); if (b) { openEp(+b.dataset.ep); return; }
+  const more = e.target.closest('#nv-epmore');
+  if (more) { sec.querySelectorAll('#nv-epl li[hidden]').forEach(li => li.hidden = false); more.remove(); return; }
   const g = e.target.closest('[data-go]');
   if (g) {
     sec.querySelectorAll('.nv-tabs button').forEach(x => x.classList.toggle('on', x === g));
@@ -222,24 +237,28 @@ blank.addEventListener('pointerdown', startHold);
 blank.addEventListener('contextmenu', e => e.preventDefault());
 blank.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMemo(); } });
 
-/* ── 새 댓글 알림 (들어온 뒤 가끔, 한 번 방문에 3번까지) ── */
+/* ── 새 댓글 알림 (들어온 뒤 5초마다, 겹치지 않게 섞어서) ── */
 const toast = document.createElement('div');
 toast.className = 'nv-toast'; toast.setAttribute('aria-live', 'polite');
 document.body.appendChild(toast);
-let cmN = 40;
-function showToast(i) {
-  const L = N.toasts || []; if (!L.length) return;
-  const t = L[(S.hash(S.today) + i) % L.length];
+let cmN = 40, tq = [], nq = [];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const modalOpen = () => { const m = $('modal-panel'); return !!(m && m.offsetParent && m.getBoundingClientRect().width > 0); };
+function showToast() {
+  const L = N.toasts || [], NM = N.toastNames || ['독자']; if (!L.length) return;
+  if (document.hidden || sheet.classList.contains('on') || modalOpen()) return;
+  if (!tq.length) tq = shuffle(L);
+  if (!nq.length) nq = shuffle(NM);
   cmN++;
-  toast.innerHTML = `<b>새 댓글</b><span>${esc(t)}</span><i>방금 · ${cmN}번째</i>`;
+  toast.innerHTML = `<b>새 댓글</b><span>${esc(tq.pop())}</span><i>${esc(nq.pop())} · 방금</i>`;
   toast.classList.add('on');
-  setTimeout(() => toast.classList.remove('on'), 4200);
+  clearTimeout(showToast.h); showToast.h = setTimeout(() => toast.classList.remove('on'), Math.max(1500, (N.toastEvery || 5) * 1000 - 900));
 }
 
 /* ── 들어온 뒤 ── */
 document.addEventListener('archive:enter', () => {
   const lines = S.writing() ? '…지금 쓰는 중이에요. 보지 마요.' : off ? '오늘은 휴재예요. 그러니까 볼 거 없어요.' : S.posted ? `${ep}화 올라왔어요. …읽든가 말든가.` : `…또 왔어요? ${ep}화는 23시예요.`;
   setTimeout(() => say(lines), RM ? 300 : 1600);
-  [14000, 52000, 98000].forEach((ms, i) => setTimeout(() => { if (!document.hidden && !sheet.classList.contains('on')) showToast(i); }, ms));
+  setInterval(showToast, (N.toastEvery || 5) * 1000);
 }, { once: true });
 })();

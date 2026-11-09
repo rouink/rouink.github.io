@@ -22,7 +22,8 @@ const offDay = N.offDay == null ? 3 : N.offDay;
 const isOff = q.get('wed') != null ? q.get('wed') === '1' : now.getDay() === offDay;
 
 /* 오늘 회차: start 날짜가 startEp화, 하루 지나면 1화씩 (휴재일은 건너뜀) */
-function ep() {
+const MAXEP = (N.episodes || []).length || 9999;
+function rawEp() {
   if (q.get('ep')) return Math.max(1, +q.get('ep'));
   const [y, m, d] = (N.start || '2026-11-13').split('-').map(Number);
   const st = new Date(y, m - 1, d), t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -33,6 +34,9 @@ function ep() {
   }
   return n;
 }
+/* 마지막 회차를 넘기면 완결로 멈춤 */
+const ep = () => Math.min(rawEp(), MAXEP);
+const done = rawEp() > MAXEP;
 /* 23시 전에는 오늘 회차가 아직 안 올라왔다 */
 const posted = hour >= 23 || hour < 5;
 function seat(n) {
@@ -55,5 +59,5 @@ const hash = t => { let h = 7; for (const ch of String(t)) h = (h * 31 + ch.code
 const pron = () => s.gender === '여' ? '그녀' : '그';
 const fill = t => String(t == null ? '' : t).replace(/\{그\}/g, pron());
 
-window.NOVEL_STORE = { s, save, today, hour, minute, isOff, ep, posted, seat, writing, lastSeen, daysSince, hash, pron, fill, q, now };
+window.NOVEL_STORE = { s, save, today, hour, minute, isOff, ep, done, posted, seat, writing, lastSeen, daysSince, hash, pron, fill, q, now };
 })();
