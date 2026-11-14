@@ -61,7 +61,7 @@ window.ARCHIVE = {
       author: '은재',
       since: '연재 2년째',
       schedule: '매일 23시',
-      start: '2026-11-13',                           // 이날이 12화. 하루 지나면 1화씩 (휴재일 제외)
+      start: '2026-11-14',                           // 이날이 12화. 하루 지나면 1화씩 (휴재일 제외)
       startEp: 12,
       offDay: 3,                                     // 휴재 요일 (0 일 · 1 월 · 2 화 · 3 수 · 4 목 · 5 금 · 6 토)
       likes: 12418,
@@ -326,7 +326,7 @@ window.ARCHIVE = {
       music: 'assets/music/theme.mp3',
       portrait: 'assets/portrait.webp',
       booth: ['assets/booth/char1_1.webp', 'assets/booth/char1_2.webp'],   // 인생 두컷 1컷 팔짱 · 2컷 웃음
-      crack: 'https://crack.wrtn.ai/characters/6af1a65778158608253c7203/detail',
+      crack: 'https://crack.wrtn.ai/characters/6af6c9d7fb92821f401f9612/detail',
       gallery: [
         { img: 'assets/gallery/g01_cold.webp', label: '착각이에요', desc: '팔짱은 방어고, 턱은 공격이다. 오늘도 둘 다.' },
         { img: 'assets/gallery/g02_caught.webp', label: '아직 안 갔어요?', desc: '밤 열한 시, 빈 사무실. 노트북 불빛 너머로 인기척이 들렸다.' },
