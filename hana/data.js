@@ -57,9 +57,9 @@ window.ARCHIVE = {
       hero: {
         school: { img: 'assets/hero_school.webp', pos: '66% 18%', pcPos: '60% 16%', label: 'Faculty Room · Seat 12', title: ['엄하나', '선생님.'],
                   sub: '생활지도 담당, 별명은 교칙의 화신. 교무실에선 당신에게도 존댓말과 1미터. 퇴근 버튼을 누르면, 말이 바뀌어요.' },
-        off:    { img: 'assets/hero_off.webp', pos: '50% 22%', pcImg: 'assets/gallery/g10_sofa_smile.webp', pcPos: '70% 30%', label: 'After six · 둘만', title: ['월요일엔', '남이에요.'],
+        off:    { img: 'assets/hero_off.webp?v=2', pos: '50% 22%', pcImg: 'assets/gallery/g10_sofa_smile.webp', pcPos: '70% 30%', label: 'After six · 둘만', title: ['월요일엔', '남이에요.'],
                   sub: '머리를 풀었고, 존댓말이 샜다. 월요일 아침 8시 반까지는 하나. 그다음엔 다시 엄하나 선생님.' },
-        weekend:{ img: 'assets/hero_off.webp', pos: '50% 22%', pcImg: 'assets/gallery/g14_sleepy_morning.webp', pcPos: '70% 30%', label: 'Weekend · 둘만', title: ['주말엔', '하나.'],
+        weekend:{ img: 'assets/hero_off.webp?v=2', pos: '50% 22%', pcImg: 'assets/gallery/g14_sleepy_morning.webp', pcPos: '70% 30%', label: 'Weekend · 둘만', title: ['주말엔', '하나.'],
                   sub: '학교가 없는 날. 포스트잇도, 1미터도 없다. 월요일 아침 8시 반이 오기 전까지는.' }
       },
       /* 들킬 위험 (출근 모드) · 거리 (퇴근 모드) */
@@ -183,8 +183,8 @@ window.ARCHIVE = {
       ],
       themeTitle: 'One Meter',
       music: 'assets/music/theme.mp3',
-      portrait: 'assets/portrait.webp',
-      booth: ['assets/booth/char1_1.webp', 'assets/booth/char1_2.webp'],   // 인생 두컷 1컷 쉿 · 2컷 후드티 웃음
+      portrait: 'assets/portrait.webp?v=2',
+      booth: ['assets/booth/hana_school.webp', 'assets/booth/hana_winter.webp'],   // 인생 두컷 1컷 교무실(블레이저) · 2컷 겨울 산책(목도리 웃음) — 사용자 누끼
       crack: '',
       gallery: [
         { img: 'assets/gallery/g01_cold_glance.webp', label: '명단은요?', desc: '팔짱을 낀 채 곁눈질. 교무실용 얼굴은 이 각도에서 완성된다.' },
@@ -197,13 +197,13 @@ window.ARCHIVE = {
         { img: 'assets/gallery/g08_one_meter.webp', label: '딱 1미터', desc: '방과 후 창가. 선을 지키는 사람이 웃을 수 있는 가장 가까운 거리.' },
         { img: 'assets/gallery/g09_untie_hair.webp', label: '6시 1분', desc: '현관문이 닫히기 전에 머리끈부터. 선생님이 하나로 바뀌는 데 걸리는 시간.' },
         { img: 'assets/gallery/g10_sofa_smile.webp', label: '여기 앉아', desc: '소파는 하나. 1미터는 교무실에 두고 왔다.' },
-        { img: 'assets/gallery/g11_lean_close.webp', label: '규칙 몇 번이었지', desc: '기댈 듯 가까이. 세 번째 규칙을 깨는 쪽은 늘 그녀다.' },
+        { img: 'assets/gallery/g11_lean_close.webp?v=2', label: '규칙 몇 번이었지', desc: '기댈 듯 가까이. 세 번째 규칙을 깨는 쪽은 늘 그녀다.' },
         { img: 'assets/gallery/g12_sulking.webp', label: '≠', desc: '말하지 않는다. 입을 다문 채로 포스트잇 한 장 분량을 다 말했다.' },
         { img: 'assets/gallery/g13_trip_plan.webp', label: '맨 뒷장', desc: '교무수첩을 덮는 게 반 박자 늦었다. 날짜가 보였다.' },
         { img: 'assets/gallery/g14_sleepy_morning.webp', label: '토요일 아침', desc: '학교가 없는 날의 얼굴. 존댓말도 없는 날.' },
         { img: 'assets/gallery/g15_winter_walk.webp', label: '퇴근길', desc: '목도리에 반쯤 묻힌 얼굴로 돌아본다. 여기서부턴 1미터가 아니다.' },
-        { img: 'assets/gallery/g16_holding_tears.webp', label: '첫 학교 얘기', desc: '규칙을 만든 이유를 처음 말한 밤. 웃으면서 말했다.' },
-        { img: 'assets/gallery/g17_eye_contact.webp', label: '월요일엔 남이에요', desc: '아주 가까이에서, 반말로. 월요일 8시 반까지의 얼굴.' },
+        { img: 'assets/gallery/g16_holding_tears.webp?v=2', label: '첫 학교 얘기', desc: '규칙을 만든 이유를 처음 말한 밤. 웃으면서 말했다.' },
+        { img: 'assets/gallery/g17_eye_contact.webp?v=2', label: '월요일엔 남이에요', desc: '아주 가까이에서, 반말로. 월요일 8시 반까지의 얼굴.' },
         { img: 'assets/gallery/g18_rule_break.webp', label: '규칙 깨는 날', desc: '학교 창가에서, 처음으로 애인의 얼굴. 교무실에서.' }
       ]
     }
