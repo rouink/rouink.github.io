@@ -752,7 +752,10 @@ function audioReady(){if(audioOK)return;audioOK=true;snd.classList.add('ok');ent
 a.addEventListener('loadedmetadata',audioReady);
 if(window.fetch)fetch(a.getAttribute('src'),{method:'HEAD'}).then(r=>{const t=r.headers.get('content-type')||'';if(r.ok&&!/html|text/.test(t))audioReady()}).catch(()=>{});
 a.addEventListener('error',()=>{audioOK=false});
-function play(on){if(!audioOK)return;if(on){a.volume=.55;a.play().catch(()=>{});}else a.pause();snd.classList.toggle('on',on);snd.setAttribute('aria-pressed',on)}
+/* 곡 제목: 휴대폰 잠금 화면·알림의 '지금 재생 중'에 뜬다 */
+const NP=window.liuNowPlaying=t=>{try{if('mediaSession' in navigator&&window.MediaMetadata)navigator.mediaSession.metadata=new MediaMetadata({title:t,artist:'류설향 · 향방',album:'HYANGBANG No.15',artwork:[{src:new URL('assets/og.jpg',location.href).href,sizes:'1200x630',type:'image/jpeg'}]})}catch(e){}};
+const MAIN_TITLE='The Twentieth, 7 p.m.';
+function play(on){if(!audioOK)return;if(on){a.volume=.55;a.play().catch(()=>{});NP(MAIN_TITLE)}else a.pause();snd.classList.toggle('on',on);snd.setAttribute('aria-pressed',on)}
 snd.onclick=()=>play(a.paused);
 /* 입장 — 시향지 · 오늘의 처방 */
 function enterAudio(){const g=$('#e-go'),q=$('#e-quiet');if(!g)return;g.textContent='소리 켜고 들어가기';q.hidden=false}
@@ -1065,7 +1068,7 @@ function sel(tab,focus){tabs.forEach(t=>{const on=t===tab;t.setAttribute('aria-s
 tabs.forEach((t,i)=>{t.addEventListener('click',()=>sel(t));t.addEventListener('keydown',e=>{const d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;if(d){e.preventDefault();sel(tabs[(i+d+tabs.length)%tabs.length],true)}})});
 /* 테마곡: 켜면 배경음악은 잠시 쉼, 끄거나 창을 닫으면 돌아옴 */
 const th=$('#theme'),tb=$('#theme-btn'),bgm=$('#bgm');let bgmWas=false;
-function themeOn(on){if(on){bgmWas=bgm&&!bgm.paused;if(bgmWas)bgm.pause();th.volume=.6;th.play().catch(()=>{});}else{th.pause();if(bgmWas){bgm.play().catch(()=>{});bgmWas=false}}tb.classList.toggle('on',on);tb.setAttribute('aria-pressed',on)}
+function themeOn(on){const NP=window.liuNowPlaying||(()=>{});if(on){bgmWas=bgm&&!bgm.paused;if(bgmWas)bgm.pause();th.volume=.6;th.play().catch(()=>{});NP($('#theme-t').textContent)}else{th.pause();if(bgmWas){bgm.play().catch(()=>{});NP('The Twentieth, 7 p.m.');bgmWas=false}}tb.classList.toggle('on',on);tb.setAttribute('aria-pressed',on)}
 tb.addEventListener('click',()=>themeOn(th.paused));
 /* 열고 닫기 (휴대폰 뒤로 가기로도 닫힘) */
 let open=false,pushed=false,timer=0;
