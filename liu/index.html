@@ -449,9 +449,9 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
  <div class="g-giant" aria-hidden="true">15</div>
  <div class="g-pg">
   <div class="g-head"><span class="g-lab">Reservations</span><span class="g-no">No.15</span></div>
-  <table><tr><td>12.04 FRI · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
-  <tr><td>01.04 MON · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
-  <tr><td>02.04 THU · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
+  <table><tr><td>11.20 FRI · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
+  <tr><td>12.20 SUN · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
+  <tr><td>01.20 WED · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
   <tr class="walk"><td>WALK-IN</td><td>받지 않음</td></tr></table>
   <h1>명단에<br><em>안 계시네요.</em></h1>
   <p>이 공방은 한 분의 예약만 받아요.</p>
@@ -517,7 +517,7 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
  </dl>
 
  <button type="button" class="fileopen rv" id="fileopen" aria-haspopup="dialog" aria-controls="file"><span class="tab">HER FILE · No.15</span><span><strong>그녀의 기록</strong><small>소지품 · TMI · 지나온 이야기</small></span><span class="go" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></button>
- <figure class="shot"><img src="assets/s02.jpg" alt="흰 봉투를 내미는 류설향" loading="lazy"><figcaption class="say"><q>이번 달 상환분이요. 세어 보세요, 투자자님.</q><small class="lab" style="color:#F0E6EE">12.04 · 19:00 · 상환일</small></figcaption></figure>
+ <figure class="shot"><img src="assets/s02.jpg" alt="흰 봉투를 내미는 류설향" loading="lazy"><figcaption class="say"><q>이번 달 상환분이요. 세어 보세요, 투자자님.</q><small class="lab" style="color:#F0E6EE">11.20 · 19:00 · 상환일</small></figcaption></figure>
 </section>
 
 <section class="sec" id="middle-note">
@@ -540,16 +540,16 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
  <div class="ledger rv">
   <div class="row"><span class="lab">Remaining</span><span class="lab pl">1 of 12</span></div>
   <p class="amt"><small>₩</small><span id="amt">24,000,000</span></p>
-  <p class="sub">한 달 200만 원씩, 매달 4일.<br>언제든 다 갚으면 끝.</p>
+  <p class="sub">한 달 200만 원씩, 매달 20일.<br>언제든 다 갚으면 끝.</p>
   <div class="months" id="months"></div>
-  <div class="due"><span>다음 상환일<br><b style="font:inherit;color:var(--ink)" id="duedate">12월 4일 금요일</b></span><b id="dday">D-20</b></div>
+  <div class="due"><span>다음 상환일<br><b style="font:inherit;color:var(--ink)" id="duedate">11월 20일 금요일</b></span><b id="dday">D-20</b></div>
  </div>
  <button class="waive" id="waive" aria-expanded="false" aria-controls="reply">남은 돈, 안 갚아도 돼요</button>
  <div class="reply" id="reply">
   <div class="pic"><img src="assets/s03.jpg" alt="팔짱을 끼고 거절하는 류설향" loading="lazy"><span class="stamp">반려</span></div>
   <div class="say">
    <q>탕감이요? 적선은 손님한테나 하세요.</q>
-   <q>다음 달 4일. 빠지지 말고 오세요.</q>
+   <q>다음 달 20일. 빠지지 말고 오세요.</q>
   </div>
   <p class="after">그날 밤, 공방 불은 늦게까지 켜져 있었다.</p>
  </div>
@@ -565,7 +565,7 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
    <div class="r"><span>Fig leaf<small>wrist</small></span><em>30%</em></div>
    <div class="r hide"><span>Wet cedar<small>coat in the rain</small></span><em>46%</em></div>
    <div class="r hide"><span>White musk<small>your sleeve</small></span><em>8%</em></div>
-   <div class="r hide"><span>Burnt sugar<small>the 4th, 7pm</small></span><em>4%</em></div>
+   <div class="r hide"><span>Burnt sugar<small>the 20th, 7pm</small></span><em>4%</em></div>
    <div class="nm"><span class="lab">Name</span><u></u></div>
    <div class="ft"><span id="visit">첫 방문 · 1 / 5</span><span>No.37</span></div>
   </div>
@@ -680,7 +680,7 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
 </div>
 <audio id="theme" src="assets/theme.mp3" loop preload="none"></audio>
 <audio id="bgm" src="assets/main.mp3" loop preload="metadata"></audio>
-<script src="js/keepsake.js?v=3"></script>
+<script src="js/keepsake.js?v=4"></script>
 
 <script>
 (function(){if(window.LIU_LOCKED)return;
@@ -710,11 +710,11 @@ rack.addEventListener('click',e=>{const b=e.target.closest('.bl');if(!b)return;i
 $('#lbc').onclick=()=>{lb.classList.remove('on');document.body.classList.remove('locked')};$('#lbp').onclick=()=>step(-1);$('#lbn').onclick=()=>step(1);
 lb.addEventListener('click',e=>{if(e.target===lb)$('#lbc').onclick()});
 document.addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;if(e.key==='Escape')$('#lbc').onclick();if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)});
-/* 장부 · 다음 4일 */
-(function(){const now=new Date(),start=new Date(2026,11,4,19);let due=new Date(now.getFullYear(),now.getMonth(),4,19);if(now>due)due=new Date(now.getFullYear(),now.getMonth()+1,4,19);if(due<start)due=start;
+/* 장부 · 다음 20일 */
+(function(){const now=new Date(),start=new Date(2026,10,20,19);let due=new Date(now.getFullYear(),now.getMonth(),20,19);if(now>due)due=new Date(now.getFullYear(),now.getMonth()+1,20,19);if(due<start)due=start;
  const d=Math.ceil((new Date(due.getFullYear(),due.getMonth(),due.getDate())-new Date(now.getFullYear(),now.getMonth(),now.getDate()))/864e5);
  const W='일월화수목금토';$('#duedate').textContent=`${due.getMonth()+1}월 ${due.getDate()}일 ${W[due.getDay()]}요일`;$('#dday').textContent=d===0?'D-DAY':'D-'+d;
- const M=['12','1','2','3','4','5','6','7','8','9','10','11'];$('#months').innerHTML=M.map((m,i)=>`<i class="${i===0?'next':''}">${m}월</i>`).join('')})();
+ const M=['11','12','1','2','3','4','5','6','7','8','9','10'];$('#months').innerHTML=M.map((m,i)=>`<i class="${i===0?'next':''}">${m}월</i>`).join('')})();
 $('#waive').onclick=function(){this.setAttribute('aria-expanded','true');$('#reply').classList.add('on')};
 /* Trial 37 · 방문마다 한 줄 */
 const rows=[...document.querySelectorAll('#trial37 .r')];const show37=Math.min(5,1+visits);rows.forEach((r,i)=>r.classList.toggle('hide',i>=show37));
@@ -1037,7 +1037,7 @@ const BAG=[
  {k:'Hand cream · unscented',t:'무향 핸드크림',p:'조향사의 손에는 냄새가 없어야 한다. 그래서 그녀 손끝에서 무언가 난다면, 방금 그녀가 만진 것의 냄새다.',q:'향 없는 걸 고르는 게 제일 어려워요.'},
  {k:'Fountain pen · violet ink',t:'보라 잉크 만년필',p:'레시피는 지워지지 않는 펜으로만 쓴다. 틀리면 긋고 다음 줄에. 어느 한 장에는 그은 줄이 서른여섯 개다.',q:'연필은 마음이 바뀌잖아요.'}];
 const TMI=[
- ['Contacts','휴대폰 연락처에 당신은 ‘4일’로 저장돼 있다.'],
+ ['Contacts','휴대폰 연락처에 당신은 ‘20일’로 저장돼 있다.'],
  ['Cold','감기에 걸리면 공방 문을 닫는다. 코 막힌 날엔 아무것도 만들지 않는다.'],
  ['Weather','좋아하는 날씨는 비. 냄새가 제일 멀리까지 오는 날이라서.'],
  ['Stray','공방 앞에 오는 골목 고양이에게 이름을 지어 주지 않았다. 부르면 정이 든다고.'],
@@ -1047,7 +1047,7 @@ const TL=[
  ['23','이름 없는 향','향료 회사 연구실의 막내. 그녀가 짠 향은 백화점 1층에 깔렸고, 병 뒷면에는 다른 사람 이름이 적혔다. 3년째 되던 날 사직서를 냈다. 사유 칸에 한 줄. ‘제 이름으로 하겠습니다.’'],
  ['26','향방','골목 끝, 세탁소가 나간 자리. 간판보다 유리 풍경을 먼저 달았다. 일하다 고개를 들지 않아도 되게. 한 사람에게 한 병만 만든다는 고집은, 손님보다 빨리 돈을 먹었다.'],
  ['27','임대','작년 겨울, 문에 ‘임대’ 종이를 붙이려던 저녁에 풍경이 울렸다. 계약서는 한 장, 조건은 한 줄. 그녀는 서명했고, 고맙다는 말은 아직 하지 않았다.'],
- ['28','오늘','매달 4일 저녁 7시, 작업대 끝으로 흰 봉투를 민다. 다 갚으면 남이라고, 오늘도 말할 참이었다. <b>당신 옷깃에서, 그녀가 만든 적 없는 향이 나기 전까지는.</b>']];
+ ['28','오늘','매달 20일 저녁 7시, 작업대 끝으로 흰 봉투를 민다. 다 갚으면 남이라고, 오늘도 말할 참이었다. <b>당신 옷깃에서, 그녀가 만든 적 없는 향이 나기 전까지는.</b>']];
 const $=s=>document.querySelector(s),RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const F=$('#file'),sheet=F.querySelector('.sheet'),body=$('#fbody'),opener=$('#fileopen');
 const pad=n=>String(n).padStart(2,'0');

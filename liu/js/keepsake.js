@@ -730,9 +730,9 @@ const TRIAL = () => { const f = FORM(); if (f) return f.no; let n = 0; try { n =
 const pad2 = n => String(n).padStart(2, '0');
 const today = (sep = '.') => { const d = new Date(); return `${d.getFullYear()}${sep}${pad2(d.getMonth() + 1)}${sep}${pad2(d.getDate())}`; };
 const DOW = ['일', '월', '화', '수', '목', '금', '토'];
-function nextDue() {   // 매달 4일 19:00
-  const n = new Date(); let d = new Date(n.getFullYear(), n.getMonth(), 4, 19, 0, 0);
-  if (n > d) d = new Date(n.getFullYear(), n.getMonth() + 1, 4, 19, 0, 0);
+function nextDue() {   // 매달 20일 19:00 (첫 상환 2026-11-20)
+  const n = new Date(); let d = new Date(n.getFullYear(), n.getMonth(), 20, 19, 0, 0);
+  if (n > d) d = new Date(n.getFullYear(), n.getMonth() + 1, 20, 19, 0, 0);
   const dd = Math.ceil((d - n) / 864e5);
   return { text: `${pad2(d.getMonth() + 1)}.${pad2(d.getDate())} (${DOW[d.getDay()]}) 19:00`, dd };
 }
