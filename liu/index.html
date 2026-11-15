@@ -1,4 +1,11 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<!doctype html><html lang="ko" class="liu-lock"><head><meta charset="utf-8">
+<script>/* 예약제: 크랙 링크의 열쇠가 있어야 열린다 */(function(){var H='avc9a',d=document.documentElement,ok=false;
+function h(s){var x=2166136261;for(var i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619)>>>0}return x.toString(36)}
+var q=null;try{q=new URLSearchParams(location.search).get('k')}catch(e){}
+if(q&&h(q)===H){ok=true;try{localStorage.setItem('liu.key',q);history.replaceState(null,'',location.pathname+location.hash)}catch(e){}}
+else{try{var s=localStorage.getItem('liu.key');if(s&&h(s)===H)ok=true}catch(e){}}
+if(ok)d.classList.remove('liu-lock');else{window.LIU_LOCKED=true;document.title='향방 — 예약제'}})();</script>
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>류설향 — 향방 No.15</title>
 <meta name="description" content="갚을 때까진, 당신 향만. 골목 끝 조향 공방 향방의 전속 조향사 류설향.">
@@ -311,6 +318,29 @@ body.p2 #stage{display:none!important}
 #stage .dots i.f{background:var(--plum)}
 #stage b{font-family:"CG";font-weight:700;font-size:10.5px;letter-spacing:.24em;color:var(--plum)}
 #stage span{font-size:13.5px;color:var(--ink);overflow:hidden;text-overflow:ellipsis}
+/* 예약제 잠금 화면 (B 예약 장부) */
+#gate{display:none}
+html.liu-lock,html.liu-lock body{overflow:hidden;background:var(--paper)}
+html.liu-lock body>*:not(#gate){display:none!important}
+html.liu-lock #gate{display:flex;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;padding:0 var(--gut);background:var(--paper);color:var(--ink);word-break:keep-all;overflow:hidden}
+#gate .g-giant{position:absolute;right:-24px;bottom:3vh;font-family:"COR";font-size:240px;line-height:1;color:var(--plum);opacity:.06;transform:rotate(-8deg);pointer-events:none}
+#gate .g-pg{position:relative;width:min(342px,100%);animation:gin 1s var(--ease) both}
+@keyframes gin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+#gate .g-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;border-bottom:1px solid var(--ink)}
+#gate .g-lab{font-family:"CG";font-weight:700;font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--plum)}
+#gate .g-no{font-family:"CG";font-style:italic;font-weight:500;font-size:15px;color:var(--mute)}
+#gate table{width:100%;border-collapse:collapse;margin-top:4px;font-family:"CG";font-weight:600;font-size:14px;color:var(--mute)}
+#gate td{padding:11px 0;border-bottom:1px solid var(--line);letter-spacing:.04em}
+#gate td:last-child{text-align:right;font-family:"NM";font-weight:400;letter-spacing:0}
+#gate tr.walk td{color:var(--plum)}
+#gate tr.walk td:last-child{font-weight:800}
+#gate .g-bl{display:inline-block;filter:blur(3.2px);color:var(--ink)}
+#gate h1{margin-top:44px;font-weight:800;font-size:34px;line-height:1.24;letter-spacing:-.06em}
+#gate h1 em{font-style:normal;color:var(--plum)}
+#gate p{margin-top:16px;font-size:16px;line-height:1.8;color:var(--body)}
+#gate .g-sig{margin-top:10px;text-align:right;font-family:"COR";font-size:44px;line-height:1.1;color:var(--plum)}
+@media (min-width:900px){#gate .g-pg{width:520px}#gate h1{font-size:46px}#gate .g-giant{font-size:520px;right:8vw;top:10vh;bottom:auto}}
+@media (prefers-reduced-motion:reduce){#gate .g-pg{animation:none}}
 /* 그녀의 기록 — 여는 단추(서류철) */
 .fileopen{position:relative;isolation:isolate;display:grid;grid-template-columns:1fr 44px;align-items:center;gap:var(--s2);width:100%;margin-top:calc(var(--s5) + 8px);padding:22px 20px 22px 22px;border:1px solid var(--line);border-radius:0 8px 8px 8px;background:var(--card);text-align:left;box-shadow:7px 7px 0 -1px var(--paper2),7px 7px 0 0 rgba(32,24,32,.14),0 26px 44px -30px rgba(32,24,32,.5);transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
 .fileopen .tab{position:absolute;left:-1px;top:-27px;height:28px;padding:0 14px;display:flex;align-items:center;border:1px solid var(--line);border-bottom:0;border-radius:7px 7px 0 0;background:var(--card);font-family:"CG";font-weight:700;font-size:10.5px;letter-spacing:.26em;color:var(--plum)}
@@ -415,6 +445,20 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
 
 </style></head>
 <body class="locked">
+<div id="gate" aria-label="향방 예약 장부">
+ <div class="g-giant" aria-hidden="true">15</div>
+ <div class="g-pg">
+  <div class="g-head"><span class="g-lab">Reservations</span><span class="g-no">No.15</span></div>
+  <table><tr><td>12.04 FRI · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
+  <tr><td>01.04 MON · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
+  <tr><td>02.04 THU · 19:00</td><td><span class="g-bl" aria-hidden="true">투자자</span> 님</td></tr>
+  <tr class="walk"><td>WALK-IN</td><td>받지 않음</td></tr></table>
+  <h1>명단에<br><em>안 계시네요.</em></h1>
+  <p>이 공방은 한 분의 예약만 받아요.</p>
+  <div class="g-sig">Seolhyang</div>
+ </div>
+</div>
+
 <noscript><style>#entry{display:none}body.locked{overflow:auto}</style></noscript>
 <!-- 입장: 시향지 · 오늘의 처방 -->
 <div id="entry" role="dialog" aria-label="향방 입장 — 오늘의 향 고르기">
@@ -639,7 +683,7 @@ html.fileopen-lock,html.fileopen-lock body{overflow:hidden}
 <script src="js/keepsake.js?v=3"></script>
 
 <script>
-(function(){
+(function(){if(window.LIU_LOCKED)return;
 const $=s=>document.querySelector(s),RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const store={get(k,d){try{const v=localStorage.getItem('liu.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('liu.'+k,JSON.stringify(v))}catch(e){}}};
 /* 방문 */
@@ -986,7 +1030,7 @@ if(RM)document.querySelectorAll('.rv').forEach(el=>el.classList.add('in'));
 /* 그녀의 기록: 소지품 · TMI · 지나온 이야기 · 테마곡
    소지품 사진은 assets/bag/01.webp ~ 04.webp 를 올리면 저절로 뜬다(없으면 글 카드만).
    테마곡은 assets/theme.mp3 를 올리면 단추가 생긴다. */
-(function(){
+(function(){if(window.LIU_LOCKED)return;
 const BAG=[
  {k:'Coffee beans · tin',t:'코 씻는 원두',p:'향을 오래 맡아 코가 무뎌지면, 원두를 한 번 맡고 처음부터 다시 맡는다. 상환일 밤이면 틴이 비어 있다.',q:'만지지 마세요. 세어 둔 거예요.'},
  {k:'Atomizer · 5ml · no label',t:'라벨 없는 병',p:'안주머니에 늘 한 병. 라벨이 없다. 무슨 향이냐고 물으면, 그녀는 시향지부터 집어 든다.',q:'샘플이에요. 팔 거 아니에요.'},
