@@ -185,7 +185,7 @@ window.ARCHIVE = {
       music: 'assets/music/theme.mp3',
       portrait: 'assets/portrait.webp?v=2',
       booth: ['assets/booth/hana_school.webp', 'assets/booth/hana_winter.webp'],   // 인생 두컷 1컷 교무실(블레이저) · 2컷 겨울 산책(목도리 웃음) — 사용자 누끼
-      crack: '',
+      crack: 'https://crack.wrtn.ai/characters/6af910b5e508e0c3c9d3db27/detail',
       gallery: [
         { img: 'assets/gallery/g01_cold_glance.webp', label: '명단은요?', desc: '팔짱을 낀 채 곁눈질. 교무실용 얼굴은 이 각도에서 완성된다.' },
         { img: 'assets/gallery/g02_postit.webp', label: '안 봤어요', desc: '타자를 치다 말고 슬쩍. 벽의 포스트잇은 구석까지 읽었다.' },
