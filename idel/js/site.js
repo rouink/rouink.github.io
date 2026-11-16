@@ -11,7 +11,7 @@
     get:function(k,d){try{var v=localStorage.getItem('idel.'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},
     set:function(k,v){if(preview&&(k==='n'||k==='last'))return;try{localStorage.setItem('idel.'+k,JSON.stringify(v));}catch(e){}}
   };
-  if(qs.has('reset')){try{['n','last','dots','cloth','name','hintCloth','snd'].forEach(function(k){localStorage.removeItem('idel.'+k);});sessionStorage.removeItem('idel.in');}catch(e){}}
+  if(qs.has('reset')){try{['n','last','dots','cloth','name','hintCloth','snd','pal','memo','night'].forEach(function(k){localStorage.removeItem('idel.'+k);});sessionStorage.removeItem('idel.in');}catch(e){}}
   var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* 시간 — 해 질 녘(17~19시)만 앉는 시간 */
@@ -25,6 +25,11 @@
   if(preview){S.n=Math.max(0,Math.min(12,+qs.get('visit')||0));S.last=qs.has('sat')?today:'';}
   S.n=Math.max(0,Math.min(12,S.n));
   Object.defineProperty(S,'satToday',{get:function(){return S.last===S.today;}});
+  /* 열두 색: 회차마다 고른 안료 {id, d} — 미리보기 ?pal=1 이면 앉은 만큼 채움 */
+  var PG=D.pigments||[];
+  S.pal=store.get('pal',[])||[];
+  if(preview&&qs.has('pal')){S.pal=[];for(var pi=0;pi<S.n;pi++){if(pi===S.n-1&&S.satToday&&qs.get('pal')==='open')break;S.pal[pi]={id:PG[(pi*5)%12].id,d:(now.getMonth()+1)+'.'+(Math.max(1,now.getDate()-(S.n-1-pi)*3))};}}
+  S.pig=function(id){for(var i=0;i<PG.length;i++)if(PG[i].id===id)return PG[i];return null;};
   window.IDEL_STATE=S;
 
   body.classList.add('pre');
@@ -45,7 +50,7 @@
   if(nm){
     nm.value=name();
     var nmT;
-    nm.addEventListener('input',function(){clearTimeout(nmT);nmT=setTimeout(function(){store.set('name',nm.value.trim().slice(0,12));renderSittings();},300);});
+    nm.addEventListener('input',function(){clearTimeout(nmT);nmT=setTimeout(function(){store.set('name',nm.value.trim().slice(0,12));renderSittings();var ci=$('#coin-name-input');if(ci)ci.value=name().slice(0,10);},300);});
     nm.addEventListener('keydown',function(e){if(e.key==='Enter'){nm.blur();}});
   }
 
@@ -70,7 +75,7 @@
   function renderSittings(){
     var n=S.n, L=D.sittings||[];
     $('#sitHead').innerHTML= n===0?'열두 번 중<br><em>아직 한 번도.</em>':(n>=12?'열두 번,<br><em>끝.</em>':'열두 번 중<br><em>'+ORD[n]+' 번째.</em>');
-    var bar=''; for(var i=0;i<12;i++) bar+='<i'+(i<n?' class="on"':'')+'></i>';
+    var bar=''; for(var i=0;i<12;i++){var pc=S.pal[i]&&S.pig(S.pal[i].id); bar+='<i'+(i<n?' class="on"':'')+(pc&&i<n?' style="--c:'+pc.hex+'" title="'+esc(pc.name)+'"':'')+'></i>';}
     $('#sitBar').innerHTML=bar;
     var msg;
     if(n>=12) msg='열두 번이 모두 끝났다. 마른 그림은 혼담 상대의 집으로 간다.';
@@ -81,12 +86,12 @@
     var nmv=name()||'당신', out='', cut=Math.max(0,n-3);
     if(cut>0) out+='<button type="button" class="sit-more" id="sitMore">지난 회차 '+cut+'개 펼치기</button>';
     for(var k=0;k<n&&k<L.length;k++){
-      var s=L[k], today=(k===n-1&&S.satToday);
+      var s=L[k], today=(k===n-1&&S.satToday), pk=S.pal[k]&&S.pig(S.pal[k].id);
       out+='<article class="sit rv in'+(today?' today':'')+(k<cut?' old':'')+'">'+
         '<div class="sit-ph"><img src="assets/t/'+s.img+'.jpg" alt="'+esc(s.stage)+' 회차의 이델" loading="lazy"></div>'+
-        '<div class="sit-meta"><span class="sit-no">No.'+pad(k+1)+' · 1127. '+esc(s.d)+' ('+esc(s.w)+')</span><span class="sit-stage">'+esc(s.stage)+'</span></div>'+
+        '<div class="sit-meta"><span class="sit-no">No.'+pad(k+1)+' · 1127. '+esc(s.d)+' ('+esc(s.w)+')</span><span class="sit-stage">'+(pk?'<i class="sw-dot" style="--c:'+pk.hex+'"></i>'+esc(pk.name)+' · ':'')+esc(s.stage)+'</span></div>'+
         '<p class="body">'+esc(s.text)+'</p>'+
-        '<p class="hand">'+esc(s.note.replace('{name}',nmv))+'</p></article>';
+        '<p class="hand">'+esc(s.note.replace('{name}',nmv))+'</p>'+(today?palBlock(k):'')+'</article>';
     }
     if(n<12&&L[n]){
       var nx=L[n];
@@ -97,6 +102,23 @@
     var sl=$('#sitList'); sl.innerHTML=out;
     var mb=$('#sitMore'); if(mb)mb.addEventListener('click',function(){sl.classList.add('all');});
   }
+
+  /* 오늘 칠할 색 — 그날 앉은 뒤에 하나. 한 번 고른 색은 다시 못 고른다 */
+  function palBlock(k){
+    var got=S.pal[k]&&S.pig(S.pal[k].id);
+    if(got) return '<div class="pal-got"><i class="sw-big" style="--c:'+got.hex+'"></i><div><p class="lb">TODAY\'S PIGMENT · 오늘의 색</p><b>'+esc(got.name)+'</b><p class="hand sm">'+esc(got.line)+'</p></div></div>';
+    var used={}; S.pal.forEach(function(x){if(x)used[x.id]=1;});
+    return '<div class="pal-pick" data-k="'+k+'"><p class="lb">TODAY\'S PIGMENT · 오늘 칠할 색 하나</p><div class="pal-sw">'+PG.map(function(g){
+      return '<button type="button" class="sw'+(used[g.id]?' used':'')+'" data-pg="'+g.id+'" style="--c:'+g.hex+'"'+(used[g.id]?' disabled aria-label="'+esc(g.name)+' — 이미 고른 색"':' aria-label="'+esc(g.name)+'"')+'><i></i><span>'+esc(g.name)+'</span></button>';
+    }).join('')+'</div><p class="note">고르면 바꿀 수 없다. 열두 번이 끝나면 도록에 실린다.</p></div>';
+  }
+  $('#sitList').addEventListener('click',function(e){
+    var b=e.target.closest('[data-pg]'); if(!b||b.disabled)return;
+    var box=b.closest('.pal-pick'), k=+box.getAttribute('data-k'), g=S.pig(b.getAttribute('data-pg')); if(!g)return;
+    S.pal[k]={id:g.id,d:(now.getMonth()+1)+'.'+now.getDate()}; if(!preview)store.set('pal',S.pal);
+    toast(g.line,3400); renderSittings();
+    if(window.IDEL_EXTRA)IDEL_EXTRA.cat();
+  });
 
   /* 덮어 둔 캔버스 — 다섯 번째 회차부터 */
   var clothAsk=false;
@@ -258,6 +280,28 @@
     return hasMain;
   });
 
+  /* 두 쪽 — I 화실 / VII 표구실 (#framing) */
+  var page=1, pg1=$('#pg1'), pg2=$('#pg2');
+  var ci=$('#coin-name-input');
+  if(ci){
+    ci.value=name().slice(0,10); var ciT;
+    ci.addEventListener('input',function(){clearTimeout(ciT);ciT=setTimeout(function(){store.set('name',ci.value.trim());if(nm)nm.value=ci.value.trim();renderSittings();if(window.IDEL_EXTRA)IDEL_EXTRA.redraw();if(window.IDEL_KEEPSAKE&&IDEL_KEEPSAKE.redraw)IDEL_KEEPSAKE.redraw();},250);});
+    ci.addEventListener('keydown',function(e){if(e.key==='Enter')ci.blur();});
+  }
+  function showPage(n,keep){
+    if(n===page)return; page=n;
+    pg1.hidden=n!==1; pg2.hidden=n!==2; html.classList.toggle('on-fr',n===2);
+    var pb=$('#pgBtn'); pb.textContent=n===2?'화실':'표구실'; pb.setAttribute('data-go',n===2?'1':'2');
+    var fg=$('#footGo'); fg.innerHTML=n===2?'<span class="lb">I</span>화실로 돌아가기':'<span class="lb">VII</span>표구실로 · 메모와 카드와 두 컷'; fg.setAttribute('data-go',n===2?'1':'2');
+    try{history.replaceState(history.state,'',n===2?location.pathname+location.search+'#framing':location.pathname+location.search);}catch(e){}
+    if(n===2){ if(ci)ci.value=name().slice(0,10); if(window.IDEL_KEEPSAKE)IDEL_KEEPSAKE.init(); if(window.IDEL_EXTRA)IDEL_EXTRA.page2(); }
+    observe(); onScroll();
+    if(!keep)window.scrollTo(0,0);
+  }
+  doc.addEventListener('click',function(e){var b=e.target.closest('[data-go]');if(!b)return;e.preventDefault();showPage(+b.getAttribute('data-go'));});
+  $$('.nav a[href^="#s"],.cta a,.mark').forEach(function(a){a.addEventListener('click',function(e){if(page!==2)return;e.preventDefault();showPage(1,true);var t=$(a.getAttribute('href'));setTimeout(function(){if(t)t.scrollIntoView();else window.scrollTo(0,0);},30);});});
+  $$('.fr-toc a').forEach(function(a){a.addEventListener('click',function(e){var t=$(a.getAttribute('href'));if(!t)return;e.preventDefault();t.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});});});
+
   /* 머리띠 · 나타나기 · 자리 비움 */
   var top=$('#top');
   function onScroll(){top.classList.toggle('solid',(window.scrollY||0)>40);}
@@ -278,12 +322,13 @@
     if(entered)return; entered=true;
     body.classList.remove('pre'); requestAnimationFrame(function(){body.classList.add('in');});
     observe();
-    if(S.n>=5&&!store.get('cloth',false)&&!store.get('hintCloth',false)){store.set('hintCloth',true);setTimeout(function(){toast('이젤 옆 천이 조금 들려 있다.',3000);},2200);}
+    if(location.hash==='#framing')showPage(2);
+    if(page===1&&S.n>=5&&!store.get('cloth',false)&&!store.get('hintCloth',false)){store.set('hintCloth',true);setTimeout(function(){toast('이젤 옆 천이 조금 들려 있다.',3000);},2200);}
   }
 
   render();
   window.IDEL_SITE={
     sit:function(){ if(!S.satToday&&S.n<12){S.n++;} S.last=S.today; store.set('n',S.n); store.set('last',S.today); render(); },
-    entered:onEntered, toast:toast, startMusic:startMusic, musicReady:musicReady, render:render
+    entered:onEntered, toast:toast, startMusic:startMusic, musicReady:musicReady, render:render, showPage:showPage, store:store
   };
 })();

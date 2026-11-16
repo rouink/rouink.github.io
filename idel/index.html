@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Marcellus&family=Nanum+Brush+Script&family=Mrs+Saint+Delafield&display=swap">
-<link rel="stylesheet" href="theme.css?v=1">
+<link rel="stylesheet" href="theme.css?v=2">
 </head>
 <body>
 
@@ -82,14 +82,16 @@
       <a href="#s4"><span>IV</span>회차 기록</a>
       <a href="#s5"><span>V</span>스케치북</a>
       <a href="#s6"><span>VI</span>덮어 둔 캔버스</a>
+      <a href="#framing" class="nav-fr" data-go="2"><span>VII</span>표구실</a>
     </nav>
     <div class="tools">
       <span class="clock" id="clock">해 질 녘 · 앉는 시간</span>
+      <button class="pgbtn" id="pgBtn" type="button" data-go="2">표구실</button>
       <button class="snd" id="snd" type="button" hidden aria-pressed="false">SOUND · OFF</button>
     </div>
   </header>
 
-  <main>
+  <main id="pg1">
     <section id="hero" aria-label="첫 화면">
       <div class="hero-img"><img src="assets/h_color.jpg" alt="해 질 녘 북탑 화실, 붓 꼬리를 든 이델" fetchpriority="high"></div>
       <div class="hero-veil"></div>
@@ -213,11 +215,119 @@
         <p class="hint">그녀에게 물으면, 붓부터 씻을 것이다.</p>
       </div>
     </section>
+
+    <section id="s8" data-n="VIII" class="sec two night">
+      <div class="col-txt rv">
+        <p class="lb">VIII · AFTER DARK</p>
+        <h2 id="ntHead">해가 지면<br><em>화실은 닫힌다.</em></h2>
+        <p class="body" id="ntText">밤 일곱 시부터 새벽 다섯 시까지. 그 시간에 북탑 창에 촛불이 켜져 있는 걸 본 사람이 있다.</p>
+        <p class="hint" id="ntHint">19:00 — 05:00 사이에 다시 오면 문이 열려 있다.</p>
+        <button class="lnk nt-auto" id="ntAuto" type="button" hidden>문지르기 어렵다면 — 한 번에 보기</button>
+      </div>
+      <figure class="nt-paper rv" id="ntPaper">
+        <canvas id="ntCanvas" width="900" height="1125" aria-label="이젤 위의 종이"></canvas>
+        <span class="nt-tag lb" id="ntTag">CLOSED · 19:00 — 05:00</span>
+      </figure>
+    </section>
+  </main>
+
+  <main id="pg2" hidden aria-label="표구실">
+    <section id="fr" data-n="VII" class="sec fr-top">
+      <div class="sec-head rv in">
+        <p class="lb">VII · FRAMING ROOM</p>
+        <h2>가져가도 되는 건<br><em>여기 있는 것만.</em></h2>
+        <p class="body">그녀가 적어 둔 메모 한 장, 이름 새긴 카드, 옆에 서는 두 컷. 열두 번을 다 앉으면 도록 한 쪽이 더해진다. 올린 사진과 이름은 <b>이 기기 안에서만</b> 쓰인다.</p>
+      </div>
+      <div class="kfield"><label for="coin-name-input">NAME</label><input type="text" id="coin-name-input" maxlength="10" placeholder="새길 이름 · 비우면 ‘당신’" autocomplete="off" enterkeyhint="done"></div>
+      <nav class="fr-toc" aria-label="표구실 차례">
+        <a href="#memo"><span>i</span>메모</a><a href="#pcard"><span>ii</span>카드</a><a href="#booth"><span>iii</span>두 컷</a><a href="#cat"><span>iv</span>도록</a>
+      </nav>
+    </section>
+
+    <section id="memo" class="sec kk">
+      <div class="kk-txt">
+        <div class="kk-head"><span class="kno">i</span><p class="lb">HER CROQUIS · 그녀가 본 당신</p></div>
+        <h3 class="h3">적어 둔 건 있어.<br><em>보여 줄 생각은 없었고.</em></h3>
+        <p class="body sm">세 가지만 답하면, 앉은 당신을 보며 그녀가 적은 메모가 나온다. 같은 답이라도 날마다 조금씩 다르다.</p>
+        <div id="memoQ"></div>
+        <p class="knote" id="memoNote">셋 다 골라야 보여 준다.</p>
+        <div class="kbtns"><button class="kb1" id="memo-go" type="button" disabled>보여 주기</button></div>
+      </div>
+      <div class="kk-out">
+        <div class="kstage" id="memo-stage"><canvas id="memo-canvas" width="1080" height="1350" aria-label="그녀의 메모 미리보기"></canvas></div>
+        <div class="kbtns" id="memo-save-row" hidden><button class="kb1" id="memo-save" type="button">메모 저장하기</button></div>
+      </div>
+    </section>
+
+    <section id="pcard" class="sec kk">
+      <div class="kk-txt">
+        <div class="kk-head"><span class="kno">ii</span><p class="lb">PHOTOCARD · 이름 새긴 카드</p></div>
+        <h3 class="h3">이름은 새겨 줄게.<br><em>외우진 않아.</em></h3>
+        <div class="kf"><span class="k">Shape<em>모양</em></span>
+          <div class="seg" id="shape-group">
+            <button type="button" data-shape="gilt">금박 액자</button><button type="button" data-shape="sketch">스케치북</button><button type="button" data-shape="caption">도록 한 쪽</button><i class="br"></i>
+            <button type="button" data-shape="card">포토카드</button><button type="button" data-shape="can">캔뱃지</button><i class="br"></i>
+            <button type="button" data-shape="coinA">주화 · 양각</button><button type="button" data-shape="coinB">주화 · 판화</button><button type="button" data-shape="coinC">주화 · 음각</button>
+          </div></div>
+        <div class="kf" id="metal-row"><span class="k">Finish<em>마감</em></span>
+          <div class="seg" id="metal-group"><button type="button" data-metal="gold">금</button><button type="button" data-metal="rose">로즈</button><button type="button" data-metal="silver">플래티넘</button><button type="button" data-metal="aurora">오로라</button></div></div>
+        <div class="kf" id="photo-style-row"><span class="k">Photo style<em>사진 표현</em></span>
+          <div class="seg" id="photo-group"><button type="button" data-photo="color">컬러</button><button type="button" data-photo="relief">음각</button></div></div>
+        <div class="kf"><span class="k">Photo<em>사진</em></span><div class="kths" id="pc-thumbs"></div></div>
+        <input type="file" id="coin-avatar-upload" accept="image/*" hidden>
+      </div>
+      <div class="kk-out">
+        <div class="kstage"><canvas id="coin-canvas" width="900" height="900" aria-label="카드 미리보기"></canvas></div>
+        <div class="kbtns"><button class="kb1" id="btn-download" type="button">카드 저장하기</button></div>
+      </div>
+    </section>
+
+    <section id="booth" class="sec kk">
+      <div class="kk-txt">
+        <div class="kk-head"><span class="kno">iii</span><p class="lb">TWO SITTINGS · 옆에 서는 두 컷</p></div>
+        <h3 class="h3">옆에 서는 건 두 번.<br><em>움직이면 다시.</em></h3>
+        <div class="kf"><span class="k">Style<em>모양</em></span>
+          <div class="seg" id="booth-style-group"><button type="button" data-bstyle="diptych">두 폭 그림</button><button type="button" data-bstyle="croquis">크로키 띠</button><button type="button" data-bstyle="classic">인생 두컷</button></div></div>
+        <div class="kf" id="booth-frame-row"><span class="k">Frame<em>테</em></span>
+          <div class="seg" id="booth-frame-group"><button type="button" data-bframe="gold">금</button><button type="button" data-bframe="rose">로즈</button><button type="button" data-bframe="silver">플래티넘</button><button type="button" data-bframe="aurora">오로라</button></div></div>
+        <div class="kf"><span class="k">Background<em>배경</em></span>
+          <div class="seg" id="booth-bg-group"><button type="button" data-bbg="tower">북탑 화실</button><button type="button" data-bbg="studio">스튜디오</button><button type="button" data-bbg="sunset">노을</button><button type="button" data-bbg="night">밤</button><button type="button" data-bbg="sakura">벚꽃</button><button type="button" data-bbg="sky">하늘</button><button type="button" data-bbg="holo">홀로</button></div>
+          <p id="booth-bg-status" class="knote" aria-live="polite"></p></div>
+        <div class="kf"><span class="k">Side<em>그녀 자리</em></span>
+          <div class="seg" id="booth-side-group"><button type="button" data-bside="left">왼쪽</button><button type="button" data-bside="right">오른쪽</button></div></div>
+        <div class="kf"><label class="k" for="booth-zoom">Photo size<em>· <span id="booth-sel">CUT 01</span></em></label>
+          <input type="range" id="booth-zoom" min="50" max="180" value="100">
+          <div class="seg" style="margin-top:10px"><button type="button" id="booth-move" aria-pressed="false">사진 옮기기 · 꺼짐</button></div>
+          <p class="knote">사진 옮기기를 켜면 미리보기에서 사진을 끌어 옮길 수 있다. 다 옮겼으면 꺼 둔다. 켜져 있는 동안은 미리보기 위에서 스크롤이 멈춘다.</p></div>
+      </div>
+      <div class="kk-out">
+        <div class="kstage"><canvas id="booth-canvas" width="1200" height="2312" aria-label="두 컷 미리보기"></canvas></div>
+        <p id="booth-step" class="kstep" aria-live="polite"></p>
+        <input type="file" id="booth-upload" accept="image/*" hidden>
+        <div class="kbtns"><button class="kb1" id="booth-upload-btn" type="button">1번 사진 올리기</button><button class="kb2" id="booth-reset" type="button">다시</button></div>
+        <div class="kbtns kb-tight"><button class="kb1" id="booth-download" type="button" disabled>두 컷 저장하기</button></div>
+      </div>
+    </section>
+
+    <section id="cat" class="sec kk">
+      <div class="kk-txt">
+        <div class="kk-head"><span class="kno">iv</span><p class="lb">CATALOGUE · 도록 한 쪽</p></div>
+        <h3 class="h3">열두 번 앉으면,<br><em>도록에 실린다.</em></h3>
+        <p class="body sm">회차마다 그녀의 팔레트에서 고른 색이 한 칸씩 채워진다. 색은 화실의 회차 기록에서, 그날 앉은 뒤에 고른다.</p>
+        <div class="cat-pal" id="catPal" aria-label="고른 색"></div>
+        <p class="knote" id="catNote"></p>
+      </div>
+      <div class="kk-out">
+        <div class="kstage"><canvas id="cat-canvas" width="1080" height="1350" aria-label="도록 한 쪽 미리보기"></canvas></div>
+        <div class="kbtns"><button class="kb1" id="cat-save" type="button" disabled>도록 한 쪽 저장하기</button></div>
+      </div>
+    </section>
   </main>
 
   <footer id="foot">
     <p class="f-sig">Idel<button class="spark" type="button" data-dot="2" aria-label="빛 한 점"><i></i></button></p>
     <p class="f-line">IDEL · Don't move. Not yet.</p>
+    <button class="btn line pg-go" id="footGo" type="button" data-go="2"><span class="lb">VII</span>표구실로 · 메모와 카드와 두 컷</button>
     <a class="btn" id="crackBtn" href="#" hidden>크랙에서 대화하기</a>
     <p class="f-copy">© 페르르 · 북탑 화실</p>
   </footer>
@@ -251,11 +361,14 @@
 </div>
 
 <div id="toast" role="status" aria-live="polite"></div>
+<div id="ksheet" role="dialog" aria-modal="true" aria-label="그림 저장" hidden><img id="ksheet-img" alt="저장할 그림"><p>그림을 길게 눌러 저장해 주세요.</p><button type="button" id="ksheet-x">닫기</button></div>
 <audio id="bgm" preload="none" loop></audio>
 <audio id="themeA" preload="none"></audio>
 
-<script src="data.js?v=1"></script>
-<script src="js/site.js?v=1"></script>
-<script src="js/entry.js?v=1"></script>
+<script src="data.js?v=2"></script>
+<script src="js/site.js?v=2"></script>
+<script src="js/extra.js?v=1"></script>
+<script src="js/keepsake.js?v=1"></script>
+<script src="js/entry.js?v=2"></script>
 </body>
 </html>
