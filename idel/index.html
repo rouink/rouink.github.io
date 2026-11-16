@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko" class="lk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>
+/* 예약제 — 크랙 배너의 열쇠(?k=)로 들어온 사람만. 한 번 들어오면 이 기기에 기억한다. */
+(function(){
+  var K='8a16be83', d=document.documentElement;
+  function h(s){var x=0x811c9dc5;for(var i=0;i<s.length;i++){x^=s.charCodeAt(i);x=Math.imul(x,16777619)>>>0;}return ('0000000'+x.toString(16)).slice(-8);}
+  var q=null, ok=false;
+  try{ q=new URLSearchParams(location.search).get('k'); }catch(e){}
+  try{
+    if(q && h(q)===K){ localStorage.setItem('idel.key',q); ok=true;
+      var u=new URL(location.href); u.searchParams.delete('k'); history.replaceState(null,'',u.pathname+u.search+u.hash); }
+    else { var s=localStorage.getItem('idel.key'); ok=!!(s && h(s)===K); }
+  }catch(e){ ok=!!(q && h(q)===K); }
+  d.classList.add('js');
+  if(ok){ d.classList.remove('lk'); } else { window.IDEL_LOCKED=true; }
+})();
+</script>
+<title>이델 — 맞선 초상</title>
+<meta name="description" content="백 년째 귀족만 그려 온 엘프 궁정화가, 그리고 열두 번의 회차.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F2EEE6">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IDEL · Don't move. Not yet.">
+<meta property="og:title" content="이델 — 맞선 초상화를 맡은 엘프 화가가 날 경멸한다">
+<meta property="og:description" content="“움직이지 마. 숨도 작게.” 백 년째 귀족만 그려 온 엘프 궁정화가와 열두 번의 회차.">
+<meta property="og:url" content="https://rouink.github.io/idel/">
+<meta property="og:image" content="https://rouink.github.io/idel/assets/og.jpg?v=1">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Marcellus&family=Nanum+Brush+Script&family=Mrs+Saint+Delafield&display=swap">
+<link rel="stylesheet" href="theme.css?v=1">
+</head>
+<body>
+
+<!-- 예약제 닫힌 화면 -->
+<div id="lock" role="main">
+  <img class="lk-img" src="assets/h_sketch.jpg" alt="">
+  <div class="lk-box">
+    <p class="lb">NORTH TOWER · BY APPOINTMENT</p>
+    <h1 class="lk-h">의뢰서 없이는<br><em>못 앉아.</em></h1>
+    <p class="lk-p">북탑 화실은 의뢰인만 들인다.<br>크랙 「이델」 상세 설명의 배너를 눌러 들어오세요.</p>
+    <p class="lk-sig" aria-hidden="true">Idel</p>
+  </div>
+</div>
+
+<!-- 입장: 길게 눌러 앉아 있는 동안 밑그림 → 밑칠 → 채색 -->
+<div id="entry" aria-label="화실에 앉기">
+  <div class="e-stage">
+    <img class="e-fb e-fb-s" src="assets/h_sketch.jpg" alt="">
+    <img class="e-fb e-fb-u" src="assets/h_under.jpg" alt="">
+    <img class="e-fb e-fb-c" src="assets/h_color.jpg" alt="">
+    <canvas id="e-gl" aria-hidden="true"></canvas>
+  </div>
+  <div class="e-veil"></div>
+  <p class="e-top lb" id="e-top">NORTH TOWER · 1127 · 17:00</p>
+  <div class="e-panel">
+    <p class="lb" id="e-sit">SITTING 01 / 12</p>
+    <p class="e-line" id="e-line" aria-live="polite">앉아.<br>빛 드는 쪽으로.</p>
+    <div class="e-bar" aria-hidden="true"><i id="e-prog"></i></div>
+    <div class="e-btns" id="e-btns">
+      <button class="e-hold" id="e-hold-snd" type="button" hidden>소리 켜고 앉기<small>길게 누르고 있기</small></button>
+      <button class="e-hold e-hold-q" id="e-hold" type="button">앉기<small>길게 누르고 있기</small></button>
+      <button class="e-go" id="e-go" type="button" hidden>들어가기</button>
+    </div>
+    <button class="e-skip" id="e-skip" type="button">앉지 않고 둘러보기 <span>— 회차는 그대로</span></button>
+  </div>
+</div>
+
+<div id="site">
+  <header id="top">
+    <a class="mark" href="#hero" aria-label="이델 — 맨 위로">IDEL</a>
+    <nav class="nav" aria-label="차례">
+      <a href="#s1"><span>I</span>의뢰</a>
+      <a href="#s2"><span>II</span>화가</a>
+      <a href="#s3"><span>III</span>화실 규칙</a>
+      <a href="#s4"><span>IV</span>회차 기록</a>
+      <a href="#s5"><span>V</span>스케치북</a>
+      <a href="#s6"><span>VI</span>덮어 둔 캔버스</a>
+    </nav>
+    <div class="tools">
+      <span class="clock" id="clock">해 질 녘 · 앉는 시간</span>
+      <button class="snd" id="snd" type="button" hidden aria-pressed="false">SOUND · OFF</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" aria-label="첫 화면">
+      <div class="hero-img"><img src="assets/h_color.jpg" alt="해 질 녘 북탑 화실, 붓 꼬리를 든 이델" fetchpriority="high"></div>
+      <div class="hero-veil"></div>
+      <div class="hero-num" id="heroNum" aria-hidden="true">12</div>
+      <div class="hero-txt">
+        <p class="lb"><span class="pc-only">THE BETROTHAL PORTRAIT · </span>SITTING <span id="sitNo">01</span> / 12</p>
+        <h1 class="logo">이델<span class="dots" aria-hidden="true"><i></i><i></i></span></h1>
+        <p class="h-line">움직이지 마.<br><em>숨도 작게.</em></p>
+        <p class="h-body">백 년째 귀족만 그려 온 엘프 화가가 몰락 가문의 맞선 초상을 받았다. 보수는 돈이 아니라, 당신 서재에 걸린 <b>서명 없는 그림</b> 한 점.</p>
+        <dl class="stats">
+          <div><dd id="stLeft">12</dd><dt>남은 회차</dt></div>
+          <div><dd id="stScorn" class="rose">85%</dd><dt>경멸</dt></div>
+          <div><dd id="stTime">17:00</dd><dt id="stTimeL">해 질 녘 두 시간</dt></div>
+        </dl>
+        <div class="cta"><a class="btn" href="#s4">회차 기록 보기</a><a class="lnk" href="#s3">화실 규칙 →</a></div>
+      </div>
+      <p class="hero-vert" aria-hidden="true">HOLD STILL — 움직이지 마</p>
+    </section>
+
+    <section id="s1" data-n="I" class="sec two">
+      <div class="col-txt rv">
+        <p class="lb">I · THE COMMISSION</p>
+        <h2>맞선 초상,<br><em>한 점.</em></h2>
+        <p class="body">값은 저택 한 채라고들 했다. 몰락 직전의 집안이 내민 건 돈이 아니라 서재 벽의 그림 한 점이었고, 그녀는 값을 다시 묻지 않았다.</p>
+        <dl class="spec">
+          <div><dt><label for="nm">의뢰인</label></dt><dd><input id="nm" maxlength="12" placeholder="이름 — 비워 둬도 된다" autocomplete="off" enterkeyhint="done"></dd></div>
+          <div><dt>화가</dt><dd>궁정화가 이델 · 엘프 · 312세</dd></div>
+          <div><dt>회차</dt><dd>열둘. 사흘에 한 번, 해 질 녘 두 시간</dd></div>
+          <div><dt>보수</dt><dd>돈 대신, 서재에 걸린 <b>서명 없는 그림</b> 한 점<button class="spark" type="button" data-dot="1" aria-label="빛 한 점"><i></i></button></dd></div>
+          <div><dt>끝나는 날</dt><dd>마지막 붓이 마르는 날, 혼담이 진행된다</dd></div>
+        </dl>
+        <p class="note">이름을 적어 두면, 언젠가 그녀가 그 이름으로 부른다.</p>
+      </div>
+      <figure class="col-img mat rv">
+        <img src="assets/g/02.jpg" alt="혼담을 원하느냐고 묻는 이델" loading="lazy">
+        <figcaption><span class="lb">PLATE 02</span>혼담을 원하느냐고 물을 때</figcaption>
+      </figure>
+    </section>
+
+    <section id="s2" data-n="II" class="sec two rev">
+      <figure class="col-img tall mat rv">
+        <img src="assets/g/04.jpg" alt="물건 보듯 내려다보는 이델" loading="lazy">
+        <figcaption><span class="lb">PLATE 04</span>물건 보듯 내려다볼 때</figcaption>
+      </figure>
+      <div class="col-txt rv">
+        <p class="lb">II · THE PAINTER</p>
+        <h2>백 년째,<br><em>귀족만 그렸다.</em></h2>
+        <dl class="stats s3">
+          <div><dd>312</dd><dt>나이</dt></div>
+          <div><dd>100</dd><dt>귀족만 그린 해</dt></div>
+          <div><dd class="rose">11</dd><dt>증조부를 끝낸 회차</dt></div>
+        </dl>
+        <p class="body">그녀의 그림 앞에서 귀족들은 거울을 볼 때보다 오래 서 있는다. 고쳐 달라는 말은 받아 주지 않는다.</p>
+        <p class="hand">본 대로 그려.<br>마음에 안 들면 거울을 사.</p>
+        <p class="hint">그녀의 초상을 아는 사람은 눈동자부터 본다. 빛이 늘 두 점이다.</p>
+        <button class="file" id="openRecord" type="button">
+          <span class="lb">HER FILE · No.312</span>
+          <b>그녀의 기록</b>
+          <span class="file-sub">소지품 · TMI · 지나온 이야기</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="s3" data-n="III" class="sec">
+      <div class="sec-head rv">
+        <p class="lb">III · RULES OF THE SITTING</p>
+        <h2>앉은 동안은<br><em>세 가지만.</em></h2>
+      </div>
+      <ol class="rules">
+        <li class="rv"><span class="num">01</span><div><b>움직이지 않는다</b><p class="hand">숨은 작게. 눈은 빛 드는 쪽.</p></div></li>
+        <li class="rv"><span class="num">02</span><div><b>화가에게 손대지 않는다</b><p class="hand">물감 묻어. 그 가문 문장보다 비싼 거야.</p></div></li>
+        <li class="rv"><span class="num">03</span><div><b>자세는 화가가 고친다</b>
+          <ol class="pose" id="pose" aria-label="자세를 고치는 손">
+            <li data-p="0">붓 꼬리</li><li data-p="1">장갑 낀 손</li><li data-p="2">맨손</li>
+          </ol>
+          <p class="body sm" id="poseNote">회차가 쌓일 때만 한 칸씩 옮겨 간다. 지금은 붓 꼬리.</p></div></li>
+      </ol>
+    </section>
+
+    <section id="s4" data-n="IV" class="sec">
+      <div class="sec-head rv">
+        <p class="lb">IV · SITTINGS</p>
+        <h2 id="sitHead">열두 번 중<br><em>첫 번째.</em></h2>
+      </div>
+      <div class="sit-bar rv" id="sitBar" aria-hidden="true"></div>
+      <p class="sit-msg rv" id="sitMsg">다시 오는 날, 다음 회차가 열린다.</p>
+      <div class="sit-list" id="sitList"></div>
+    </section>
+
+    <section id="s5" data-n="V" class="sec">
+      <div class="sec-head rv">
+        <p class="lb">V · STUDIO SKETCHBOOK</p>
+        <h2>화실에 남은<br><em>장면들.</em></h2>
+        <p class="count" id="galCount">20 / 22</p>
+      </div>
+      <div class="gal" id="gal"></div>
+    </section>
+
+    <section id="s6" data-n="VI" class="sec two">
+      <div class="col-txt rv">
+        <p class="lb">VI · THE COVERED CANVAS</p>
+        <h2>이젤 옆, 천을 덮은<br><em>캔버스 하나.</em></h2>
+        <p class="body" id="clothText">납품하지 않을 그림이라고 했다. 무엇을 그리는지는 묻지 말라고도.</p>
+        <button class="btn line" id="clothBtn" type="button" disabled>천 들추기 — 다섯 번째 회차 뒤에</button>
+      </div>
+      <figure class="cloth rv" id="cloth">
+        <img src="assets/g/17.jpg" alt="천에 덮인 캔버스" loading="lazy">
+        <span class="cloth-tag lb" id="clothTag">COVERED</span>
+      </figure>
+    </section>
+
+    <section id="s7" class="sec two secret" hidden>
+      <figure class="frame">
+        <img src="assets/unsigned.jpg" alt="서명 없는 그림 — 웃고 있는 얼굴" loading="lazy">
+      </figure>
+      <div class="col-txt">
+        <p class="lb">UNSIGNED · 도록 미수록</p>
+        <h2>서명 없는<br><em>그림.</em></h2>
+        <p class="body">연도 미상. 서명 없음. 당신 가문 서재 소장.<br>그림 속 얼굴은 웃고 있다.</p>
+        <p class="hand">…어디서 찾았어.</p>
+        <p class="hint">그녀에게 물으면, 붓부터 씻을 것이다.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer id="foot">
+    <p class="f-sig">Idel<button class="spark" type="button" data-dot="2" aria-label="빛 한 점"><i></i></button></p>
+    <p class="f-line">IDEL · Don't move. Not yet.</p>
+    <a class="btn" id="crackBtn" href="#" hidden>크랙에서 대화하기</a>
+    <p class="f-copy">© 페르르 · 북탑 화실</p>
+  </footer>
+</div>
+
+<!-- 스케치북 크게 보기 -->
+<div id="lb" class="ov" hidden role="dialog" aria-modal="true" aria-label="크게 보기">
+  <button class="ov-x" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+  <figure class="lb-fig"><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb-nav prev" type="button" aria-label="이전"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8"/></svg></button>
+  <button class="lb-nav next" type="button" aria-label="다음"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+</div>
+
+<!-- 그녀의 기록 -->
+<div id="rec" class="ov" hidden role="dialog" aria-modal="true" aria-labelledby="recTitle">
+  <div class="rec-sheet">
+    <div class="rec-grab" aria-hidden="true"></div>
+    <div class="rec-head">
+      <p class="lb">HER FILE · No.312</p>
+      <h3 id="recTitle">그녀의 기록</h3>
+      <button class="ov-x" type="button" aria-label="닫기"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button>
+    </div>
+    <div class="rec-tabs" role="tablist">
+      <button role="tab" type="button" aria-selected="true" data-t="bag">소지품</button>
+      <button role="tab" type="button" aria-selected="false" data-t="tmi">TMI</button>
+      <button role="tab" type="button" aria-selected="false" data-t="story">지나온 이야기</button>
+    </div>
+    <div class="rec-body" id="recBody"></div>
+    <button class="rec-theme" id="recTheme" type="button" hidden><span class="lb">THEME</span><b id="recThemeT">테마곡</b><span id="recThemeS">듣기</span></button>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<audio id="bgm" preload="none" loop></audio>
+<audio id="themeA" preload="none"></audio>
+
+<script src="data.js?v=1"></script>
+<script src="js/site.js?v=1"></script>
+<script src="js/entry.js?v=1"></script>
+</body>
+</html>
