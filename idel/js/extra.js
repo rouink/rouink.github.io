@@ -6,7 +6,7 @@
   var toast=SITE.toast||function(){};
   function $(s){return doc.querySelector(s);}
   var reduce=!!S.reduce, TAU=Math.PI*2;
-  var FL='"Marcellus",serif', FK='"Noto Serif KR",serif', FH='"Nanum Brush Script","Noto Serif KR",cursive', FS='"Mrs Saint Delafield",cursive';
+  var FL='"Marcellus",serif', FK='"Noto Serif KR",serif', FH='"Yeon Sung","Noto Serif KR",cursive', HS=.86, FS='"Mrs Saint Delafield",cursive';
   var INK='#24201D', INK2='#2E2925', MUTE='#5E554D', ROSE='#9E3A5C', GOLD='#C8AE6E';
   var esc=function(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});};
   function hash(t){var x=0x811c9dc5;for(var i=0;i<t.length;i++){x^=t.charCodeAt(i);x=Math.imul(x,16777619)>>>0;}return x;}
@@ -29,7 +29,7 @@
   }
   var kx=$('#ksheet-x'); if(kx&&!kx.dataset.on){kx.dataset.on=1;kx.addEventListener('click',function(){$('#ksheet').hidden=true;$('#ksheet-img').removeAttribute('src');doc.body.classList.remove('locked');});}
   function busy(btn,fn){if(btn.disabled)return;var t=btn.textContent;btn.textContent='만드는 중…';btn.disabled=true;setTimeout(function(){try{fn();}finally{btn.textContent=t;btn.disabled=false;}},40);}
-  function hand(g,t,x,y,size,col,rot){g.save();g.translate(x,y);g.rotate(rot||0);g.fillStyle=col||INK;g.font='400 '+size+'px '+FH;g.textAlign='left';g.fillText(t,0,0);g.restore();}
+  function hand(g,t,x,y,size,col,rot){g.save();g.translate(x,y);g.rotate(rot||0);g.fillStyle=col||INK;g.font='400 '+Math.round(size*HS)+'px '+FH;g.textAlign='left';g.fillText(t,0,0);g.restore();}
   function line(g,x1,y1,x2,y2,r,w,a){g.lineWidth=w;g.globalAlpha=a;g.beginPath();g.moveTo(x1+(r()-.5)*3,y1+(r()-.5)*3);g.quadraticCurveTo((x1+x2)/2+(r()-.5)*5,(y1+y2)/2+(r()-.5)*5,x2+(r()-.5)*3,y2+(r()-.5)*3);g.stroke();g.globalAlpha=1;}
   function sheetPaper(g,W,H,seed){   // 스케치북에서 뜯은 장
     var r=lcg(seed);g.clearRect(0,0,W,H);g.fillStyle='#F8F4EB';g.beginPath();g.moveTo(0,22);
@@ -169,7 +169,7 @@
       g.fillStyle=pg.hex; g.beginPath(); g.ellipse(612,sy-14,28,20,-.2,0,TAU); g.fill(); g.strokeStyle='rgba(36,32,29,.22)'; g.lineWidth=1.5; g.stroke();
       g.fillStyle=MUTE; g.font='400 22px '+FL; g.textAlign='left'; g.fillText('PIGMENT',656,sy-24); g.fillStyle=INK2; g.font='700 26px '+FK; g.fillText(pg.name,656,sy+6);
     } else {
-      g.fillStyle='rgba(94,85,77,.55)'; g.font='400 46px '+FH; g.textAlign='left';
+      g.fillStyle='rgba(94,85,77,.55)'; g.font='400 40px '+FH; g.textAlign='left';
       g.fillText('세 가지를 고르면,',96,y+LH); g.fillText('여기에 적힌다.',96,y+LH*2);
       for(var k=0;k<5;k++){g.fillStyle='rgba(36,32,29,.1)';g.fillRect(96,y+LH*(k+1)+16,880,1.5);}
     }

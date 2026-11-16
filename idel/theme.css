@@ -6,7 +6,7 @@
   --line:rgba(36,32,29,.16);
   --ko:'Noto Serif KR','Nanum Myeongjo',serif;
   --lb:'Marcellus','Times New Roman',serif;
-  --hand:'Nanum Brush Script','Noto Serif KR',cursive;
+  --hand:'Yeon Sung','Noto Serif KR',cursive;
   --sig:'Mrs Saint Delafield','Times New Roman',cursive;
   --ease:cubic-bezier(.2,.8,.2,1);
   --safe-b:env(safe-area-inset-bottom,0px); --safe-t:env(safe-area-inset-top,0px);
@@ -124,7 +124,7 @@ main{overflow-x:clip}
 .sec h2{margin:0;font-weight:900;font-size:40px;letter-spacing:-.06em;line-height:1.1}
 .body{margin:0;font-size:16.5px;line-height:1.85;color:var(--ink2)}
 .body.sm{font-size:15px;line-height:1.75}
-.hand{margin:0;font-family:var(--hand);font-size:28px;line-height:1.2;color:var(--ink)}
+.hand{margin:0;font-family:var(--hand);font-size:24px;line-height:1.3;color:var(--ink);text-wrap:balance}
 .hint,.note{margin:0;font-size:14px;line-height:1.75;color:var(--mute)}
 .col-txt{display:flex;flex-direction:column;gap:24px;min-width:0}
 .two{display:flex;flex-direction:column;gap:44px}
@@ -303,7 +303,7 @@ html.on-fr #top{background:rgba(242,238,230,.92);-webkit-backdrop-filter:blur(10
 .sw-big{flex:none;width:48px;height:48px;border-radius:50%;background:var(--c);box-shadow:inset 0 0 0 1px rgba(36,32,29,.14)}
 .pal-got .lb{color:var(--rose);font-size:10px}
 .pal-got b{display:block;font-size:18px;letter-spacing:-.03em;margin:2px 0 2px}
-.hand.sm{font-size:22px}
+.hand.sm{font-size:19px}
 
 /* VIII 밤의 화실 */
 .nt-paper{position:relative;margin:0;max-width:520px;width:100%;justify-self:center;align-self:center;background:#F2EEE6;box-shadow:0 1px 0 rgba(36,32,29,.06),0 26px 50px -34px rgba(36,32,29,.5)}
@@ -419,7 +419,7 @@ body.locked{overflow:hidden}
   .mat img{border-width:18px}
   .sec h2{font-size:64px;letter-spacing:-.065em;line-height:1.06}
   .body{font-size:18px}
-  .hand{font-size:32px}
+  .hand{font-size:28px}
   .two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:96px;align-items:center}
   .two.rev>.col-img{order:-1}
   .sec-head{margin-bottom:48px;max-width:720px}

@@ -449,7 +449,7 @@ if (Array.isArray(PAGE.enamel) && PAGE.enamel.length === 2) Object.values(METALS
 selectMetal(DEF_METAL); selectShape('gilt'); selectPhoto('color');
 Promise.all([
   document.fonts.load('400 10px "Marcellus"'), document.fonts.load('400 13px "Noto Serif KR"'), document.fonts.load('700 13px "Noto Serif KR"'),
-  document.fonts.load('900 13px "Noto Serif KR"'), document.fonts.load('20px "Mrs Saint Delafield"'), document.fonts.load('20px "Nanum Brush Script"')
+  document.fonts.load('900 13px "Noto Serif KR"'), document.fonts.load('20px "Mrs Saint Delafield"'), document.fonts.load('20px "Yeon Sung"')
 ]).then(() => { skKey = ''; drawCoin(); drawBooth(); }).catch(() => {});
 
 /* ===== 인생 두컷: 사진 2장을 순서대로 올리면 프레임에 합성 + 캐릭터 PNG 겹치기 =====
@@ -732,7 +732,7 @@ const IMP = () => { const d = new Date(); return `1127. ${d.getMonth() + 1}. ${d
 const ORDK = ['', '첫', '두', '세', '네', '다섯', '여섯', '일곱', '여덟', '아홉', '열', '열한', '열두'];
 const SITS = () => { const S = window.IDEL_STATE; return S ? Math.max(0, Math.min(12, S.n || 0)) : 0; };
 const INK = '#24201D', INK2 = '#2E2925', MUTE = '#5E554D', ROSE = '#9E3A5C', GOLD = '#C8AE6E', CHAR = 'rgba(42,38,34,.86)';
-const F_LB = '"Marcellus",serif', F_KO = '"Noto Serif KR",serif', F_HAND = '"Nanum Brush Script","Noto Serif KR",cursive', F_SIG = '"Mrs Saint Delafield",cursive';
+const F_LB = '"Marcellus",serif', F_KO = '"Noto Serif KR",serif', F_HAND = '"Yeon Sung","Noto Serif KR",cursive', F_SIG = '"Mrs Saint Delafield",cursive';
 
 function patternGrain(c, sc) { const p = c.createPattern(grain, 'repeat'); try { p.setTransform(new DOMMatrix().scale(1 / sc)); } catch (e) {} return p; }
 function grainOver(path, a) { ctx.save(); ctx.clip(path); ctx.globalCompositeOperation = 'multiply'; ctx.globalAlpha = a; ctx.fillStyle = patternGrain(ctx, SCALE); ctx.fillRect(0, 0, 300, 300); ctx.restore(); }
@@ -822,8 +822,8 @@ function renderSketch(P, name) {
   const sx = X + 12, sy = Y + 33, sw = W - 24, sh = 172;
   ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.drawImage(sketchOf(sw, sh), sx, sy, sw, sh); ctx.restore();
   const n = SITS();
-  ctx.fillStyle = INK; fitFont(name, 400, 19, F_HAND, sw * .7); ctx.textAlign = 'left'; ctx.fillText(name, X + 16, Y + 228);
-  ctx.fillStyle = MUTE; ctx.font = `400 11.5px ${F_HAND}`;
+  ctx.fillStyle = INK; fitFont(name, 400, 17, F_HAND, sw * .7); ctx.textAlign = 'left'; ctx.fillText(name, X + 16, Y + 228);
+  ctx.fillStyle = MUTE; ctx.font = `400 10px ${F_HAND}`;
   ctx.fillText(n ? `${ORDK[n]} 번째 회차. 그대로 있어.` : '아직 한 번도 안 앉았지.', X + 16, Y + 245);
   ctx.fillStyle = INK; ctx.font = `30px ${F_SIG}`; ctx.textAlign = 'right'; ctx.fillText('Idel', X + W - 22, Y + H - 14);
   ctx.fillStyle = GOLD; [0, 4.2].forEach(dx => { ctx.beginPath(); ctx.arc(X + W - 18 + dx, Y + H - 33, 1.15, 0, TAU); ctx.fill(); });
@@ -912,9 +912,9 @@ BOOTH_STYLES.croquis = {
     const user = guestName(); g.textBaseline = 'alphabetic';
     g.fillStyle = MUTE; g.font = `400 14px ${F_LB}`; g.textAlign = 'left'; bSpacedL(g, 'CROQUIS  ·  No.313', 52, 72, 4.2);
     g.textAlign = 'right'; g.font = `400 14px ${F_LB}`; g.fillText(IMP(), 548, 72);
-    g.fillStyle = INK; g.font = `400 36px ${F_HAND}`; g.textAlign = 'left';
+    g.fillStyle = INK; g.font = `400 31px ${F_HAND}`; g.textAlign = 'left';
     g.fillText('01 — 움직이지 마.', 54, 552); g.fillText('02 — …됐어. 오늘은 여기까지.', 54, 1040);
-    g.fillStyle = INK2; bFit(g, user, 400, 34, F_HAND, 300); g.fillText(user, 54, 1112);
+    g.fillStyle = INK2; bFit(g, user, 400, 30, F_HAND, 300); g.fillText(user, 54, 1112);
     g.fillStyle = INK; g.font = `66px ${F_SIG}`; g.textAlign = 'right'; g.fillText('Idel', 538, 1122);
     g.fillStyle = GOLD; [0, 9].forEach(dx => { g.beginPath(); g.arc(544 + dx, 1080, 2.6, 0, TAU); g.fill(); });
   }
