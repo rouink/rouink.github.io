@@ -97,7 +97,7 @@
       ['s0','s1','s2','so'].forEach(function(n,i){gl.uniform1i(gl.getUniformLocation(pr,n),i);});
       U={p1:gl.getUniformLocation(pr,'p1'),p2:gl.getUniformLocation(pr,'p2'),sc:gl.getUniformLocation(pr,'sc'),of:gl.getUniformLocation(pr,'of')};
     }catch(e){gl=null;return;}
-    Promise.all(['assets/h_sketch.jpg','assets/h_under.jpg','assets/h_color.jpg','assets/h_order.png'].map(load)).then(function(ims){
+    Promise.all(['assets/h_sketch.jpg?v=2','assets/h_under.jpg?v=2','assets/h_color.jpg?v=2','assets/h_order.png'].map(load)).then(function(ims){
       if(!gl)return;
       ims.forEach(function(im,i){tex(i,im);});
       ready=true; fit(); cv.classList.add('ready');

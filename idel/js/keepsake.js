@@ -9,7 +9,7 @@ const charIds = Object.keys(characters);
 const BRAND = PAGE.brand;
 const esc = t => String(t).replace(/[&<>"']/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]));
 const HER_LIST = ['03','01','02','04','07','08','10','12','13','14'];
-$('pc-thumbs').innerHTML = '<button type="button" class="kth up" id="btn-upload" aria-label="내 사진 올리기"><span>내 사진<br>올리기</span></button>' + HER_LIST.map(n => `<button type="button" class="kth" data-her="${n}" aria-label="${n}번 사진"><img src="assets/p/s${n}.jpg" alt="" loading="lazy"></button>`).join('');
+$('pc-thumbs').innerHTML = '<button type="button" class="kth up" id="btn-upload" aria-label="내 사진 올리기"><span>내 사진<br>올리기</span></button>' + HER_LIST.map(n => `<button type="button" class="kth" data-her="${n}" aria-label="${n}번 사진"><img src="assets/p/s${n}.jpg?v=2" alt="" loading="lazy"></button>`).join('');
 /* ===== 기념주화 제작소: 코난 기념뱃지 같은 앤티크 메탈 음각 (900px로 그려 선명하게 저장) ===== */
 const cv = $('coin-canvas'), TAU = Math.PI * 2, R = 88; let ctx = cv.getContext('2d'), SCALE = cv.width / 300;
 const METALS = {
@@ -946,7 +946,7 @@ $('booth-style-group').addEventListener('click', e => { const b = e.target.close
 const HER = ['03','01','02','04','07','08','10','12','13','14'];
 function pickHer(n) {
   herSel = n; avatarUpload = false;
-  const img = new Image(); img.onload = () => { avatar = img; avatarId++; drawCoin(); }; img.src = `assets/p/${n}.jpg`;
+  const img = new Image(); img.onload = () => { avatar = img; avatarId++; drawCoin(); }; img.src = `assets/p/${n}.jpg?v=2`;
   document.querySelectorAll('[data-her]').forEach(b => b.classList.toggle('active', b.dataset.her === n)); $('btn-upload').classList.remove('active');
 }
 $('pc-thumbs').addEventListener('click', e => { const b = e.target.closest('[data-her]'); if (b) pickHer(b.dataset.her); });

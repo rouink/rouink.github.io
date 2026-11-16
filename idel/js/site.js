@@ -88,14 +88,14 @@
     for(var k=0;k<n&&k<L.length;k++){
       var s=L[k], today=(k===n-1&&S.satToday), pk=S.pal[k]&&S.pig(S.pal[k].id);
       out+='<article class="sit rv in'+(today?' today':'')+(k<cut?' old':'')+'">'+
-        '<div class="sit-ph"><img src="assets/t/'+s.img+'.jpg" alt="'+esc(s.stage)+' 회차의 이델" loading="lazy"></div>'+
+        '<div class="sit-ph"><img src="assets/t/'+s.img+'.jpg?v=2" alt="'+esc(s.stage)+' 회차의 이델" loading="lazy"></div>'+
         '<div class="sit-meta"><span class="sit-no">No.'+pad(k+1)+' · 1127. '+esc(s.d)+' ('+esc(s.w)+')</span><span class="sit-stage">'+(pk?'<i class="sw-dot" style="--c:'+pk.hex+'"></i>'+esc(pk.name)+' · ':'')+esc(s.stage)+'</span></div>'+
         '<p class="body">'+esc(s.text)+'</p>'+
         '<p class="hand">'+esc(s.note.replace('{name}',nmv))+'</p>'+(today?palBlock(k):'')+'</article>';
     }
     if(n<12&&L[n]){
       var nx=L[n];
-      out+='<article class="sit lock rv in"><div class="sit-ph"><img src="assets/t/'+nx.img+'.jpg" alt="" loading="lazy"></div>'+
+      out+='<article class="sit lock rv in"><div class="sit-ph"><img src="assets/t/'+nx.img+'.jpg?v=2" alt="" loading="lazy"></div>'+
         '<div class="sit-meta"><span class="sit-no">No.'+pad(n+1)+' · 1127. '+esc(nx.d)+' ('+esc(nx.w)+')</span><span class="sit-stage">아직 마르지 않음</span></div>'+
         '<p class="body sm">'+(S.satToday||n===0?'다시 오는 날 앉으면 이 회차가 열리고, 캔버스가 한 단계 마른다.':'다시 들어와 앉으면 이 회차가 열린다.')+'</p></article>';
     }
@@ -170,7 +170,7 @@
     G.forEach(function(it){
       var ok=unlocked(it); if(ok){c++;shown.push(it);}
       out+='<button type="button" class="g'+(ok?'':' locked')+'" data-k="'+it.k+'"'+(ok?' aria-label="'+esc(it.cap)+' — 크게 보기"':' aria-label="아직 열리지 않은 장면"')+'>'+
-        '<img src="assets/t/'+it.k+'.jpg" alt="" loading="lazy"><span class="gn">'+(ok?'No.'+it.k:'No.'+it.k+' · ?')+'</span></button>';
+        '<img src="assets/t/'+it.k+'.jpg?v=2" alt="" loading="lazy"><span class="gn">'+(ok?'No.'+it.k:'No.'+it.k+' · ?')+'</span></button>';
     });
     $('#gal').innerHTML=out; $('#galCount').textContent=c+' / '+G.length;
   }
@@ -210,7 +210,7 @@
   function setLb(){
     var it=shown[lbI]; if(!it)return;
     lbImg.style.opacity=0;
-    var im=new Image(); im.onload=function(){lbImg.src=im.src;lbImg.alt=it.cap;lbImg.style.opacity=1;}; im.src='assets/g/'+it.k+'.jpg';
+    var im=new Image(); im.onload=function(){lbImg.src=im.src;lbImg.alt=it.cap;lbImg.style.opacity=1;}; im.src='assets/g/'+it.k+'.jpg?v=2';
     lbCap.innerHTML='<span class="lb">No.'+it.k+'</span>'+esc(it.cap);
   }
   function openLb(i){lbI=Math.max(0,i);setLb();if(!openOv)showOv($('#lb'));}
