@@ -1,7 +1,7 @@
 /* 이델 — 사이트 글과 값. 글을 고칠 때는 이 파일만 고치면 된다. */
 window.IDEL = {
   sig: "IDEL · Don't move. Not yet.",
-  crack: '',               // 크랙 작품 주소(열쇠 붙은 사이트 주소 아님). 비어 있으면 '크랙에서 대화하기' 버튼이 숨는다.
+  crack: 'https://crack.wrtn.ai/characters/6afc26fb6c9f47bdaace9a7e/detail', // 크랙 작품 주소(열쇠 붙은 사이트 주소 아님). 비어 있으면 '크랙에서 대화하기' 버튼이 숨는다.
   music: {
     main: 'assets/main.mp3', mainTitle: 'Hold Still',
     theme: 'assets/theme.mp3', themeTitle: 'Two Points of Light'
