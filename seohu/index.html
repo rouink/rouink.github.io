@@ -229,12 +229,14 @@ footer .cr{max-width:1120px;margin:14px auto 0;font-family:var(--f-mono);font-si
 .phone .b.you{align-self:flex-start;background:#fff;color:#1B2230}
 .phone .b.me{align-self:flex-end;background:#1B2230;color:#EEF1F5}
 .phone .b.fail{align-self:flex-end;background:transparent;color:#1B2230;border:1px dashed #9AA3B2}
+.phone .b.del{align-self:flex-end;background:transparent;color:#9AA3B2;text-decoration:line-through;padding:2px 13px;font-size:13px}
 .phone .b small{display:block;font:500 10px var(--f-mono);color:#9AA3B2;margin-top:3px}
 .phone .bar{display:flex;align-items:center;gap:8px;padding:10px 12px 16px;background:#fff;border-top:1px solid #E1E4E9}
 .phone .in{flex:1;min-height:38px;border-radius:19px;background:#EEF0F3;padding:9px 14px;font:400 14px var(--f-text);color:#1B2230;white-space:nowrap;overflow:hidden;max-width:none;margin:0}
 .phone .in .ph{color:#9AA3B2}
 .phone .in i{display:inline-block;width:1.5px;height:16px;background:#1B2230;vertical-align:-3px;margin-left:1px;animation:car 1s steps(1) infinite}
 @keyframes car{50%{opacity:0}}
+@media (max-width:640px){.phone{width:min(300px,100%);aspect-ratio:9/14}}
 .phone .send{width:34px;height:34px;border-radius:50%;background:#C9CED6;flex:none}
 .tap{margin-top:16px;font:500 15px var(--f-text);padding:12px 18px;min-height:44px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
 /* 서명란 */
@@ -265,6 +267,8 @@ footer .cr{max-width:1120px;margin:14px auto 0;font-family:var(--f-mono);font-si
 .rtabs button{flex:none;background:none;border:0;border-bottom:2px solid transparent;padding:16px 18px 14px;font:500 15px var(--f-text);color:var(--muted);cursor:pointer;margin-bottom:-1px}
 .rtabs button small{font-family:var(--f-mono);font-size:11px;margin-left:6px}
 .rtabs button[aria-selected="true"]{color:var(--ink);border-color:var(--ink)}
+.rtabs .sh{display:none}
+@media (max-width:640px){.rtabs{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible}.rtabs button{padding:14px 2px 12px;font-size:15px;text-align:center;white-space:nowrap}.rtabs .lg{display:none}.rtabs .sh{display:inline}}
 .rpanel{padding-top:32px}
 .rpanel .lead{font-family:var(--f-display);font-weight:900;font-size:24px;line-height:1.35;letter-spacing:-.03em;margin:0 0 28px}
 .items{display:grid;gap:16px}
@@ -310,6 +314,16 @@ body.in .sndw{opacity:1;pointer-events:auto}
 .sndp .opt[aria-pressed="true"]{background:rgb(220 226 234 / .08)}.sndp .opt[aria-pressed="true"]::before{background:var(--on-night);border-color:var(--on-night)}
 .sndp .opt:hover{background:rgb(220 226 234 / .06)}.sndp .opt:focus-visible{outline:2px solid var(--silver);outline-offset:-2px}
 @media (prefers-reduced-motion:reduce){.snd.on .bars i{animation:none;height:8px}}
+
+.sgpop{position:fixed;inset:0;z-index:40;display:grid;place-items:center;padding:24px 16px;background:rgb(8 11 16 / .72);backdrop-filter:blur(3px);opacity:0;transition:opacity .5s var(--ease)}
+.sgpop.on{opacity:1}
+.sgpop .box{width:min(420px,100%);background:var(--sheet);color:var(--ink);padding:36px 28px 28px;border-top:4px solid var(--accent);box-shadow:0 30px 60px -20px rgb(0 0 0 / .6);transform:translateY(12px);transition:transform .5s var(--ease)}
+.sgpop.on .box{transform:none}
+.sgpop .t{margin:0 0 18px;font:900 40px/1.15 var(--f-display);letter-spacing:-.03em}
+.sgpop .b{margin:0 0 16px;font-size:17px;line-height:1.75;color:var(--muted)}
+.sgpop .qt{margin:0 0 26px;font:700 21px/1.6 var(--f-display);color:var(--ink)}
+.sgpop .tap{border-color:var(--ink);color:var(--ink);width:100%}
+@media (prefers-reduced-motion:reduce){.sgpop,.sgpop .box{transition:none}}
 </style>
 </head>
 <body>
@@ -378,9 +392,9 @@ body.in .sndw{opacity:1;pointer-events:auto}
       <div class="rfile" id="rfile">
         <div class="rtabs" role="tablist" aria-label="그의 기록">
           <button type="button" role="tab" id="rt-prof" aria-controls="rp-prof" aria-selected="true">프로필</button>
-          <button type="button" role="tab" id="rt-bag" aria-controls="rp-bag" aria-selected="false" tabindex="-1">What’s in my bag<small>4</small></button>
-          <button type="button" role="tab" id="rt-tmi" aria-controls="rp-tmi" aria-selected="false" tabindex="-1">TMI<small>4</small></button>
-          <button type="button" role="tab" id="rt-his" aria-controls="rp-his" aria-selected="false" tabindex="-1">지나온 이야기</button>
+          <button type="button" role="tab" id="rt-bag" aria-controls="rp-bag" aria-selected="false" tabindex="-1"><span class="lg">What’s in my bag<small>4</small></span><span class="sh">소지품</span></button>
+          <button type="button" role="tab" id="rt-tmi" aria-controls="rp-tmi" aria-selected="false" tabindex="-1"><span class="lg">TMI<small>4</small></span><span class="sh">TMI</span></button>
+          <button type="button" role="tab" id="rt-his" aria-controls="rp-his" aria-selected="false" tabindex="-1"><span class="lg">지나온 이야기</span><span class="sh">이야기</span></button>
         </div>
         <section class="rpanel" id="rp-prof" role="tabpanel" aria-labelledby="rt-prof">
           <ul class="tags"><li>진경그룹 전무</li><li>정략결혼 3년 차</li><li>무심남</li><li>후회남</li></ul>
@@ -449,7 +463,7 @@ body.in .sndw{opacity:1;pointer-events:auto}
           <p class="cnt" id="phCnt">지운 말 0 / 4</p>
           <button class="tap" type="button" id="phTap">화면 누르기</button>
         </div>
-        <div class="phone rise" id="phone" role="button" tabindex="0" aria-label="그의 휴대폰 화면 누르기">
+        <div class="phone rise" id="phDev" role="button" tabindex="0" aria-label="그의 휴대폰 화면 누르기">
           <div class="scr">
             <div class="top"><b>당신</b><span>마지막 대화 · 1,095일 전</span></div>
             <div class="msgs" id="phMsgs" aria-live="polite"><span class="day">2023. 11. 26</span><div class="b me">도착했어.<small>읽음 · 오후 2:04</small></div></div>
@@ -481,7 +495,7 @@ body.in .sndw{opacity:1;pointer-events:auto}
         <div class="rise">
           <p class="q">빈칸은 하나.<br>당신 쪽이다.</p>
           <p class="d">이혼을 원하시면 서명하세요.</p>
-          <p class="react" id="sgReact" aria-live="polite"></p>
+          <p class="react" id="sgReact" aria-live="polite" hidden></p>
           <button class="tap" type="button" id="sgClear">지우기</button>
         </div>
         <div class="pad rise" id="sgPad">
@@ -490,6 +504,14 @@ body.in .sndw{opacity:1;pointer-events:auto}
           <div class="row"><span class="k">신청인 1</span><canvas id="sgCv" aria-label="서명 칸. 그려서 서명"></canvas></div>
           <div class="row"><span class="k">신청인 2</span><div class="his"><span>진서후 <span class="wait">…잠깐만.</span></span><em id="sgHis">서명 없음</em></div></div>
         </div>
+      </div>
+    </div>
+    <div class="sgpop" id="sgPop" role="dialog" aria-modal="true" aria-labelledby="sgPopT" hidden>
+      <div class="box">
+        <p class="t" id="sgPopT">…잠깐만.</p>
+        <p class="b">다 쓰기도 전에,<br>그가 펜 끝을 손으로 덮는다.</p>
+        <p class="qt">“…한 줄만 남겨 줘.<br>0시까지만.”</p>
+        <button class="tap" type="button" id="sgPopX">펜을 내려놓는다</button>
       </div>
     </div>
   </section>
@@ -617,12 +639,13 @@ if(entered)reveal();
 /* 포토카드 · 인생 두컷 */
 (function(){
 const $=s=>document.querySelector(s);
-const HIM=[['face',.42],['s03',.6],['s05',.62],['s07',.42],['s11',.58],['s17',.62],['s18',.5],['side',.5]];
+/* 숫자 = 사진에서 얼굴이 있는 가로 위치(0 왼쪽~1 오른쪽). 세로 카드로 잘라도 얼굴이 가운데 오게 */
+const HIM=[['face',.55],['s03',.52],['s05',.3],['s07',.47],['s11',.42],['s17',.55],['s18',.45],['side',.42]];
 const cache={};const img=src=>cache[src]||(cache[src]=new Promise(r=>{const i=new Image();i.decoding='async';i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src}));
-const him=k=>img('img/'+k+'.webp');
+const him=k=>img('img/'+k+'.webp');const hcut=k=>img('img/cut/'+k+'.webp');/* 인생두컷용 누끼(배경 투명) */
 const SERIF='"Noto Serif KR",serif',MONO='"IBM Plex Mono",monospace';
 const fontsReady=document.fonts?Promise.all([document.fonts.load('900 40px "Noto Serif KR"'),document.fonts.load('400 20px "Noto Serif KR"'),document.fonts.load('500 20px "IBM Plex Mono"')]).catch(()=>{}):Promise.resolve();
-function cover(c,im,x,y,w,h,fx=.5,fy=.4,z=1,ox=0,oy=0){if(!im)return;const s=Math.max(w/im.width,h/im.height)*z;const dw=im.width*s,dh=im.height*s;let dx=x+(w-dw)*fx+ox,dy=y+(h-dh)*fy+oy;c.drawImage(im,dx,dy,dw,dh)}
+function cover(c,im,x,y,w,h,fx=.5,fy=.4,z=1,ox=0,oy=0){if(!im)return;const s=Math.max(w/im.width,h/im.height)*z;const dw=im.width*s,dh=im.height*s;/* fx·fy = 보이고 싶은 지점(얼굴)을 칸 가운데로, 빈틈 없게 가장자리에서 멈춤 */let dx=Math.min(x,Math.max(x+w-dw,x+w/2-fx*dw))+ox,dy=Math.min(y,Math.max(y+h-dh,y+h/2-fy*dh))+oy;c.drawImage(im,dx,dy,dw,dh)}
 function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.arcTo(x+w,y,x+w,y+h,r);c.arcTo(x+w,y+h,x,y+h,r);c.arcTo(x,y+h,x,y,r);c.arcTo(x,y,x+w,y,r);c.closePath()}
 const FIN={silver:{a:'#F4F6F9',b:'#A7B1C0',c:'#6C7788',t:'#1B2230',s:'#4D5666'},ink:{a:'#2A3140',b:'#151A23',c:'#0B0E14',t:'#EEF1F5',s:'#A9B3C1'},silk:{a:'#FFFFFF',b:'#F1EFEA',c:'#D9DCE2',t:'#1B2230',s:'#6A7486'}};
 function metal(c,x0,y0,x1,y1,f){const g=c.createLinearGradient(x0,y0,x1,y1);g.addColorStop(0,f.a);g.addColorStop(.45,f.b);g.addColorStop(.5,f.c);g.addColorStop(.55,f.a);g.addColorStop(1,f.b);return g}
@@ -666,13 +689,16 @@ setPhoto('face');
 const bc=$('#booth-canvas'),bx=bc.getContext('2d');const CW=1080,CH=900,X0=60,Y=[150,1090];
 const B={style:'form',frame:'silk',bg:'silk',side:'right',sel:0,cuts:[{him:5,up:null,z:1,ox:0,oy:0},{him:6,up:null,z:1,ox:0,oy:0}],move:false};
 const FR={silk:{bg:'#FBFAF7',t:'#1B2230',s:'#6A7486',l:'rgba(27,34,48,.14)'},silver:{bg:null,t:'#1B2230',s:'#4D5666',l:'rgba(27,34,48,.2)'},ink:{bg:'#121722',t:'#EEF1F5',s:'#A9B3C1',l:'rgba(220,226,234,.18)'}};
-let bTok=0;async function drawB(){const tk=++bTok;await fontsReady;const silk=await img('img/silk.webp'),H0=await him(HIM[B.cuts[0].him][0]),H1=await him(HIM[B.cuts[1].him][0]),TT=await img('img/'+(B.frame==='ink'?'title.webp':'title_ink.webp'));if(tk!==bTok)return;const HI=[H0,H1];const fr=FR[B.frame];bx.clearRect(0,0,1200,2312);
+let bTok=0;async function drawB(){const tk=++bTok;await fontsReady;const silk=await img('img/silk.webp'),H0=await hcut(HIM[B.cuts[0].him][0]),H1=await hcut(HIM[B.cuts[1].him][0]),TT=await img('img/'+(B.frame==='ink'?'title.webp':'title_ink.webp'));if(tk!==bTok)return;const HI=[H0,H1];const fr=FR[B.frame];bx.clearRect(0,0,1200,2312);
  if(B.frame==='silver'){bx.fillStyle=metal(bx,0,0,1200,2312,FIN.silver)}else bx.fillStyle=fr.bg;bx.fillRect(0,0,1200,2312);
  bx.fillStyle=fr.s;bx.font=`500 32px ${MONO}`;bx.fillText(B.style==='form'?'이혼 합의서 · 제 1095 호':B.style==='timer'?'THE LAST 48 HOURS':'SEOHU · 2026',X0,98);bx.textAlign='right';bx.fillText('2026.11.26',X0+CW,98);bx.textAlign='left';
 
  for(let i=0;i<2;i++){const c=B.cuts[i],y=Y[i],hw=CW/2;const meL=B.side==='left';const mx=meL?X0:X0+hw,hx=meL?X0+hw:X0;
+  /* 배경은 두 칸(나·서후)에 한 장으로 같이 깔린다 */
+  bx.save();bx.beginPath();bx.rect(X0,y,CW,CH);bx.clip();
+  if(B.bg==='silk')cover(bx,silk,X0,y,CW,CH,.5,.4);else{const g=bx.createLinearGradient(0,y,0,y+CH);if(B.bg==='night'){g.addColorStop(0,'#1B2433');g.addColorStop(1,'#0B1018')}else{g.addColorStop(0,'#F7F6F2');g.addColorStop(1,'#E9E6DF')}bx.fillStyle=g;bx.fillRect(X0,y,CW,CH)}
+  bx.restore();
   bx.save();bx.beginPath();bx.rect(mx,y,hw,CH);bx.clip();
-  if(B.bg==='silk')cover(bx,silk,mx,y,hw,CH,.25,.3);else{const g=bx.createLinearGradient(0,y,0,y+CH);if(B.bg==='night'){g.addColorStop(0,'#1B2433');g.addColorStop(1,'#0B1018')}else{g.addColorStop(0,'#F7F6F2');g.addColorStop(1,'#E9E6DF')}bx.fillStyle=g;bx.fillRect(mx,y,hw,CH)}
   if(c.up)cover(bx,c.up,mx,y,hw,CH,.5,.4,c.z,c.ox,c.oy);else{bx.fillStyle=B.bg==='night'?'rgba(220,226,234,.75)':'rgba(27,34,48,.55)';bx.textAlign='center';bx.font=`400 44px ${SERIF}`;bx.fillText('여기에 내 사진',mx+hw/2,y+CH/2-6);bx.font=`500 30px ${MONO}`;bx.fillText(`CUT 0${i+1}`,mx+hw/2,y+CH/2+50);bx.textAlign='left'}
   bx.restore();
   const h=HIM[c.him];bx.save();bx.beginPath();bx.rect(hx,y,hw,CH);bx.clip();cover(bx,HI[i],hx,y,hw,CH,h[1],.3);bx.restore();
@@ -713,10 +739,10 @@ const DR=['밥은 먹었어?','오늘 늦게 와?','그 서류 말인데','가�
 const sleep=ms=>new Promise(r=>setTimeout(r,RM?0:ms));
 async function type(t){for(let i=1;i<=t.length;i++){inp.innerHTML=t.slice(0,i)+'<i></i>';await sleep(110)}}
 async function erase(t){await sleep(700);for(let i=t.length-1;i>=0;i--){inp.innerHTML=(t.slice(0,i)||'')+'<i></i>';await sleep(55)}inp.innerHTML='<span class="ph">메시지 입력</span>'}
-async function step(){if(busy)return;if(k>=DR.length){k=0;msgs.querySelectorAll('.fail').forEach(e=>e.remove());}busy=true;const t=DR[k];await type(t);
- if(k<DR.length-1){await erase(t)}else{await sleep(900);inp.innerHTML='<span class="ph">메시지 입력</span>';const b=document.createElement('div');b.className='b fail';b.innerHTML=t+'<small>보내지 않음 · 임시 저장</small>';msgs.appendChild(b)}
+async function step(){if(busy)return;if(k>=DR.length){k=0;msgs.querySelectorAll('.fail,.del').forEach(e=>e.remove());}busy=true;const dv=$('#phDev').getBoundingClientRect();if(dv.bottom>innerHeight||dv.top<0)$('#phDev').scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});const t=DR[k];await type(t);
+ if(k<DR.length-1){await erase(t);const d=document.createElement('div');d.className='b del';d.textContent=t;msgs.appendChild(d)}else{await sleep(900);inp.innerHTML='<span class="ph">메시지 입력</span>';const b=document.createElement('div');b.className='b fail';b.innerHTML=t+'<small>보내지 않음 · 임시 저장</small>';msgs.appendChild(b)}
  k++;$('#phCnt').textContent=k>=DR.length?'지운 말 3 / 4 · 하나는 못 지웠다':`지운 말 ${k} / 4`;$('#phTap').textContent=k>=DR.length?'처음부터 다시':'화면 누르기';busy=false}
-$('#phone').addEventListener('click',step);$('#phTap').addEventListener('click',step);$('#phone').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();step()}});
+$('#phDev').addEventListener('click',step);$('#phTap').addEventListener('click',step);$('#phDev').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();step()}});
 /* 서명란: 다 쓰기 전에 그가 붙잡음. 저장 안 함 */
 const cv=$('#sgCv'),c=cv.getContext('2d'),pad=$('#sgPad'),re=$('#sgReact');let drawing=false,last=null,len=0,stopped=false;
 function size(){const r=cv.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);cv.width=r.width*dpr;cv.height=r.height*dpr;c.setTransform(dpr,0,0,dpr,0,0);c.lineCap='round';c.lineJoin='round';c.strokeStyle='#1B2230'}
@@ -724,7 +750,10 @@ size();addEventListener('resize',()=>{if(!len)size()});
 const P=e=>{const r=cv.getBoundingClientRect();return[e.clientX-r.left,e.clientY-r.top]};
 cv.addEventListener('pointerdown',e=>{if(stopped)return;e.preventDefault();if(!len){const r=cv.getBoundingClientRect();if(Math.abs(cv.width-r.width*Math.min(2,devicePixelRatio||1))>2)size()}drawing=true;last=P(e);cv.setPointerCapture(e.pointerId)});
 cv.addEventListener('pointermove',e=>{if(!drawing||stopped)return;const p=P(e);const d=Math.hypot(p[0]-last[0],p[1]-last[1]);c.lineWidth=Math.max(1.4,3.2-d*.08);c.beginPath();c.moveTo(last[0],last[1]);c.lineTo(p[0],p[1]);c.stroke();last=p;len+=d;
- if(len>240&&!stopped){stopped=true;drawing=false;pad.classList.add('stop');$('#sgHis').textContent='펜을 덮은 손';re.innerHTML='다 쓰기도 전에, 그가 펜 끝을 손으로 덮는다.<br>“…한 줄만 남겨 줘. 0시까지만.”';re.classList.add('on')}});
+ if(len>240&&!stopped){stopped=true;drawing=false;pad.classList.add('stop');$('#sgHis').textContent='펜을 덮은 손';openPop()}});
+const pop=$('#sgPop');function openPop(){pop.hidden=false;requestAnimationFrame(()=>pop.classList.add('on'));document.body.style.overflow='hidden';$('#sgPopX').focus()}
+function closePop(){pop.classList.remove('on');document.body.style.overflow='';setTimeout(()=>{pop.hidden=true},RM?0:500);$('#sgClear').focus()}
+$('#sgPopX').addEventListener('click',closePop);pop.addEventListener('click',e=>{if(e.target===pop)closePop()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!pop.hidden)closePop()});
 ['pointerup','pointercancel'].forEach(t=>cv.addEventListener(t,()=>drawing=false));
 $('#sgClear').addEventListener('click',()=>{c.clearRect(0,0,cv.width,cv.height);len=0;stopped=false;pad.classList.remove('stop');$('#sgHis').textContent='서명 없음';re.classList.remove('on');setTimeout(()=>{if(!stopped)re.textContent=''},800);size()});
 })();
