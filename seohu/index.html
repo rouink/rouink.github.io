@@ -330,7 +330,7 @@ body.in .sndw{opacity:1;pointer-events:auto}
 <div class="gate g" id="gate" role="dialog" aria-modal="true" aria-label="입장">
   <div class="gate-bg" aria-hidden="true"></div>
   <div class="gate-top in" style="width:100%">
-    <span class="label">2026. 11. 26 · PM 11:00 · 신혼집 거실</span>
+    <span class="label">2026. 11. 29 · PM 11:00 · 신혼집 거실</span>
     <span class="label">결혼 1,093일째</span>
   </div>
   <div class="gate-mid in" style="width:100%">
@@ -466,7 +466,7 @@ body.in .sndw{opacity:1;pointer-events:auto}
         <div class="phone rise" id="phDev" role="button" tabindex="0" aria-label="그의 휴대폰 화면 누르기">
           <div class="scr">
             <div class="top"><b>당신</b><span>마지막 대화 · 1,095일 전</span></div>
-            <div class="msgs" id="phMsgs" aria-live="polite"><span class="day">2023. 11. 26</span><div class="b me">도착했어.<small>읽음 · 오후 2:04</small></div></div>
+            <div class="msgs" id="phMsgs" aria-live="polite"><span class="day">2023. 11. 29</span><div class="b me">도착했어.<small>읽음 · 오후 2:04</small></div></div>
             <div class="bar"><p class="in" id="phIn"><span class="ph">메시지 입력</span></p><span class="send" aria-hidden="true"></span></div>
           </div>
         </div>
@@ -588,7 +588,7 @@ body.in .sndw{opacity:1;pointer-events:auto}
 <script>
 document.documentElement.classList.add('js');
 document.querySelectorAll('.label,footer span').forEach(e=>{if(/[가-힣]/.test(e.textContent))e.classList.add('kr')});
-const CONFIG={crackUrl:'', start:'2026-11-26T23:00:00+09:00'};
+const CONFIG={crackUrl:'', start:'2026-11-29T23:00:00+09:00'};
 const $=s=>document.querySelector(s);
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -691,7 +691,7 @@ const B={style:'form',frame:'silk',bg:'silk',side:'right',sel:0,cuts:[{him:5,up:
 const FR={silk:{bg:'#FBFAF7',t:'#1B2230',s:'#6A7486',l:'rgba(27,34,48,.14)'},silver:{bg:null,t:'#1B2230',s:'#4D5666',l:'rgba(27,34,48,.2)'},ink:{bg:'#121722',t:'#EEF1F5',s:'#A9B3C1',l:'rgba(220,226,234,.18)'}};
 let bTok=0;async function drawB(){const tk=++bTok;await fontsReady;const silk=await img('img/silk.webp'),H0=await hcut(HIM[B.cuts[0].him][0]),H1=await hcut(HIM[B.cuts[1].him][0]),TT=await img('img/'+(B.frame==='ink'?'title.webp':'title_ink.webp'));if(tk!==bTok)return;const HI=[H0,H1];const fr=FR[B.frame];bx.clearRect(0,0,1200,2312);
  if(B.frame==='silver'){bx.fillStyle=metal(bx,0,0,1200,2312,FIN.silver)}else bx.fillStyle=fr.bg;bx.fillRect(0,0,1200,2312);
- bx.fillStyle=fr.s;bx.font=`500 32px ${MONO}`;bx.fillText(B.style==='form'?'이혼 합의서 · 제 1095 호':B.style==='timer'?'THE LAST 48 HOURS':'SEOHU · 2026',X0,98);bx.textAlign='right';bx.fillText('2026.11.26',X0+CW,98);bx.textAlign='left';
+ bx.fillStyle=fr.s;bx.font=`500 32px ${MONO}`;bx.fillText(B.style==='form'?'이혼 합의서 · 제 1095 호':B.style==='timer'?'THE LAST 48 HOURS':'SEOHU · 2026',X0,98);bx.textAlign='right';bx.fillText('2026.11.29',X0+CW,98);bx.textAlign='left';
 
  for(let i=0;i<2;i++){const c=B.cuts[i],y=Y[i],hw=CW/2;const meL=B.side==='left';const mx=meL?X0:X0+hw,hx=meL?X0+hw:X0;
   /* 배경은 두 칸(나·서후)에 한 장으로 같이 깔린다 */
