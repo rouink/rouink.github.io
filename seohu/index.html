@@ -531,7 +531,7 @@ body.in .sndw{opacity:1;pointer-events:auto}
           <p class="answer" id="answer" aria-live="polite"></p>
           <div class="end">
             <a class="btn" id="cta" href="#" target="_blank" rel="noopener" hidden>대화하러 가기 <span aria-hidden="true">→</span></a>
-            <span class="btn off" id="ctaOff">11월 26일 밤 11시 공개</span>
+            <span class="btn off" id="ctaOff">11월 29일 밤 11시 공개</span>
             <p>HL·BL 모두 플레이 가능</p>
           </div>
         </div>
@@ -612,7 +612,7 @@ function fmt(ms){const s=Math.max(0,Math.floor(ms/1000));return `${pad(Math.floo
 function tick(){const now=Date.now();
   if(now<T0){const d=Math.ceil((T0-now)/864e5);
     $('#clockLabel').classList.add('kr');$('#clockLabel').textContent=`서류가 식탁에 오르기까지 · D-${d}`;$('#clock').textContent=d>2?`D-${d}`:fmt(T0-now);
-    $('#clockCap').textContent='11월 26일 목요일 밤 11시부터 48시간이 줄어든다.';$('#stH').textContent='48:00 남음';}
+    $('#clockCap').textContent='11월 29일 일요일 밤 11시부터 48시간이 줄어든다.';$('#stH').textContent='48:00 남음';}
   else if(now<T1){$('#clockLabel').textContent='결혼 3년째 되는 날까지';$('#clock').textContent=fmt(T1-now);
     $('#clockCap').textContent='지금 이 시각에도 그는 서명하지 않은 서류를 들고 있다.';$('#stH').textContent=fmt(T1-now).slice(0,5)+' 남음';
     if(CONFIG.crackUrl){}}
