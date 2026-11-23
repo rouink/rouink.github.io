@@ -4,7 +4,13 @@ window.IDEL = {
   crack: 'https://crack.wrtn.ai/characters/6afc26fb6c9f47bdaace9a7e/detail', // 크랙 작품 주소(열쇠 붙은 사이트 주소 아님). 비어 있으면 '크랙에서 대화하기' 버튼이 숨는다.
   music: {
     main: 'assets/main.mp3', mainTitle: 'Hold Still',
-    theme: 'assets/theme.mp3', themeTitle: 'Two Points of Light'
+    theme: 'assets/theme.mp3', themeTitle: 'Two Points of Light',
+    /* 플레이리스트 순서. 곡을 더하려면 여기에 한 줄 */
+    list: [
+      {src:'assets/main.mp3',  title:'Hold Still'},
+      {src:'assets/theme.mp3', title:'Two Points of Light'},
+      {src:'assets/smile.mp3', title:'웃는 얼굴로'}
+    ]
   },
 
   /* 입장 화면 대사 — 줄바꿈은 \n */

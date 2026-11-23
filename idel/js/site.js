@@ -253,29 +253,34 @@
     window.addEventListener('pointermove',move); window.addEventListener('pointerup',end); window.addEventListener('pointercancel',end);
   })();
 
-  /* 소리 — 곡 파일이 있을 때만 단추가 보인다 */
-  var M=D.music||{}, bgm=$('#bgm'), th=$('#themeA'), snd=$('#snd'), hasMain=false, hasTheme=false, playing=false, themeOn=false;
+  /* 소리 — 플레이리스트(◀◀ ▶ ▶▶). 기본 꺼짐, 곡이 끝나면 다음 곡. 곡 파일이 있을 때만 보인다 */
+  var M=D.music||{}, bgm=$('#bgm'), th=$('#themeA'), snd=$('#snd'), pl=$('#pl'), plT=$('#plT'), playing=false, hasMain=false, hasTheme=false;
+  var LIST=(M.list||[{src:M.main,title:M.mainTitle},{src:M.theme,title:M.themeTitle}]).filter(function(t){return t&&t.src;}), idx=0, ok=[];
   function exists(u){return fetch(u,{method:'HEAD',cache:'no-store'}).then(function(r){return r.ok;}).catch(function(){return false;});}
   function meta(title){try{if('mediaSession' in navigator&&window.MediaMetadata){navigator.mediaSession.metadata=new MediaMetadata({title:title||'IDEL',artist:'이델',album:'북탑 화실',artwork:[{src:'assets/og.jpg',sizes:'1200x630',type:'image/jpeg'}]});}}catch(e){}}
-  function setSnd(on){playing=on;snd.setAttribute('aria-pressed',on?'true':'false');snd.textContent=on?'SOUND · ON':'SOUND · OFF';}
+  function setSnd(on){playing=on;snd.setAttribute('aria-pressed',on?'true':'false');snd.setAttribute('aria-label',on?'멈추기':'재생');snd.textContent=on?'❚❚':'▶';pl.classList.toggle('on',on);$('#recThemeS').textContent=(on&&ok[idx]&&ok[idx].src===M.theme)?'멈추기':'듣기';}
+  function show(){var t=ok[idx];plT.textContent=t?t.title:'';}
+  function load(i){idx=(i+ok.length)%ok.length;var t=ok[idx];if(bgm.getAttribute('src')!==t.src){bgm.src=t.src;}show();}
   function startMusic(){
-    if(!hasMain)return;
-    if(!bgm.src)bgm.src=M.main; bgm.volume=.55;
-    var p=bgm.play(); if(p&&p.then)p.then(function(){setSnd(true);meta(M.mainTitle);}).catch(function(){setSnd(false);}); else setSnd(true);
+    if(!ok.length)return; if(!bgm.getAttribute('src'))load(idx); bgm.volume=.55;
+    var p=bgm.play(); if(p&&p.then)p.then(function(){setSnd(true);meta(ok[idx].title);}).catch(function(){setSnd(false);}); else setSnd(true);
     store.set('snd',true);
   }
   function stopMusic(){bgm.pause();setSnd(false);store.set('snd',false);}
+  function jump(d){if(!ok.length)return;var was=playing;load(idx+d);if(was)startMusic();else setSnd(false);}
+  bgm.loop=false;
+  bgm.addEventListener('ended',function(){load(idx+1);startMusic();});
   snd.addEventListener('click',function(){playing?stopMusic():startMusic();});
-  function stopTheme(){if(themeOn){th.pause();themeOn=false;$('#recThemeS').textContent='듣기';if(playing){bgm.play().catch(function(){});meta(M.mainTitle);}}}
+  $('#plPrev').addEventListener('click',function(){jump(-1);});
+  $('#plNext').addEventListener('click',function(){jump(1);});
+  /* 그녀의 기록 '테마곡 듣기'는 플레이리스트에서 테마곡으로 바로 간다 */
   $('#recTheme').addEventListener('click',function(){
-    if(themeOn){stopTheme();return;}
-    if(!th.src)th.src=M.theme; th.volume=.6; bgm.pause();
-    th.play().then(function(){themeOn=true;$('#recThemeS').textContent='멈추기';meta(M.themeTitle);}).catch(function(){});
+    var i=-1;ok.forEach(function(t,k){if(t.src===M.theme)i=k;});if(i<0)return;
+    if(playing&&idx===i){stopMusic();return;} load(i);startMusic();
   });
-  th.addEventListener('ended',stopTheme);
-  var musicReady=Promise.all([M.main?exists(M.main):false,M.theme?exists(M.theme):false]).then(function(r){
-    hasMain=!!r[0]; hasTheme=!!r[1];
-    if(hasMain){snd.hidden=false;}
+  var musicReady=Promise.all(LIST.map(function(t){return exists(t.src);})).then(function(r){
+    ok=LIST.filter(function(t,k){return r[k];}); hasMain=ok.length>0; hasTheme=ok.some(function(t){return t.src===M.theme;});
+    if(hasMain){pl.hidden=false;show();}
     if(hasTheme){var b=$('#recTheme');b.hidden=false;$('#recThemeT').textContent=M.themeTitle||'그녀의 테마';}
     return hasMain;
   });

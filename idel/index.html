@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&family=Marcellus&family=Yeon+Sung&family=Mrs+Saint+Delafield&display=swap">
-<link rel="stylesheet" href="theme.css?v=3">
+<link rel="stylesheet" href="theme.css?v=4">
 </head>
 <body>
 
@@ -87,8 +87,7 @@
     <div class="tools">
       <span class="clock" id="clock">해 질 녘 · 앉는 시간</span>
       <button class="pgbtn" id="pgBtn" type="button" data-go="2">표구실</button>
-      <button class="snd" id="snd" type="button" hidden aria-pressed="false">SOUND · OFF</button>
-    </div>
+          </div>
   </header>
 
   <main id="pg1">
@@ -362,11 +361,17 @@
 
 <div id="toast" role="status" aria-live="polite"></div>
 <div id="ksheet" role="dialog" aria-modal="true" aria-label="그림 저장" hidden><img id="ksheet-img" alt="저장할 그림"><p>그림을 길게 눌러 저장해 주세요.</p><button type="button" id="ksheet-x">닫기</button></div>
-<audio id="bgm" preload="none" loop></audio>
+<div class="pl" id="pl" hidden role="group" aria-label="배경음악">
+  <button type="button" class="pl-b" id="plPrev" aria-label="이전 곡">◀◀</button>
+  <button type="button" class="pl-b pl-play" id="snd" aria-pressed="false" aria-label="재생">▶</button>
+  <span class="pl-t" id="plT" aria-live="polite"></span>
+  <button type="button" class="pl-b" id="plNext" aria-label="다음 곡">▶▶</button>
+</div>
+<audio id="bgm" preload="none"></audio>
 <audio id="themeA" preload="none"></audio>
 
-<script src="data.js?v=4"></script>
-<script src="js/site.js?v=3"></script>
+<script src="data.js?v=5"></script>
+<script src="js/site.js?v=4"></script>
 <script src="js/extra.js?v=2"></script>
 <script src="js/keepsake.js?v=3"></script>
 <script src="js/entry.js?v=3"></script>
